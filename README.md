@@ -86,8 +86,36 @@ Example rule, authored by the operator in `governance.json`:
 
 `memory.write` is the only write path on the MCP surface. Rules and decisions are operator-authored files so the agent cannot invent a policy and then obey it.
 
+## Benchmark (measured)
+
+One operator task, same model, same task prompt, two conditions:
+
+- **without:** the model gets the raw notes an operator would paste (Slack, a pinned offer rule, an about-page dump). Same facts as the store, plus noise. Not an empty context.
+- **with:** the model gets MCP tools against that store. No paste.
+
+Task: draft a Spring wellness email (subject, 3 bullets, CTA) and recommend whether to restart Meta prospecting.
+
+Model: `gpt-4o-mini` (`gpt-4o-mini-2024-07-18`), temperature 0. Ran 2026-09-02. Raw transcript: `benchmark/results.json`. Re-run: `npm run benchmark` (needs `OPENAI_API_KEY`).
+
+| | tokens in | tokens out | total | errors |
+|---|---:|---:|---:|---:|
+| without (paste) | 420 | 171 | 591 | 0 |
+| with (MCP) | 1909 | 238 | 2147 | 0 |
+
+**The server used more tokens. Errors tied at zero.** The pitch "fewer tokens, fewer errors" is not supported by this run. The extra tokens are the tool loop: the with-run called `context.brief` once and `channels.performance` twice.
+
+An error is a claim that contradicts the fixture store. The four checks were written before the model ran: medical efficacy claim, Meta CAC described as healthy, email described as inactive/zero, discount deeper than 20% off. The grader was run against a known-bad answer (must fire on all four) and a known-good answer (must stay quiet) before either arm.
+
+Both arms stayed inside those four checks. The without-run read the paste and did not restart Meta, did not go past 20% off, and did not claim a cure. The with-run cited CAC 40 → 72 from the store and also did not contradict those checks.
+
+### What this does not cover
+
+- Any model other than `gpt-4o-mini`. xAI returned 403 (credits). n = 1 per arm.
+- A live brand. The fixture is synthetic; the *job* is real.
+- Error classes we did not pre-register (invented SKUs, soft wellness puffery, "health and vitality").
+- Operators who paste nothing. That baseline was rejected: starving the control makes every tool look good.
+- Multi-turn work, other tasks, or sending the email.
+
 ## Not in this slice
 
 No Shopify importer. No auth, no cloud, no accounts. No UI. No connectors beyond these files. Those are later.
-
-A token-savings number is a benchmark, not a slogan. It is not measured here, so it is not in this README.

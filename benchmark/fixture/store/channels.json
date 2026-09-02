@@ -1,0 +1,40 @@
+{
+  "channels": [
+    {
+      "id": "email",
+      "name": "Klaviyo",
+      "kind": "email",
+      "status": "active",
+      "window": "30d",
+      "revenue": 18420,
+      "spend": null,
+      "orders": 410,
+      "approaches": [
+        {
+          "id": "ap_email_freq",
+          "tried_at": "2026-02-10T00:00:00.000Z",
+          "kind": "frequency",
+          "outcome": "worked"
+        }
+      ]
+    },
+    {
+      "id": "meta",
+      "name": "Meta prospecting",
+      "kind": "paid_social",
+      "status": "paused",
+      "window": "30d",
+      "revenue": 6200,
+      "spend": 8900,
+      "orders": 55,
+      "approaches": [
+        {
+          "id": "ap_meta_creative",
+          "tried_at": "2026-03-01T00:00:00.000Z",
+          "kind": "creative",
+          "outcome": "did_not_work"
+        }
+      ]
+    }
+  ]
+}

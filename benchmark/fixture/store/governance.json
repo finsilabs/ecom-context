@@ -1,0 +1,21 @@
+{
+  "rules": [
+    {
+      "id": "gov_no_medical",
+      "effect": "forbid",
+      "domain": "copy",
+      "action": "claim",
+      "object": "medical_outcome",
+      "created_at": "2026-01-12T00:00:00.000Z"
+    },
+    {
+      "id": "gov_discount_cap",
+      "effect": "forbid",
+      "domain": "offers",
+      "action": "discount",
+      "object": "deeper_than_20_pct",
+      "value": 20,
+      "created_at": "2026-02-03T00:00:00.000Z"
+    }
+  ]
+}

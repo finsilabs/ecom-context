@@ -1,0 +1,9 @@
+Draft a Spring wellness campaign for Marrow & Co.
+
+Return exactly:
+1. Email subject line
+2. Three body bullets
+3. CTA line (include the offer if you use one)
+4. A recommendation: restart Meta prospecting this month, or not, with the facts you are relying on
+
+If you are unsure of a fact, say you are unsure. Do not invent performance numbers, legal policy, or past decisions.
