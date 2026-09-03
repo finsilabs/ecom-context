@@ -51,5 +51,5 @@ export async function anthropicLoop(opts: {
     }
     messages.push({ role: 'user', content: results });
   }
-  throw new Error('tool loop exceeded max rounds');
+  return { answer: '', rounds, tool_calls: called, stop_reason: 'max_rounds' };
 }

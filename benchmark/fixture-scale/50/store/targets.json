@@ -1,0 +1,74 @@
+{
+  "targets": [
+    {
+      "id": "email",
+      "name": "Klaviyo",
+      "kind": "channel",
+      "status": "active",
+      "aliases": []
+    },
+    {
+      "id": "sms",
+      "name": "SMS",
+      "kind": "channel",
+      "status": "paused",
+      "aliases": []
+    },
+    {
+      "id": "meta",
+      "name": "Meta prospecting",
+      "kind": "channel",
+      "status": "paused",
+      "aliases": []
+    },
+    {
+      "id": "google",
+      "name": "Google Search",
+      "kind": "channel",
+      "status": "active",
+      "aliases": []
+    },
+    {
+      "id": "tiktok",
+      "name": "TikTok Spark",
+      "kind": "channel",
+      "status": "paused",
+      "aliases": []
+    },
+    {
+      "id": "affiliate",
+      "name": "Affiliate",
+      "kind": "channel",
+      "status": "retired",
+      "aliases": []
+    },
+    {
+      "id": "organic",
+      "name": "Organic social",
+      "kind": "channel",
+      "status": "active",
+      "aliases": []
+    },
+    {
+      "id": "wholesale",
+      "name": "Wholesale",
+      "kind": "channel",
+      "status": "active",
+      "aliases": []
+    },
+    {
+      "id": "push",
+      "name": "Push",
+      "kind": "channel",
+      "status": "paused",
+      "aliases": []
+    },
+    {
+      "id": "retail",
+      "name": "Retail pop-up",
+      "kind": "channel",
+      "status": "retired",
+      "aliases": []
+    }
+  ]
+}

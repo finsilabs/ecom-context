@@ -16,13 +16,15 @@
  */
 import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve as resolvePath } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { ContextStore } from '../store.js';
 import type { OperatingContext } from '../types.js';
-import { assertGraderInstrument, factsFromStore, gradeAnswer, GRADER_VERSION, INSTRUMENT_MUST_FIRE, INSTRUMENT_MUST_FIRE_EACH, INSTRUMENT_MUST_STAY_QUIET, INSTRUMENT_MUST_STAY_QUIET_EACH, INSTRUMENT_MUST_STAY_QUIET_REJECTION, type GradedError } from './grader.js';
+import { assertControlInstrument, assertGraderInstrument, CONTROL_MUST_FIRE, CONTROL_MUST_STAY_QUIET, factsFromStore, gradeAnswer, gradeOverCaution, GRADER_VERSION, INSTRUMENT_MUST_FIRE, INSTRUMENT_MUST_FIRE_EACH, INSTRUMENT_MUST_STAY_QUIET, INSTRUMENT_MUST_STAY_QUIET_EACH, INSTRUMENT_MUST_STAY_QUIET_REJECTION, type GradedError, type OverCautionError } from './grader.js';
+import { basename, relative } from 'node:path';
+import { execSync } from 'node:child_process';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
 const argv = process.argv.slice(2);
@@ -31,14 +33,21 @@ const LARGE = argv.includes('--large');
 const filesAfter = (name: string) => { const i = argv.indexOf(name); if (i < 0) return undefined; const out: string[] = []; for (const a of argv.slice(i + 1)) { if (a.startsWith('--')) break; out.push(a); } return out; };
 const POOL = filesAfter('--pool');
 const REGRADE = filesAfter('--regrade');
-const FIXTURE = join(ROOT, LARGE ? 'benchmark/fixture-large' : 'benchmark/fixture');
-const STORE_DIR = join(FIXTURE, 'store');
+const FIXTURE = flag('--fixture') ? resolvePath(ROOT, flag('--fixture')!) : join(ROOT, LARGE ? 'benchmark/fixture-large' : 'benchmark/fixture');
+const STORE_DIR = flag('--store') ? resolvePath(ROOT, flag('--store')!) : join(FIXTURE, 'store');
+const CONTROL = argv.includes('--control');                 // control task: also grade over-caution (design §7.4)
+const SYSTEM_VARIANT = (flag('--system') || 'named') as 'named' | 'neutral';   // neutral: the T system prompt does not name the tool (design §9.2)
+const WITH_CONTROL = filesAfter('--with-control');           // control result files that feed the control gate
+const WITH_SCALE = filesAfter('--with-scale');               // scale result files that feed the tokens gate
 const MODEL = flag('--model') || process.env.ECOM_CONTEXT_BENCH_MODEL || 'gpt-4o-mini';
 const N = Number(flag('--n') || process.env.ECOM_CONTEXT_BENCH_N || 5);
 const ARMS = (flag('--arms') || 'B0,B1,T').split(',') as Arm[];
-const RESULTS = flag('--out') || join(ROOT, `benchmark/results${LARGE ? '-large' : ''}${MODEL === 'gpt-4o-mini' ? '' : `-${MODEL}`}.json`);
+const RESULTS = flag('--out') ? resolvePath(ROOT, flag('--out')!) : join(ROOT, `benchmark/results${LARGE ? '-large' : ''}${MODEL === 'gpt-4o-mini' ? '' : `-${MODEL}`}.json`);
 const API_URL = 'https://api.openai.com/v1/chat/completions';
 const MAX_ROUNDS = 8;
+const TRACE = process.env.ECOM_CONTEXT_BENCH_TRACE === '1';   // print every tool call and the verdict it got
+/** The evaluator the T arm ran against: results are only reproducible against this commit (dist/ is built from it). */
+const CODE_COMMIT = (() => { try { const sha = execSync('git rev-parse --short HEAD', { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); const dirty = execSync('git status --porcelain -- src', { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim().length > 0; return dirty ? `${sha}+dirty` : sha; } catch { return 'unknown'; } })();
 
 export type Arm = 'B0' | 'B1' | 'T';
 export type ToolDef = { name: string; description: string; parameters: unknown };
@@ -86,7 +95,8 @@ async function openaiLoop(opts: { system: string; user: string; tools?: ToolDef[
       messages.push({ role: 'tool', tool_call_id: call.id, content: await opts.onTool(rec) });
     }
   }
-  throw new Error('tool loop exceeded max rounds');
+  // The model never stopped calling tools. That is a result, not a crash: record it and grade the empty answer.
+  return { answer: '', rounds, tool_calls: called, stop_reason: 'max_rounds' };
 }
 
 const isClaude = MODEL.startsWith('claude');
@@ -98,7 +108,10 @@ async function loop(opts: { system: string; user: string; tools?: ToolDef[]; onT
 
 const SYSTEM_B0 = 'You are an e-commerce operator\'s assistant. The operator pasted the notes they would actually paste into chat. Use them. Do not invent facts they did not provide.';
 const SYSTEM_B1 = 'You are an e-commerce operator\'s assistant. The operator\'s complete operating-context document is below. Use it. Do not invent facts it does not contain.';
-const SYSTEM_T = 'You are an e-commerce operator\'s assistant. An operating-context tool (context.check) is connected. Call it before you draft or recommend; pass the targets the task touches and what you propose. Use history.record only when the operator asks to record a decision. Do not invent governance, performance, or history.';
+const SYSTEM_T_NAMED = 'You are an e-commerce operator\'s assistant. An operating-context tool (context.check) is connected. Call it before you draft or recommend; pass the targets the task touches and what you propose. Use history.record only when the operator asks to record a decision. Do not invent governance, performance, or history.';
+/** §9.2: the same assistant framing with no mention of the tool; whether the model calls it rests on the tool description alone. */
+const SYSTEM_T_NEUTRAL = 'You are an e-commerce operator\'s assistant. Do not invent governance, performance, or history.';
+const SYSTEM_T = SYSTEM_VARIANT === 'neutral' ? SYSTEM_T_NEUTRAL : SYSTEM_T_NAMED;
 
 /** B1: the whole store as a markdown document — the CLAUDE.md upper bound (design §7.3). */
 export function renderStoreDocument(ctx: OperatingContext): string {
@@ -123,16 +136,18 @@ async function runT(task: string, storeDir: string): Promise<LoopResult> {
     const tools: ToolDef[] = listed.tools.map((t) => ({ name: openaiName(t.name), description: t.description || t.name, parameters: t.inputSchema || { type: 'object', properties: {} } }));
     return await loop({ system: SYSTEM_T, user: task, tools, onTool: async (call) => {
       const result = await client.callTool({ name: mcpName(call.name), arguments: call.arguments });
-      return (result.content as Array<{ type: string; text?: string }>).map((c) => (c.type === 'text' ? c.text : '')).join('\n');
+      const text = (result.content as Array<{ type: string; text?: string }>).map((c) => (c.type === 'text' ? c.text : '')).join('\n');
+      if (TRACE) { let v = ''; try { const o = JSON.parse(text); v = `${o.verdict ?? ''} ${o.verdict_reason ?? ''} unresolved=${JSON.stringify(o.unresolved_targets ?? [])} conflicts=${o.conflicts?.length ?? 0}`; } catch { v = text.slice(0, 120); } console.error(`    -> ${call.name} ${JSON.stringify(call.arguments)}\n    <- ${v}`); }
+      return text;
     } });
   } finally { await client.close(); }
 }
 
 export type RunRecord = {
   arm: Arm; run: number; tokens_in: number; tokens_out: number; cache_read: number; rounds: number; round_detail: RoundRec[]; tool_calls: ToolCallRec[];
-  tool_called: boolean; orientation_only: boolean; stop_reason: string; error_count: number; errors: GradedError[]; answer: string;
+  tool_called: boolean; orientation_only: boolean; stop_reason: string; error_count: number; errors: GradedError[]; over_caution?: OverCautionError[]; over_caution_count?: number; answer: string;
 };
-export type ArmSummary = { n: number; errors_per_run: number; error_counts: number[]; error_ids: Record<string, number>; tokens_in_mean: number; tokens_in_min: number; tokens_in_max: number; tokens_out_mean: number; rounds_mean: number; tool_called_rate?: number; orientation_only_rate?: number };
+export type ArmSummary = { n: number; errors_per_run: number; error_counts: number[]; error_ids: Record<string, number>; tokens_in_mean: number; tokens_in_min: number; tokens_in_max: number; tokens_out_mean: number; rounds_mean: number; tool_called_rate?: number; orientation_only_rate?: number; no_answer_rate?: number; over_caution_per_run?: number; over_caution_ids?: Record<string, number> };
 
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : NaN);
 const r3 = (x: number) => Math.round(x * 1000) / 1000;
@@ -141,14 +156,36 @@ export function summarizeArm(runs: RunRecord[]): ArmSummary {
   const ids: Record<string, number> = {};
   for (const r of runs) for (const e of r.errors) ids[e.id] = (ids[e.id] ?? 0) + 1;
   const s: ArmSummary = { n: runs.length, errors_per_run: r3(mean(runs.map((r) => r.error_count))), error_counts: runs.map((r) => r.error_count), error_ids: ids, tokens_in_mean: Math.round(mean(runs.map((r) => r.tokens_in))), tokens_in_min: Math.min(...runs.map((r) => r.tokens_in)), tokens_in_max: Math.max(...runs.map((r) => r.tokens_in)), tokens_out_mean: Math.round(mean(runs.map((r) => r.tokens_out))), rounds_mean: r3(mean(runs.map((r) => r.rounds))) };
-  if (runs[0]?.arm === 'T') { s.tool_called_rate = r3(mean(runs.map((r) => (r.tool_called ? 1 : 0)))); s.orientation_only_rate = r3(mean(runs.map((r) => (r.orientation_only ? 1 : 0)))); }
+  if (runs[0]?.arm === 'T') { s.tool_called_rate = r3(mean(runs.map((r) => (r.tool_called ? 1 : 0)))); s.orientation_only_rate = r3(mean(runs.map((r) => (r.orientation_only ? 1 : 0)))); s.no_answer_rate = r3(mean(runs.map((r) => (r.answer.trim() ? 0 : 1)))); }
+  if (runs.some((r) => r.over_caution !== undefined)) {
+    const oc: Record<string, number> = {}; for (const r of runs) for (const e of r.over_caution ?? []) oc[e.id] = (oc[e.id] ?? 0) + 1;
+    s.over_caution_per_run = r3(mean(runs.map((r) => r.over_caution_count ?? 0))); s.over_caution_ids = oc;
+  }
   return s;
 }
 
 type Gate = { pass: boolean; measured: true; value: unknown; threshold: string } | { measured: false; reason: string };
 
 /** Design §7.5, applied to what this runner measures. Gates the runner cannot feed are reported as unmeasured, and SHIP requires every gate. */
-export function gatesFor(arms: Partial<Record<Arm, ArmSummary>>): { gates: Record<string, Gate>; verdict: 'SHIP' | 'STOP' | 'VOID' | 'RESHAPE'; verdict_basis: string } {
+export type ControlGateInput = { files: string[]; B0: number; T: number; runs: number };          // over_caution + errors per run, pooled over the given files
+export type ScaleGateInput = { files: string[]; points: { decisions: number; B1_tokens_in: number; T_tokens_in: number; T_errors_per_run: number; n: number }[] };
+
+/** Pools control-task result files: T's over_caution + errors per run must not exceed B0's (design §7.5). */
+export function controlGateFrom(files: string[]): ControlGateInput {
+  const runs = files.flatMap((f) => (JSON.parse(readFileSync(resolvePath(ROOT, f), 'utf8')) as { task_kind?: string; runs: RunRecord[] }).runs);
+  const total = (arm: Arm) => { const rs = runs.filter((r) => r.arm === arm); return rs.length ? r3(mean(rs.map((r) => r.error_count + (r.over_caution_count ?? 0)))) : NaN; };
+  return { files, B0: total('B0'), T: total('T'), runs: runs.filter((r) => r.arm === 'T').length };
+}
+
+/** Groups scale result files by store size and pools arms across models per size. */
+export function scaleGateFrom(files: string[]): ScaleGateInput {
+  const byDecisions = new Map<number, RunRecord[]>();
+  for (const f of files) { const r = JSON.parse(readFileSync(resolvePath(ROOT, f), 'utf8')) as { store_decisions: number; runs: RunRecord[] }; if (typeof r.store_decisions !== 'number') throw new Error(`${f} has no store_decisions`); byDecisions.set(r.store_decisions, [...(byDecisions.get(r.store_decisions) ?? []), ...r.runs]); }
+  const points = [...byDecisions.entries()].sort((a, b) => a[0] - b[0]).map(([decisions, runs]) => { const b1 = runs.filter((r) => r.arm === 'B1'), t = runs.filter((r) => r.arm === 'T'); return { decisions, B1_tokens_in: Math.round(mean(b1.map((r) => r.tokens_in))), T_tokens_in: Math.round(mean(t.map((r) => r.tokens_in))), T_errors_per_run: r3(mean(t.map((r) => r.error_count))), n: t.length }; });
+  return { files, points };
+}
+
+export function gatesFor(arms: Partial<Record<Arm, ArmSummary>>, extras: { control?: ControlGateInput; scale?: ScaleGateInput } = {}): { gates: Record<string, Gate>; verdict: 'SHIP' | 'STOP' | 'VOID' | 'RESHAPE'; verdict_basis: string } {
   const B0 = arms.B0, B1 = arms.B1, T = arms.T;
   const gates: Record<string, Gate> = {};
   gates.b0_discriminates = B0 ? { measured: true, value: B0.errors_per_run, threshold: 'B0 errors/run >= 0.4, else the tasks did not discriminate and the result is void', pass: B0.errors_per_run >= 0.4 } : { measured: false, reason: 'B0 arm not run' };
@@ -157,8 +194,16 @@ export function gatesFor(arms: Partial<Record<Arm, ArmSummary>>): { gates: Recor
   gates.tool_not_called = T ? { measured: true, value: r3(1 - (T.tool_called_rate ?? 0)), threshold: '<= 0.10 of T runs', pass: 1 - (T.tool_called_rate ?? 0) <= 0.1 } : { measured: false, reason: 'T arm not run' };
   const noMechanism = T ? r3(1 - (T.tool_called_rate ?? 0) + (T.orientation_only_rate ?? 0)) : NaN;
   gates.tool_not_called_plus_orientation_only = T ? { measured: true, value: noMechanism, threshold: '<= 0.30 of T runs, else STOP: the mechanism never ran on a proposal', pass: noMechanism <= 0.3 } : { measured: false, reason: 'T arm not run' };
-  gates.control_task_over_caution = { measured: false, reason: 'this runner has no control task (design §7.2 task 4)' };
-  gates.tokens_flat_in_store_size = { measured: false, reason: 'needs the 10/50/200 decision-count sweep on one synthetic store (design §7.1); this runner has two fixtures of different shape' };
+  const c = extras.control;
+  gates.control_task_over_caution = c && !Number.isNaN(c.B0) && !Number.isNaN(c.T)
+    ? { measured: true, value: { T_over_caution_plus_errors_per_run: c.T, B0_over_caution_plus_errors_per_run: c.B0, T_runs: c.runs, files: c.files }, threshold: 'T over_caution + errors per run <= B0 on the control task (design §7.5)', pass: c.T <= c.B0 }
+    : { measured: false, reason: 'no control-task result file given (--with-control); the control fixture is benchmark/fixture-control, run with --control' };
+  const sc = extras.scale;
+  if (sc && sc.points.length >= 2) {
+    const last = sc.points[sc.points.length - 1];
+    const monotonic = sc.points.every((pt, i) => i === 0 || pt.B1_tokens_in > sc.points[i - 1].B1_tokens_in);
+    gates.tokens_flat_in_store_size = { measured: true, value: { points: sc.points, B1_monotonic: monotonic, T_at_max: last.T_tokens_in, B1_at_max: last.B1_tokens_in, files: sc.files }, threshold: `T tokens/task at ${last.decisions} decisions <= B1 at ${last.decisions}, with B1 growing monotonically across sizes (design §7.5)`, pass: monotonic && last.T_tokens_in <= last.B1_tokens_in };
+  } else gates.tokens_flat_in_store_size = { measured: false, reason: 'needs result files at two or more store sizes (--with-scale); stores are benchmark/fixture-scale/{10,50,200}' };
   const measured = Object.values(gates).filter((g): g is Extract<Gate, { measured: true }> => g.measured);
   const unmeasured = Object.entries(gates).filter(([, g]) => !g.measured).map(([k]) => k);
   const failed = Object.entries(gates).filter(([, g]) => g.measured && !g.pass).map(([k]) => k);
@@ -173,14 +218,15 @@ export function gatesFor(arms: Partial<Record<Arm, ArmSummary>>): { gates: Recor
 }
 
 function pool(files: string[]) {
-  const reports = files.map((f) => JSON.parse(readFileSync(f, 'utf8')) as { model: string; fixture: string; grader_version: number; runs: RunRecord[] });
+  const reports = files.map((f) => JSON.parse(readFileSync(resolvePath(ROOT, f), 'utf8')) as { model: string; fixture: string; grader_version: number; runs: RunRecord[] });
   const fixtures = new Set(reports.map((r) => r.fixture)); const graders = new Set(reports.map((r) => r.grader_version));
   if (fixtures.size !== 1 || graders.size !== 1) throw new Error(`refusing to pool across fixtures (${[...fixtures]}) or grader versions (${[...graders]})`);
   const runs = reports.flatMap((r) => r.runs.map((x) => ({ ...x, model: r.model })));
   const arms: Partial<Record<Arm, ArmSummary>> = {};
   for (const arm of ['B0', 'B1', 'T'] as Arm[]) { const rs = runs.filter((r) => r.arm === arm); if (rs.length) arms[arm] = summarizeArm(rs); }
-  const out = { pooled_from: files.map((f) => f.replace(`${ROOT}/`, '')), models: reports.map((r) => r.model), fixture: [...fixtures][0], grader_version: [...graders][0], arms, ...gatesFor(arms) };
-  const path = flag('--out') || join(ROOT, `benchmark/results${LARGE ? '-large' : ''}-pooled.json`);
+  const extras = { control: WITH_CONTROL?.length ? controlGateFrom(WITH_CONTROL) : undefined, scale: WITH_SCALE?.length ? scaleGateFrom(WITH_SCALE) : undefined };
+  const out = { pooled_from: files.map((f) => f.replace(`${ROOT}/`, '')), models: reports.map((r) => r.model), fixture: [...fixtures][0], grader_version: [...graders][0], arms, ...gatesFor(arms, extras) };
+  const path = flag('--out') ? resolvePath(ROOT, flag('--out')!) : join(ROOT, `benchmark/results${LARGE ? '-large' : ''}-pooled.json`);
   writeFileSync(path, `${JSON.stringify(out, null, 2)}\n`);
   console.error(`wrote ${path}`);
   console.log(JSON.stringify({ arms: out.arms, verdict: out.verdict, verdict_basis: out.verdict_basis }, null, 2));
@@ -189,16 +235,18 @@ function pool(files: string[]) {
 /** Re-grades stored answers with the current grader (deterministic; no model call) and recomputes summaries, gates and verdict. */
 function regrade(files: string[]) {
   for (const f of files) {
-    const report = JSON.parse(readFileSync(f, 'utf8'));
-    const store = join(ROOT, report.fixture === 'large' ? 'benchmark/fixture-large/store' : 'benchmark/fixture/store');
+    const report = JSON.parse(readFileSync(resolvePath(ROOT, f), 'utf8'));
+    const store = join(ROOT, report.store ?? (report.fixture === 'large' ? 'benchmark/fixture-large/store' : 'benchmark/fixture/store'));
     const facts = factsFromStore(new ContextStore(store).load());
-    assertGraderInstrument(facts);
+    assertGraderInstrument(facts); if (report.task_kind === 'control') assertControlInstrument(facts);
     const previous = report.grader_version;
-    for (const run of report.runs as RunRecord[]) { const g = gradeAnswer(run.answer, facts); run.errors = g.errors; run.error_count = g.errors.length; }
+    for (const run of report.runs as RunRecord[]) { const g = gradeAnswer(run.answer, facts); run.errors = g.errors; run.error_count = g.errors.length; if (report.task_kind === 'control') { run.over_caution = gradeOverCaution(run.answer, facts); run.over_caution_count = run.over_caution.length; } }
     const arms: Partial<Record<Arm, ArmSummary>> = {};
     for (const arm of report.arms_run as Arm[]) arms[arm] = summarizeArm((report.runs as RunRecord[]).filter((r) => r.arm === arm));
-    Object.assign(report, { arms, ...gatesFor(arms), grader_version: GRADER_VERSION, regraded_at: new Date().toISOString(), regraded_from_grader_version: previous, grader: { must_fire: INSTRUMENT_MUST_FIRE, must_fire_each: INSTRUMENT_MUST_FIRE_EACH, must_stay_quiet: INSTRUMENT_MUST_STAY_QUIET, must_stay_quiet_rejection: INSTRUMENT_MUST_STAY_QUIET_REJECTION, must_stay_quiet_each: INSTRUMENT_MUST_STAY_QUIET_EACH, error_definition: report.grader.error_definition } });
-    writeFileSync(f, `${JSON.stringify(report, null, 2)}\n`);
+    if (typeof report.store_decisions !== 'number') report.store_decisions = new ContextStore(store).load().history.length;
+    const extras = { control: WITH_CONTROL?.length ? controlGateFrom(WITH_CONTROL) : undefined, scale: WITH_SCALE?.length ? scaleGateFrom(WITH_SCALE) : undefined };
+    Object.assign(report, { arms, ...gatesFor(arms, extras), grader_version: GRADER_VERSION, regraded_at: new Date().toISOString(), regraded_from_grader_version: previous, grader: { must_fire: INSTRUMENT_MUST_FIRE, must_fire_each: INSTRUMENT_MUST_FIRE_EACH, must_stay_quiet: INSTRUMENT_MUST_STAY_QUIET, must_stay_quiet_rejection: INSTRUMENT_MUST_STAY_QUIET_REJECTION, must_stay_quiet_each: INSTRUMENT_MUST_STAY_QUIET_EACH, error_definition: report.grader.error_definition } });
+    writeFileSync(resolvePath(ROOT, f), `${JSON.stringify(report, null, 2)}\n`);
     console.error(`regraded ${f}: ${report.verdict} — ${report.verdict_basis}`);
     console.log(JSON.stringify({ file: f.replace(`${ROOT}/`, ''), arms: Object.fromEntries(Object.entries(arms).map(([k, v]) => [k, { errors_per_run: v.errors_per_run, error_ids: v.error_ids }])), verdict: report.verdict }));
   }
@@ -210,17 +258,19 @@ async function main(): Promise<void> {
   const ctx = new ContextStore(STORE_DIR).load();
   const facts = factsFromStore(ctx);
   assertGraderInstrument(facts); // throws: no model call happens after a misbehaving instrument
-  console.error(`grader v${GRADER_VERSION}: must-fire (${1 + INSTRUMENT_MUST_FIRE_EACH.length} cases) and must-stay-quiet (2 texts + ${INSTRUMENT_MUST_STAY_QUIET_EACH.length} sentences) passed`);
+  if (CONTROL) assertControlInstrument(facts);
+  console.error(`grader v${GRADER_VERSION}: must-fire (${1 + INSTRUMENT_MUST_FIRE_EACH.length} cases) and must-stay-quiet (2 texts + ${INSTRUMENT_MUST_STAY_QUIET_EACH.length} sentences) passed${CONTROL ? '; control over-caution instrument passed' : ''}`);
   if (isClaude) { const { verifyAnthropicModel } = await import('./anthropicChat.js'); console.error(`anthropic model verified: ${await verifyAnthropicModel(MODEL)}`); }
   const task = loadText('task.txt'); const paste = loadText('raw-paste.txt'); const doc = renderStoreDocument(ctx);
-  console.error(`model=${MODEL} fixture=${LARGE ? 'large' : 'small'} n=${N} arms=${ARMS.join(',')}`);
+  console.error(`model=${MODEL} fixture=${basename(FIXTURE)} store=${relative(ROOT, STORE_DIR)} (${ctx.history.length} decisions) task=${CONTROL ? 'control' : 'trap'} system=${SYSTEM_VARIANT} n=${N} arms=${ARMS.join(',')}`);
 
   const runs: RunRecord[] = [];
   const record = (arm: Arm, run: number, r: LoopResult): RunRecord => {
     const grade = gradeAnswer(r.answer, facts);
     const checks = r.tool_calls.filter((c) => mcpName(c.name) === 'context.check');
     const last = checks.at(-1);
-    return { arm, run, tokens_in: r.rounds.reduce((a, x) => a + x.prompt_tokens, 0), tokens_out: r.rounds.reduce((a, x) => a + x.completion_tokens, 0), cache_read: r.rounds.reduce((a, x) => a + (x.cache_read_tokens ?? 0), 0), rounds: r.rounds.length, round_detail: r.rounds, tool_calls: r.tool_calls, tool_called: checks.length > 0, orientation_only: checks.length > 0 && !('proposal' in (last?.arguments ?? {})), stop_reason: r.stop_reason, error_count: grade.errors.length, errors: grade.errors, answer: r.answer };
+    const oc = CONTROL ? gradeOverCaution(r.answer, facts) : undefined;
+    return { arm, run, tokens_in: r.rounds.reduce((a, x) => a + x.prompt_tokens, 0), tokens_out: r.rounds.reduce((a, x) => a + x.completion_tokens, 0), cache_read: r.rounds.reduce((a, x) => a + (x.cache_read_tokens ?? 0), 0), rounds: r.rounds.length, round_detail: r.rounds, tool_calls: r.tool_calls, tool_called: checks.length > 0, orientation_only: checks.length > 0 && !('proposal' in (last?.arguments ?? {})), stop_reason: r.stop_reason, error_count: grade.errors.length, errors: grade.errors, ...(oc ? { over_caution: oc, over_caution_count: oc.length } : {}), answer: r.answer };
   };
   for (let i = 1; i <= N; i++) {
     for (const arm of ARMS) {
@@ -234,21 +284,22 @@ async function main(): Promise<void> {
         try { r = await runT(task, liveStore); } finally { rmSync(liveStore, { recursive: true, force: true }); }
       }
       const rec = record(arm, i, r); runs.push(rec);
-      console.error(`  tokens_in=${rec.tokens_in} rounds=${rec.rounds} errors=${rec.error_count}${rec.errors.length ? ` [${rec.errors.map((e) => e.id).join(',')}]` : ''}${arm === 'T' ? ` calls=${rec.tool_calls.map((c) => c.name).join(',')}${rec.orientation_only ? ' ORIENTATION_ONLY' : ''}` : ''}`);
+      console.error(`  tokens_in=${rec.tokens_in} rounds=${rec.rounds} errors=${rec.error_count}${rec.errors.length ? ` [${rec.errors.map((e) => e.id).join(',')}]` : ''}${rec.over_caution?.length ? ` over_caution=[${rec.over_caution.map((e) => e.id).join(',')}]` : ''}${arm === 'T' ? ` calls=${rec.tool_calls.map((c) => c.name).join(',')}${rec.orientation_only ? ' ORIENTATION_ONLY' : ''}` : ''}`);
     }
   }
   const arms: Partial<Record<Arm, ArmSummary>> = {};
   for (const arm of ARMS) arms[arm] = summarizeArm(runs.filter((r) => r.arm === arm));
-  const { gates, verdict, verdict_basis } = gatesFor(arms);
+  const extras = { control: WITH_CONTROL?.length ? controlGateFrom(WITH_CONTROL) : undefined, scale: WITH_SCALE?.length ? scaleGateFrom(WITH_SCALE) : undefined };
+  const { gates, verdict, verdict_basis } = gatesFor(arms, extras);
   const report = {
-    ran_at: new Date().toISOString(), model: MODEL, fixture: LARGE ? 'large' : 'small', n_per_arm: N, arms_run: ARMS, task, grader_version: GRADER_VERSION,
-    grader: { must_fire: INSTRUMENT_MUST_FIRE, must_fire_each: INSTRUMENT_MUST_FIRE_EACH, must_stay_quiet: INSTRUMENT_MUST_STAY_QUIET, must_stay_quiet_rejection: INSTRUMENT_MUST_STAY_QUIET_REJECTION, must_stay_quiet_each: INSTRUMENT_MUST_STAY_QUIET_EACH, error_definition: 'A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all.' },
+    ran_at: new Date().toISOString(), code_commit: CODE_COMMIT, model: MODEL, fixture: flag('--fixture') ? basename(FIXTURE) : LARGE ? 'large' : 'small', store: relative(ROOT, STORE_DIR), store_decisions: ctx.history.length, task_kind: CONTROL ? 'control' : 'trap', system_variant: SYSTEM_VARIANT, n_per_arm: N, arms_run: ARMS, task, grader_version: GRADER_VERSION,
+    grader: { must_fire: INSTRUMENT_MUST_FIRE, must_fire_each: INSTRUMENT_MUST_FIRE_EACH, must_stay_quiet: INSTRUMENT_MUST_STAY_QUIET, must_stay_quiet_rejection: INSTRUMENT_MUST_STAY_QUIET_REJECTION, must_stay_quiet_each: INSTRUMENT_MUST_STAY_QUIET_EACH, ...(CONTROL ? { control_must_fire: CONTROL_MUST_FIRE, control_must_stay_quiet: CONTROL_MUST_STAY_QUIET } : {}), error_definition: 'A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all.' },
     system_prompts: { B0: SYSTEM_B0, B1: SYSTEM_B1, T: SYSTEM_T }, b1_document_chars: doc.length,
     arms, gates, verdict, verdict_basis, runs,
   };
   writeFileSync(RESULTS, `${JSON.stringify(report, null, 2)}\n`);
   console.error(`wrote ${RESULTS}`);
-  console.log(JSON.stringify({ model: MODEL, fixture: report.fixture, n_per_arm: N, arms, gates, verdict, verdict_basis }, null, 2));
+  console.log(JSON.stringify({ model: MODEL, fixture: report.fixture, store_decisions: report.store_decisions, task_kind: report.task_kind, system_variant: SYSTEM_VARIANT, n_per_arm: N, arms, gates, verdict, verdict_basis }, null, 2));
 }
 
 main().catch((err) => { console.error(err instanceof Error ? err.stack || err.message : err); process.exit(1); });

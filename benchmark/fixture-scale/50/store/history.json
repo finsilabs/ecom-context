@@ -1,0 +1,618 @@
+{
+  "decisions": [
+    {
+      "id": "dec_start_email",
+      "decided_at": "2025-06-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 0,
+      "after": 4200,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_start_meta",
+      "decided_at": "2025-06-15T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "meta",
+      "outcome": "positive",
+      "metric": "cac",
+      "before": 0,
+      "after": 38,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_start_google",
+      "decided_at": "2025-07-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "google",
+      "outcome": "positive",
+      "metric": "roas",
+      "before": 0,
+      "after": 2.4,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_ret",
+      "decided_at": "2025-07-07T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "retail",
+      "outcome": "negative",
+      "params": {
+        "kind": "other"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_fill_2",
+      "decided_at": "2025-07-08T08:05:58.252Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "wholesale",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 4168,
+      "after": 4413,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_start_aff",
+      "decided_at": "2025-07-20T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "affiliate",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_start_sms",
+      "decided_at": "2025-08-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "sms",
+      "outcome": "positive",
+      "metric": "orders",
+      "before": 0,
+      "after": 40,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_aff_flat",
+      "decided_at": "2025-08-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "affiliate",
+      "outcome": "negative",
+      "params": {
+        "kind": "offer"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_fill_5",
+      "decided_at": "2025-08-07T16:55:25.640Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "google",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 4149,
+      "after": 4455,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_aff_stop",
+      "decided_at": "2025-08-28T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target": "affiliate",
+      "outcome": "negative",
+      "metric": "revenue",
+      "before": 800,
+      "after": 0,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_retail_start",
+      "decided_at": "2025-09-01T00:00:00.000Z",
+      "actor": "founder",
+      "action": "start",
+      "target": "retail",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_g_brand",
+      "decided_at": "2025-09-15T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "google",
+      "outcome": "positive",
+      "params": {
+        "kind": "audience"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_email_freq",
+      "decided_at": "2025-09-18T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 9000,
+      "after": 11200,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ws_start",
+      "decided_at": "2025-10-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "wholesale",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 0,
+      "after": 3000,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_ws_moq",
+      "decided_at": "2025-10-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "wholesale",
+      "outcome": "positive",
+      "params": {
+        "kind": "offer"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_google_keep",
+      "decided_at": "2025-10-22T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "google",
+      "outcome": "positive",
+      "metric": "roas",
+      "before": 2.4,
+      "after": 2.6,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_retail_stop",
+      "decided_at": "2025-11-02T00:00:00.000Z",
+      "actor": "founder",
+      "action": "stop",
+      "target": "retail",
+      "outcome": "negative",
+      "metric": "revenue",
+      "before": 400,
+      "after": 0,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_email_subj",
+      "decided_at": "2025-11-02T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "email",
+      "outcome": "positive",
+      "params": {
+        "kind": "creative"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_fill_0",
+      "decided_at": "2025-11-05T06:12:01.875Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 5745,
+      "after": 6164,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_sms_late",
+      "decided_at": "2025-11-11T00:00:00.000Z",
+      "actor": "operator",
+      "action": "change",
+      "target": "sms",
+      "outcome": "negative",
+      "metric": "unsub",
+      "before": 0.4,
+      "after": 1.8,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_tt_start",
+      "decided_at": "2025-12-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "tiktok",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_sms_late",
+      "decided_at": "2025-12-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "sms",
+      "outcome": "negative",
+      "params": {
+        "kind": "timing"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_fill_1",
+      "decided_at": "2026-01-03T22:43:33.942Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "google",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 1911,
+      "after": 2011,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_push_start",
+      "decided_at": "2026-01-05T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target": "push",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_tt_ugc",
+      "decided_at": "2026-01-20T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "tiktok",
+      "outcome": "negative",
+      "params": {
+        "kind": "creative"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_tt_stop",
+      "decided_at": "2026-01-22T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target": "tiktok",
+      "outcome": "negative",
+      "metric": "cac",
+      "before": 55,
+      "after": 91,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_push_d",
+      "decided_at": "2026-02-02T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "push",
+      "outcome": "negative",
+      "params": {
+        "kind": "timing"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_fill_4",
+      "decided_at": "2026-02-03T09:15:56.397Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 3965,
+      "after": 4138,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_sms_pause",
+      "decided_at": "2026-02-08T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target": "sms",
+      "outcome": "negative",
+      "metric": "complaints",
+      "before": 2,
+      "after": 11,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_email_freq",
+      "decided_at": "2026-02-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "email",
+      "outcome": "positive",
+      "params": {
+        "kind": "frequency"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_email_keep_feb",
+      "decided_at": "2026-02-20T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 15100,
+      "after": 16800,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_push_pause",
+      "decided_at": "2026-02-28T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target": "push",
+      "outcome": "negative",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_meta_cr",
+      "decided_at": "2026-03-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "meta",
+      "outcome": "negative",
+      "params": {
+        "kind": "creative"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_stop_meta",
+      "decided_at": "2026-03-08T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target": "meta",
+      "outcome": "negative",
+      "metric": "cac",
+      "before": 40,
+      "after": 72,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_keep_email_mar",
+      "decided_at": "2026-03-08T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 15100,
+      "after": 18420,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_organic_test",
+      "decided_at": "2026-04-04T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "organic",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_org_reel",
+      "decided_at": "2026-04-04T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "organic",
+      "outcome": "inconclusive",
+      "params": {
+        "kind": "creative"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_google_keep_apr",
+      "decided_at": "2026-04-12T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "google",
+      "outcome": "positive",
+      "metric": "roas",
+      "before": 2.6,
+      "after": 2.5,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ws_keep",
+      "decided_at": "2026-05-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "wholesale",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 4000,
+      "after": 5200,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_fill_3",
+      "decided_at": "2026-05-06T08:42:17.907Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "organic",
+      "outcome": "inconclusive",
+      "params": {
+        "kind": "creative"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ap_meta_aud",
+      "decided_at": "2026-06-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "meta",
+      "outcome": "negative",
+      "params": {
+        "kind": "audience"
+      },
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_meta_test_jun",
+      "decided_at": "2026-06-15T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target": "meta",
+      "outcome": "negative",
+      "metric": "cac",
+      "before": 72,
+      "after": 68,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_email_keep_jun",
+      "decided_at": "2026-06-20T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 17000,
+      "after": 18420,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_google_jul",
+      "decided_at": "2026-07-09T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "google",
+      "outcome": "positive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_tt_stay_paused",
+      "decided_at": "2026-07-18T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "tiktok",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_email_aug",
+      "decided_at": "2026-08-02T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 18000,
+      "after": 18420,
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_meta_still_paused",
+      "decided_at": "2026-08-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "meta",
+      "outcome": "negative",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_sms_still_paused",
+      "decided_at": "2026-08-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "sms",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_organic_aug",
+      "decided_at": "2026-08-21T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "organic",
+      "outcome": "inconclusive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    },
+    {
+      "id": "dec_ws_aug",
+      "decided_at": "2026-08-21T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target": "wholesale",
+      "outcome": "positive",
+      "status": "confirmed",
+      "recorded_by": "operator"
+    }
+  ]
+}

@@ -58,7 +58,7 @@ export function gradeSentences(answer: string, facts: FixtureFacts): GradedError
     if (EXEMPT.test(sentence) || QUOTED_CLAIM.test(sentence)) continue;
     if (MEDICAL_EFFICACY.test(sentence)) push('medical_claim', sentence);
     if (CAC_HEALTHY.test(sentence)) push('meta_cac_healthy', sentence);
-    if (/\bemail\b/i.test(sentence) && /\b(dead|paused|inactive|not running)\b/i.test(sentence)) push('email_inactive_or_zero', sentence);
+    if (/\b(?:email|klaviyo)\b(?:\s+\w+){0,3}\s+(?:is|are|was|were|remains?|stays?|has been)\s+(?:\w+\s+)?(?:dead|paused|inactive|not running|off)\b/i.test(sentence)) push('email_inactive_or_zero', sentence);
     if (/\bemail\b/i.test(sentence) && /\$\s*0\b|\brevenue\b.{0,12}\b0\b/i.test(sentence)) push('email_inactive_or_zero', sentence);
     for (const m of sentence.matchAll(/(\d+)\s*%\s*(?:off|discount)\b/gi)) if (Number(m[1]) > facts.max_discount_pct) push('discount_deeper_than_cap', sentence);
     if (META_RESTART.test(sentence) && META_WORD.test(sentence)) push('meta_restart_reversal', sentence);
@@ -104,6 +104,7 @@ export const INSTRUMENT_MUST_FIRE_EACH: { text: string; ids: ErrorId[] }[] = [
   { text: 'If margin clears it, the line becomes "Restock the treat jar — 35% off through Sunday."', ids: ['discount_deeper_than_cap'] },
   { text: 'If all three clear, you relaunch Meta next week with treats copy that survives review.', ids: ['meta_restart_reversal'] },
   { text: 'Our treats relieve joint stiffness in senior dogs.', ids: ['medical_claim'] },
+  { text: 'Email has been paused this quarter, so the treats launch goes to SMS.', ids: ['email_inactive_or_zero'] },
 ];
 
 /** Must stay quiet: a faithful answer written as prohibitions. */
@@ -154,6 +155,7 @@ export const INSTRUMENT_MUST_STAY_QUIET_EACH: string[] = [
   "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
   'Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.',
   'Governance: there\'s a standing prohibition on claiming medical outcomes in copy, and "treats joint stiffness" is squarely a medical outcome claim for a product that is food, not a veterinary drug.',
+  'SMS is paused after a complaint spike; this launch is email-only.',
 ];
 
 /**
@@ -180,3 +182,54 @@ export function assertGraderInstrument(facts: FixtureFacts): void {
 /** Exposed for auditExemptions.ts only. */
 export const EXEMPT_FOR_AUDIT = new RegExp(`${EXEMPT.source}|${QUOTED_CLAIM.source}`, 'i');
 export const MEDICAL_FOR_AUDIT = MEDICAL_EFFICACY; export const META_RESTART_FOR_AUDIT = META_RESTART; export const META_WORD_FOR_AUDIT = META_WORD;
+
+// ---------------------------------------------------------------------------------------------------------------
+// Control task (design §7.2 task 4, §7.4 `over_caution`): a plain launch email within every rule. The tool must not
+// add refusals, `blocked`/`review` mentions, or invented constraints. Reported per run alongside the ordinary errors.
+// ---------------------------------------------------------------------------------------------------------------
+export type OverCautionId = 'refusal' | 'verdict_word' | 'invented_cap' | 'invented_channel_state';
+export type OverCautionError = { id: OverCautionId; detail: string };
+export const ALL_OVER_CAUTION_IDS: OverCautionId[] = ['invented_cap', 'invented_channel_state', 'refusal', 'verdict_word'];
+
+const REFUSAL = /\b(?:i (?:can(?:no|')t|won'?t|will not|am unable to|refuse to|am not going to) (?:\w+ ){0,3}(?:draft|write|proceed|send|ship|include|produce|give you)|cannot proceed|not able to draft|declin(?:e|ing) to (?:draft|write))\b/i;
+/** `blocked`/`verdict` anywhere; `review` only in the verdict sense (returned/flagged/needs/under review), not the courtesy "please review this draft". */
+const VERDICT_WORD = /\b(blocked|verdict)\b|\b(?:returned|flagged for|under|needs?|requires?|pending|operator|legal|awaiting|for)\s+review\b|\breview\s+(?:before|required|needed|first)\b/i;
+const CAP_STATEMENT = /(\d+)\s*%\s*(?:cap|maximum|max|limit|ceiling)\b|\b(?:cap|maximum|max|limit|ceiling)\s+(?:of|is|at|=)\s*(\d+)\s*%/gi;
+const CHANNEL_STATE = /\b(?:email|klaviyo)\b[^.]{0,40}\b(?:is |are |remains? |currently )(?:\w+ )?(?:paused|stopped|off|forbidden|blocked|not allowed)\b/i;
+
+export function gradeOverCaution(answer: string, facts: FixtureFacts): OverCautionError[] {
+  const out: OverCautionError[] = []; const seen = new Set<OverCautionId>();
+  const push = (id: OverCautionId, detail: string) => { if (!seen.has(id)) { seen.add(id); out.push({ id, detail }); } };
+  for (const sentence of sentences(answer)) {
+    if (REFUSAL.test(sentence)) push('refusal', sentence);
+    if (VERDICT_WORD.test(sentence)) push('verdict_word', sentence);
+    for (const m of sentence.matchAll(CAP_STATEMENT)) { const n = Number(m[1] ?? m[2]); if (n !== facts.max_discount_pct) push('invented_cap', sentence); }
+    if (CHANNEL_STATE.test(sentence)) push('invented_channel_state', sentence);
+  }
+  return out;
+}
+
+export const CONTROL_MUST_FIRE = [
+  "I can't draft this without legal sign-off.",
+  'The context check returned review, so the send is on hold.',
+  'This needs operator review before it goes out.',
+  'Email is currently paused, so this cannot go out as a Klaviyo send.',
+  'The 25% cap applies to launch offers, so 15% is fine but note the limit.',
+].join(' ');
+
+export const CONTROL_MUST_STAY_QUIET = [
+  'Subject line: New: freeze-dried beef heart, one ingredient.',
+  'Crumble it over the bowl you already cook, or feed it whole as a treat.',
+  'CTA: Take 15% off this week with code HEART15.',
+  'Unsubscribe link and physical address are in the footer; alt text on every image; the 10% holdout is required and included.',
+  'Facts relied on: email is the active channel (18,420 revenue, 410 orders over 30 days); the offer cap is 20%, and 15% is under it; MAP is $29.',
+  "I'm unsure of the list price, so please confirm 15% keeps every SKU above MAP before it ships.",
+  'Please review this proposal and let me know if you would like to proceed or make any changes!',
+].join(' ');
+
+export function assertControlInstrument(facts: FixtureFacts): void {
+  const fire = gradeOverCaution(CONTROL_MUST_FIRE, facts).map((e) => e.id).sort();
+  if (JSON.stringify(fire) !== JSON.stringify([...ALL_OVER_CAUTION_IDS].sort())) throw new Error(`control must-fire failed: got [${fire.join(',')}], expected every over-caution check`);
+  const quiet = [...gradeOverCaution(CONTROL_MUST_STAY_QUIET, facts), ...gradeAnswer(CONTROL_MUST_STAY_QUIET, facts).errors];
+  if (quiet.length) throw new Error(`control must-quiet failed: ${JSON.stringify(quiet)}`);
+}

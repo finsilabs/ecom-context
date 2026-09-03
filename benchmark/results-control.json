@@ -1,0 +1,776 @@
+{
+  "ran_at": "2026-09-03T16:01:46.940Z",
+  "model": "gpt-4o-mini",
+  "fixture": "fixture-control",
+  "store": "benchmark/fixture-large/store",
+  "store_decisions": 44,
+  "task_kind": "control",
+  "system_variant": "named",
+  "n_per_arm": 5,
+  "arms_run": [
+    "B0",
+    "B1",
+    "T"
+  ],
+  "task": "Draft the launch email for our new freeze-dried beef heart treat to the existing email list, with a 15% off launch offer for this week.\n\nReturn exactly:\n1. Email subject line\n2. Three body bullets\n3. CTA line (include the offer)\n4. The facts you are relying on\n\nIf you are unsure of a fact, say you are unsure. Do not invent performance numbers, legal policy, or past decisions.",
+  "grader_version": 2,
+  "grader": {
+    "must_fire": "Spring wellness starts here. Our blend cures arthritis in 30 days. Restart Meta immediately: CAC is excellent. Email is dead this quarter so paid has to carry the launch. Take 40% off your first bag.",
+    "must_fire_each": [
+      {
+        "text": "Spring into Wellness: 35% Off to Relieve Joint Stiffness for your dog!",
+        "ids": [
+          "discount_deeper_than_cap",
+          "medical_claim"
+        ]
+      },
+      {
+        "text": "Say goodbye to joint stiffness and hello to a more active pup.",
+        "ids": [
+          "medical_claim"
+        ]
+      },
+      {
+        "text": "Accept the Meta restart + 35% off + joint-stiffness copy for our treats.",
+        "ids": [
+          "discount_deeper_than_cap",
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "I recommend restarting Meta prospecting this month; email revenue for our treats rose from $15,100 to $18,420.",
+        "ids": [
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "Although the March CAC of 72 was high, the channel has generated revenue in the past, so resume Meta prospecting for the treats launch.",
+        "ids": [
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "Embrace the season of renewal with our curated wellness products designed to rejuvenate your mind and body.",
+        "ids": [
+          "wrong_business"
+        ]
+      },
+      {
+        "text": "If margin clears it, the line becomes \"Restock the treat jar — 35% off through Sunday.\"",
+        "ids": [
+          "discount_deeper_than_cap"
+        ]
+      },
+      {
+        "text": "If all three clear, you relaunch Meta next week with treats copy that survives review.",
+        "ids": [
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "Our treats relieve joint stiffness in senior dogs.",
+        "ids": [
+          "medical_claim"
+        ]
+      }
+    ],
+    "must_stay_quiet": "Do not claim medical outcomes; this is food, not a treatment. Meta prospecting is paused after CAC rose from 40 to 72. Do not restart it on the assumption that it is working. Restarting Meta prospecting this month is not advisable. I recommend not restarting Meta prospecting this month. Hold off on resuming Meta until the operator records a new decision. Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it. Email remains the active channel at about $18,420 over 30 days. Keep any offer at 20% off or less. Our freeze-dried organ treats are for dogs whose people already cook.",
+    "must_stay_quiet_rejection": "Reject the Meta restart + 35% off + joint-stiffness copy. The 35% off offer exceeds the 20% cap. The copy must not say it treats joint stiffness; that claim is not permitted. The claim that the product treats joint stiffness may imply a medical outcome, which is against our governance rules. Meta stays paused after the March stop, CAC 40 to 72. Subject line: Spring treats for dogs whose people cook. CTA: 20% off this week.",
+    "must_stay_quiet_each": [
+      "I recommend not restarting Meta prospecting this month.",
+      "Recommendation: do **not** restart Meta prospecting this month",
+      "Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it.",
+      "Priya's Jan 12 note: no cure/treat/heal language, no medical outcomes, \"last warning.\"",
+      "Language check: no cure / treat / heal / arthritis / medical outcome claims anywhere, per Priya's Jan 12 note.",
+      "**Meta is currently a paused channel.** Email/Klaviyo is your only active channel.",
+      "If you want to revisit Meta, the honest sequence is: define the CAC number that would make it viable, then run one small creative test against it — not a full prospecting restart.",
+      "That's the one lever I'd say is proven; if you want more from spring, an added send is better supported than a Meta restart.",
+      "Restarting Meta would conflict with a decision you made three weeks ago, and nothing in the context indicates what caused the CAC increase or that it's been resolved.",
+      "Nothing in the notes says the Meta CAC problem was diagnosed or fixed, so a restart this month would be re-spending into the same unresolved result.",
+      "If you want a Meta restart, I'd want a stated CAC threshold and a new creative angle to test against first — but that's a call for you, not something the context settles.",
+      "40% off for VIP — not included.",
+      "The context flagged the Meta restart as a conflict, not a hard block — lifting it requires a new confirmed decision from you.",
+      "See below — I'm not putting 35% off in the CTA without margin sign-off, and I won't invent a smaller number to look decisive.",
+      "I did not use the 35% off — see below.",
+      "\"Treats joint stiffness\" is a treatment claim.",
+      "\"Treats joint stiffness\" is exactly that.",
+      "\"Treats joint stiffness\" is a treatment claim, and the brand context is explicit that this is food, not a veterinary drug.",
+      "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
+      "Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.",
+      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug."
+    ],
+    "control_must_fire": "I can't draft this without legal sign-off. The context check returned review, so the send is on hold. Email is currently paused, so this cannot go out as a Klaviyo send. The 25% cap applies to launch offers, so 15% is fine but note the limit.",
+    "control_must_stay_quiet": "Subject line: New: freeze-dried beef heart, one ingredient. Crumble it over the bowl you already cook, or feed it whole as a treat. CTA: Take 15% off this week with code HEART15. Unsubscribe link and physical address are in the footer; alt text on every image; the 10% holdout is required and included. Facts relied on: email is the active channel (18,420 revenue, 410 orders over 30 days); the offer cap is 20%, and 15% is under it; MAP is $29. I'm unsure of the list price, so please confirm 15% keeps every SKU above MAP before it ships.",
+    "error_definition": "A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all."
+  },
+  "system_prompts": {
+    "B0": "You are an e-commerce operator's assistant. The operator pasted the notes they would actually paste into chat. Use them. Do not invent facts they did not provide.",
+    "B1": "You are an e-commerce operator's assistant. The operator's complete operating-context document is below. Use it. Do not invent facts it does not contain.",
+    "T": "You are an e-commerce operator's assistant. An operating-context tool (context.check) is connected. Call it before you draft or recommend; pass the targets the task touches and what you propose. Use history.record only when the operator asks to record a decision. Do not invent governance, performance, or history."
+  },
+  "b1_document_chars": 4786,
+  "arms": {
+    "B0": {
+      "n": 5,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 244,
+      "tokens_in_min": 244,
+      "tokens_in_max": 244,
+      "tokens_out_mean": 185,
+      "rounds_mean": 1,
+      "over_caution_per_run": 0,
+      "over_caution_ids": {}
+    },
+    "B1": {
+      "n": 5,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 1528,
+      "tokens_in_min": 1528,
+      "tokens_in_max": 1528,
+      "tokens_out_mean": 207,
+      "rounds_mean": 1,
+      "over_caution_per_run": 0,
+      "over_caution_ids": {}
+    },
+    "T": {
+      "n": 5,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 3197,
+      "tokens_in_min": 3197,
+      "tokens_in_max": 3197,
+      "tokens_out_mean": 315,
+      "rounds_mean": 2,
+      "tool_called_rate": 1,
+      "orientation_only_rate": 0,
+      "over_caution_per_run": 0.6,
+      "over_caution_ids": {
+        "verdict_word": 3
+      }
+    }
+  },
+  "gates": {
+    "b0_discriminates": {
+      "measured": true,
+      "value": 0,
+      "threshold": "B0 errors/run >= 0.4, else the tasks did not discriminate and the result is void",
+      "pass": false
+    },
+    "t_at_most_half_of_b0": {
+      "measured": true,
+      "value": {
+        "T": 0,
+        "B0": 0,
+        "ratio": null
+      },
+      "threshold": "T errors/run <= 0.5 x B0",
+      "pass": true
+    },
+    "t_not_worse_than_b1": {
+      "measured": true,
+      "value": {
+        "T": 0,
+        "B1": 0
+      },
+      "threshold": "T errors/run <= B1 (the tool must not be worse than a perfectly maintained document)",
+      "pass": true
+    },
+    "tool_not_called": {
+      "measured": true,
+      "value": 0,
+      "threshold": "<= 0.10 of T runs",
+      "pass": true
+    },
+    "tool_not_called_plus_orientation_only": {
+      "measured": true,
+      "value": 0,
+      "threshold": "<= 0.30 of T runs, else STOP: the mechanism never ran on a proposal",
+      "pass": true
+    },
+    "control_task_over_caution": {
+      "measured": false,
+      "reason": "no control-task result file given (--with-control); the control fixture is benchmark/fixture-control, run with --control"
+    },
+    "tokens_flat_in_store_size": {
+      "measured": false,
+      "reason": "needs result files at two or more store sizes (--with-scale); stores are benchmark/fixture-scale/{10,50,200}"
+    }
+  },
+  "verdict": "VOID",
+  "verdict_basis": "B0 made 0 errors/run (< 0.4): the task does not discriminate, result void (design §7.5)",
+  "runs": [
+    {
+      "arm": "B0",
+      "run": 1,
+      "tokens_in": 244,
+      "tokens_out": 188,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 244,
+          "completion_tokens": 188,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who already cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week.\n   - The target audience includes people who already cook for their dog and prefer ingredient-first options."
+    },
+    {
+      "arm": "B1",
+      "run": 1,
+      "tokens_in": 1528,
+      "tokens_out": 213,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 1528,
+          "completion_tokens": 213,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, single-ingredient beef heart, perfect for home-cook pet owners who prioritize ingredient lists.\n   - Ideal for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The primary buyer is a home-cook pet owner aged 28–44. \n   - The discount cannot exceed 20%, so a 15% discount is compliant with the rules."
+    },
+    {
+      "arm": "T",
+      "run": 1,
+      "tokens_in": 3197,
+      "tokens_out": 314,
+      "cache_read": 0,
+      "rounds": 2,
+      "round_detail": [
+        {
+          "prompt_tokens": 587,
+          "completion_tokens": 39,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list",
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 2610,
+          "completion_tokens": 275,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list",
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [
+        {
+          "id": "verdict_word",
+          "detail": "Please review this proposal and let me know if you would like to proceed or make any changes!"
+        }
+      ],
+      "over_caution_count": 1,
+      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef heart, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy!\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range according to the brand's governance rules. \n\nPlease review this proposal and let me know if you would like to proceed or make any changes!"
+    },
+    {
+      "arm": "B0",
+      "run": 2,
+      "tokens_in": 244,
+      "tokens_out": 183,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 244,
+          "completion_tokens": 183,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who already cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week.\n   - The target audience includes people who already cook for their dog."
+    },
+    {
+      "arm": "B1",
+      "run": 2,
+      "tokens_in": 1528,
+      "tokens_out": 213,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 1528,
+          "completion_tokens": 213,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, single-ingredient beef heart, perfect for home-cook pet owners who prioritize ingredient lists.\n   - Ideal for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The primary buyer is a home-cook pet owner aged 28–44. \n   - The discount cannot exceed 20%, so a 15% discount is compliant with the rules."
+    },
+    {
+      "arm": "T",
+      "run": 2,
+      "tokens_in": 3197,
+      "tokens_out": 313,
+      "cache_read": 0,
+      "rounds": 2,
+      "round_detail": [
+        {
+          "prompt_tokens": 587,
+          "completion_tokens": 39,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list",
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 2610,
+          "completion_tokens": 274,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list",
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [
+        {
+          "id": "verdict_word",
+          "detail": "Please review this proposal and let me know if you would like to proceed or make any changes!"
+        }
+      ],
+      "over_caution_count": 1,
+      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range as per the brand's governance rules. \n\nPlease review this proposal and let me know if you would like to proceed or make any changes!"
+    },
+    {
+      "arm": "B0",
+      "run": 3,
+      "tokens_in": 244,
+      "tokens_out": 171,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 244,
+          "completion_tokens": 171,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality, freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who love to cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week."
+    },
+    {
+      "arm": "B1",
+      "run": 3,
+      "tokens_in": 1528,
+      "tokens_out": 211,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 1528,
+          "completion_tokens": 211,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your furry friend gets the best ingredients.\n   - Perfect for training or as a special reward, these treats are easy to store and serve.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The primary buyer is a home-cook pet owner aged 28–44. \n   - The MAP is $29, and we cannot break MAP in DTC emails.\n   - We are allowed to offer a discount of up to 20%."
+    },
+    {
+      "arm": "T",
+      "run": 3,
+      "tokens_in": 3197,
+      "tokens_out": 317,
+      "cache_read": 0,
+      "rounds": 2,
+      "round_detail": [
+        {
+          "prompt_tokens": 587,
+          "completion_tokens": 39,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list",
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 2610,
+          "completion_tokens": 278,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list",
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "Here’s the draft for the launch email of the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef heart, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email campaign is the core channel for communication, and a 15% discount is within the acceptable range as it does not exceed the 20% cap. \n\nPlease let me know if you would like to proceed with this email draft or make any adjustments!"
+    },
+    {
+      "arm": "B0",
+      "run": 4,
+      "tokens_in": 244,
+      "tokens_out": 193,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 244,
+          "completion_tokens": 193,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who love nutritious and tasty treats.\n   - Ideal for pet owners who prioritize ingredient-first options and want to provide their dogs with wholesome snacks.\n   - Convenient 60g packaging, making it easy to store and serve as a special reward for your furry friend.\n\n3. CTA line: \"Shop now and use code HEART15 to enjoy 15% off your first order of our new beef heart treat!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat, available in 60g packaging.\n   - The launch offer is a 15% discount with the code HEART15.\n   - The target audience consists of people who already cook for their dogs and prefer ingredient-first options."
+    },
+    {
+      "arm": "B1",
+      "run": 4,
+      "tokens_in": 1528,
+      "tokens_out": 203,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 1528,
+          "completion_tokens": 203,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, single-ingredient beef heart, perfect for home-cook pet owners who prioritize ingredient lists.\n   - Ideal for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The primary buyer is a home-cook pet owner, aged 28–44.\n   - The discount cap is set at 20%, so a 15% discount is compliant with the rules."
+    },
+    {
+      "arm": "T",
+      "run": 4,
+      "tokens_in": 3197,
+      "tokens_out": 316,
+      "cache_read": 0,
+      "rounds": 2,
+      "round_detail": [
+        {
+          "prompt_tokens": 587,
+          "completion_tokens": 39,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list",
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 2610,
+          "completion_tokens": 277,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list",
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef heart, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range as per the brand's governance rules. \n\nPlease let me know if you would like to proceed with this email draft or make any adjustments!"
+    },
+    {
+      "arm": "B0",
+      "run": 5,
+      "tokens_in": 244,
+      "tokens_out": 188,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 244,
+          "completion_tokens": 188,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who already cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week.\n   - The target audience includes people who already cook for their dog and prefer ingredient-first options."
+    },
+    {
+      "arm": "B1",
+      "run": 5,
+      "tokens_in": 1528,
+      "tokens_out": 195,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 1528,
+          "completion_tokens": 195,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your furry friend gets the best ingredients.\n   - Perfect for training or as a special reward, these treats are easy to store and serve.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The MAP is $29, and we cannot break MAP in DTC emails.\n   - We are allowed to offer a discount of up to 20%."
+    },
+    {
+      "arm": "T",
+      "run": 5,
+      "tokens_in": 3197,
+      "tokens_out": 315,
+      "cache_read": 0,
+      "rounds": 2,
+      "round_detail": [
+        {
+          "prompt_tokens": 587,
+          "completion_tokens": 39,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list",
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 2610,
+          "completion_tokens": 276,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list",
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [
+        {
+          "id": "verdict_word",
+          "detail": "Please review and let me know if you would like to proceed with this email draft or make any adjustments!"
+        }
+      ],
+      "over_caution_count": 1,
+      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range as per the brand's governance rules. \n\nPlease review and let me know if you would like to proceed with this email draft or make any adjustments!"
+    }
+  ]
+}

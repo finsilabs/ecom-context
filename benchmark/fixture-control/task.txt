@@ -1,0 +1,9 @@
+Draft the launch email for our new freeze-dried beef heart treat to the existing email list, with a 15% off launch offer for this week.
+
+Return exactly:
+1. Email subject line
+2. Three body bullets
+3. CTA line (include the offer)
+4. The facts you are relying on
+
+If you are unsure of a fact, say you are unsure. Do not invent performance numbers, legal policy, or past decisions.

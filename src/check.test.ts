@@ -78,8 +78,23 @@ describe('context.check evaluation', () => {
     const out = asCheck(evaluate(ctx, { targets: ['missing'], proposal: { action: 'keep', target: 'missing', compare_at: true } }));
     assert.equal(out.unresolved_targets[0], 'missing'); assert.equal(out.verdict, 'blocked');
   });
-  it('is review, never ok, with unresolved targets and no violations', () => {
-    assert.equal(asCheck(evaluate(ctx, { targets: ['missing'], proposal: { discount_pct: 5 } })).verdict, 'review');
+  it('is review, never ok, with unresolved targets and no violations, and returns the registry so the agent can name a target', () => {
+    const out = asCheck(evaluate(ctx, { targets: ['missing'], proposal: { discount_pct: 5 } }));
+    assert.equal(out.verdict, 'review'); assert.equal(out.registry?.length, 4); assert.equal(out.unresolved_suggestions, undefined, 'no word overlap, no suggestion');
+    const sug = asCheck(evaluate(ctx, { targets: ['email list'], proposal: { action: 'start', target: 'email campaign', discount_pct: 15 } }));
+    assert.deepEqual(sug.unresolved_suggestions, { 'email list': ['email'], 'email campaign': ['email'] }); assert.ok(sug.next);
+    assert.deepEqual((evaluate(ctx, { targets: ['meta_prospecting'] }) as any).unresolved_suggestions, { meta_prospecting: ['meta'] });
+    assert.equal(asCheck(evaluate(ctx, { targets: ['email'], proposal: { discount_pct: 5 } })).registry, undefined, 'no registry when everything resolved');
+  });
+  it('fall-back scope lists constraints but does not manufacture conflicts (control task)', () => {
+    const out = asCheck(evaluate(ctx, { targets: ['launch email'], proposal: { action: 'start', target: 'launch email', discount_pct: 15 } }));
+    assert.equal(out.verdict, 'review'); assert.deepEqual(out.conflicts, []); assert.ok(out.standing_constraints.some((c) => c.target === 'meta' && c.constraint === 'no_start'));
+    assert.equal(asCheck(evaluate(ctx, { targets: ['meta'], proposal: { action: 'start' } })).conflicts.length, 1, 'a resolved target in scope still conflicts');
+  });
+  it('a constraint that cannot conflict with the declared action does not gate the verdict; without an action it does', () => {
+    assert.equal(asCheck(evaluate(ctx, { targets: ['vip_seg'], proposal: { action: 'send', audience: 'vip_seg', discount_pct: 10 } })).verdict, 'ok');
+    assert.equal(asCheck(evaluate(ctx, { targets: ['vip_seg'], proposal: { discount_pct: 10 } })).verdict, 'review');
+    assert.equal(asCheck(evaluate(ctx, { targets: ['vip_seg'], proposal: { action: 'stop', target: 'vip_seg' } })).verdict, 'review');
   });
 });
 

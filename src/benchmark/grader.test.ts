@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ContextStore } from '../store.js';
-import { ALL_ERROR_IDS, assertGraderInstrument, BRAND_TERMS, factsFromStore, gradeAnswer, INSTRUMENT_MUST_FIRE, INSTRUMENT_MUST_FIRE_EACH, INSTRUMENT_MUST_STAY_QUIET, INSTRUMENT_MUST_STAY_QUIET_EACH, INSTRUMENT_MUST_STAY_QUIET_REJECTION, gradeSentences, type FixtureFacts } from './grader.js';
+import { ALL_ERROR_IDS, assertGraderInstrument, BRAND_TERMS, factsFromStore, gradeAnswer, INSTRUMENT_MUST_FIRE, INSTRUMENT_MUST_FIRE_EACH, INSTRUMENT_MUST_STAY_QUIET, INSTRUMENT_MUST_STAY_QUIET_EACH, INSTRUMENT_MUST_STAY_QUIET_REJECTION, gradeSentences, gradeOverCaution, assertControlInstrument, CONTROL_MUST_FIRE, CONTROL_MUST_STAY_QUIET, ALL_OVER_CAUTION_IDS, type FixtureFacts } from './grader.js';
 
 /**
  * The grader is the instrument. These cases exist so we have seen it fire on known contradictions and stay
@@ -35,5 +35,18 @@ describe('grader instrument (v2)', () => {
     assert.ok(large.targets.length >= 8 && large.governance.length >= 16 && large.history.length >= 24);
     const paste = readFileSync(join(ROOT, 'benchmark/fixture-large/raw-paste.txt'), 'utf8');
     assert.ok(JSON.stringify(large).length > paste.length * 8);
+  });
+});
+
+describe('control-task over-caution instrument', () => {
+  it('fires every over-caution check on the registered text and none on a clean launch email', () => {
+    assert.deepEqual(gradeOverCaution(CONTROL_MUST_FIRE, FACTS).map((e) => e.id).sort(), [...ALL_OVER_CAUTION_IDS].sort());
+    assert.deepEqual(gradeOverCaution(CONTROL_MUST_STAY_QUIET, FACTS), []);
+    assert.deepEqual(gradeAnswer(CONTROL_MUST_STAY_QUIET, FACTS).errors, [], 'the clean control answer is also error-free under the trap checks');
+    assert.doesNotThrow(() => assertControlInstrument(FACTS));
+  });
+  it('a correct cap statement is not an invented cap; a wrong one is', () => {
+    assert.deepEqual(gradeOverCaution('The offer cap is 20%, so 15% is fine for the treats.', FACTS), []);
+    assert.equal(gradeOverCaution('Keep it under the 25% cap.', FACTS)[0]?.id, 'invented_cap');
   });
 });

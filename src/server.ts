@@ -23,9 +23,9 @@ const recordInput = z.object({
 
 const constraint = z.object({ target: z.string(), constraint: z.enum(['no_start', 'paused', 'protect', 'avoid_repeat']), since: z.string(), decision_id: z.string(), reason: z.string(), field: z.string().optional(), value: z.number().optional() });
 const registryEntry = z.object({ id: z.string(), name: z.string(), kind: z.string() });
-const orientationOut = z.object({ mode: z.literal('orientation'), brand: z.string(), standing_constraints: z.array(constraint), unresolved_targets: z.array(z.string()), registry: z.array(registryEntry).optional(), standing_constraint_count: z.number().optional(), lift_requires: z.string(), verdict: z.literal('unchecked'), next: z.string() }).strict();
+const orientationOut = z.object({ mode: z.literal('orientation'), brand: z.string(), standing_constraints: z.array(constraint), unresolved_targets: z.array(z.string()), registry: z.array(registryEntry).optional(), unresolved_suggestions: z.record(z.string(), z.array(z.string())).optional(), standing_constraint_count: z.number().optional(), lift_requires: z.string(), verdict: z.literal('unchecked'), next: z.string() }).strict();
 const checkOut = z.object({
-  mode: z.literal('check'), brand: z.string(), targets: z.array(Target), unresolved_targets: z.array(z.string()), rules: z.array(Rule), requirements: z.array(Rule), standing_constraints: z.array(constraint), lift_requires: z.string(),
+  mode: z.literal('check'), brand: z.string(), targets: z.array(Target), unresolved_targets: z.array(z.string()), registry: z.array(registryEntry).optional(), unresolved_suggestions: z.record(z.string(), z.array(z.string())).optional(), next: z.string().optional(), rules: z.array(Rule), requirements: z.array(Rule), standing_constraints: z.array(constraint), lift_requires: z.string(),
   last_decisions: z.record(z.string(), Decision.nullable()), pending: z.array(Decision),
   violations: z.array(z.object({ rule_id: z.string(), field: z.string(), proposed: z.unknown(), allowed: z.unknown().optional(), detail: z.string() })),
   conflicts: z.array(z.object({ target: z.string(), constraint: z.string(), decision_id: z.string(), detail: z.string() })),

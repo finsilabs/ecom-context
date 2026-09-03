@@ -40,6 +40,7 @@ export type OrientationResponse = {
   standing_constraints: Constraint[];
   unresolved_targets: string[];
   registry?: { id: string; name: string; kind: string }[];
+  unresolved_suggestions?: Record<string, string[]>;
   standing_constraint_count?: number;
   lift_requires: string;
   verdict: 'unchecked';
@@ -51,6 +52,9 @@ export type CheckResponse = {
   brand: string;
   targets: Target[];
   unresolved_targets: string[];
+  registry?: { id: string; name: string; kind: string }[];   // only when unresolved_targets is non-empty (design §6.5), so the agent can name a target
+  unresolved_suggestions?: Record<string, string[]>;         // unresolved name -> registry ids sharing a word with it; suggestions, never resolution
+  next?: string;                                              // only with unresolved names: what to do about them, so an agent does not retry the same words
   rules: Rule[];
   requirements: Rule[];
   standing_constraints: Constraint[];
@@ -69,6 +73,18 @@ export const LIFT_REQUIRES = 'a new confirmed operator decision on this target';
 export const ORIENTATION_NEXT = 'call context.check again with a proposal before you draft, recommend, or act';
 export const ORIENTATION_NAME_A_TARGET = 'too many constrained targets to list; name the targets the task touches and call context.check again';
 export const ORIENTATION_MAX_CONSTRAINED_TARGETS = 24;
+export const UNRESOLVED_NEXT = 'Some names are not in the registry. If a suggested or listed registry id is what you meant, call once more with that id; otherwise do not call again: proceed, and tell the operator which names were not in the registry.';
+
+/** Word-overlap suggestions for an unresolved name: registry entries whose id, name or alias shares a whole word with it. Never resolves anything (design §6.5); the agent still has to choose. */
+export function suggestionsFor(targets: Target[], name: string): string[] {
+  const words = new Set(name.toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 2));
+  return targets.filter((t) => [t.id, t.name, ...t.aliases].some((k) => k.toLowerCase().split(/[^a-z0-9]+/).some((w) => w.length > 2 && words.has(w)))).map((t) => t.id);
+}
+function suggestionMap(targets: Target[], unresolved: string[]): Record<string, string[]> | undefined {
+  const out: Record<string, string[]> = {};
+  for (const n of unresolved) { const s = suggestionsFor(targets, n); if (s.length) out[n] = s; }
+  return Object.keys(out).length ? out : undefined;
+}
 export const EVALUABLE_FIELDS = ['action', 'discount_pct', 'free_shipping', 'compare_at', 'guarantee', 'mentions_competitor', 'uses_ugc', 'audience', 'channel', 'claims', 'text'] as const;
 
 export class CheckRefused extends Error { constructor(message: string) { super(message); this.name = 'CheckRefused'; } }
@@ -147,10 +163,12 @@ export function evaluate(ctx: OperatingContext, input: CheckInput): OrientationR
 function orientation(ctx: OperatingContext, resolved: Target[], unresolved: string[]): OrientationResponse {
   const registry = ctx.targets.map((t) => ({ id: t.id, name: t.name, kind: t.kind }));
   const common = { mode: 'orientation' as const, brand: ctx.brand, unresolved_targets: unresolved, lift_requires: LIFT_REQUIRES, verdict: 'unchecked' as const };
-  if (resolved.length) return { ...common, standing_constraints: compileConstraints(ctx, resolved), ...(unresolved.length ? { registry } : {}), next: ORIENTATION_NEXT };
+  const sm = suggestionMap(ctx.targets, unresolved);
+  const sugg = unresolved.length ? { registry, ...(sm ? { unresolved_suggestions: sm } : {}) } : {};
+  if (resolved.length) return { ...common, standing_constraints: compileConstraints(ctx, resolved), ...sugg, next: ORIENTATION_NEXT };
   const constrained = constrainedTargets(ctx);
   if (constrained.length > ORIENTATION_MAX_CONSTRAINED_TARGETS) return { ...common, standing_constraints: [], registry, standing_constraint_count: compileConstraints(ctx, constrained).length, next: ORIENTATION_NAME_A_TARGET };
-  return { ...common, standing_constraints: compileConstraints(ctx, constrained), ...(unresolved.length ? { registry } : {}), next: ORIENTATION_NEXT };
+  return { ...common, standing_constraints: compileConstraints(ctx, constrained), ...sugg, next: ORIENTATION_NEXT };
 }
 
 function check(ctx: OperatingContext, proposal: Proposal, resolved: Target[], unresolved: string[]): CheckResponse {
@@ -184,8 +202,11 @@ function check(ctx: OperatingContext, proposal: Proposal, resolved: Target[], un
   }
   const explicit = [proposal.target, proposal.channel, proposal.audience].filter((x): x is string => !!x).map((x) => resolve(ctx.targets, x)?.id).filter((x): x is string => !!x);
   const conflicts: CheckResponse['conflicts'] = [];
+  // Conflicts are raised only against targets the proposal actually touches. When nothing resolved, the scope is the
+  // fall-back (every constrained target, design §6.5) so the constraints are visible and the verdict is review, but a
+  // launch email does not "conflict" with Meta's stop just because "launch email" is not in the registry (control task).
   for (const c of constraints) {
-    const touches = explicit.length ? explicit.includes(c.target) : scope.some((t) => t.id === c.target);
+    const touches = explicit.length ? explicit.includes(c.target) : resolved.length > 0 && scope.some((t) => t.id === c.target);
     if (!touches) continue;
     const push = (detail: string) => { if (!conflicts.some((x) => x.target === c.target && x.constraint === c.constraint)) conflicts.push({ target: c.target, constraint: c.constraint, decision_id: c.decision_id, detail }); };
     if ((c.constraint === 'no_start' || c.constraint === 'paused') && (proposal.action === 'start' || proposal.action === 'test')) push(c.reason);
@@ -193,11 +214,15 @@ function check(ctx: OperatingContext, proposal: Proposal, resolved: Target[], un
     if (c.constraint === 'avoid_repeat' && c.field && typeof (proposal as any)[c.field] === 'number' && (proposal as any)[c.field] >= c.value!) push(`${c.field} ${(proposal as any)[c.field]} repeats a failed test at ${c.value}`);
   }
   const pending = ctx.history.filter((d) => d.status === 'proposed' && scope.some((t) => t.id === d.target));
+  // A standing constraint forces `review` when the proposal declares no action, because the server cannot tell whether
+  // it conflicts. With an action declared, a constraint that cannot conflict with it (a `protect` on a plain send) is
+  // returned for visibility but does not gate the verdict; one that does conflict is in `conflicts` and gates it.
+  const undecidable = constraints.length > 0 && proposal.action === undefined;
   const verdict: CheckResponse['verdict'] = violations.length ? 'blocked'
-    : (conflicts.length || constraints.length || self_check.length || pattern_hits.length || unresolved.length || pending.length || !scope.length) ? 'review' : 'ok';
-  const reason = violations[0]?.detail ?? conflicts[0]?.detail ?? (constraints.length ? `standing constraints on ${constraints.map((c) => c.target).join(', ')}` : unresolved.length ? `unresolved targets: ${unresolved.join(', ')}` : self_check.length ? 'semantic rules need operator review' : pending.length ? 'pending records in scope' : !scope.length ? 'nothing resolved and nothing constrained' : 'no applicable violations or constraints');
+    : (conflicts.length || undecidable || self_check.length || pattern_hits.length || unresolved.length || pending.length || !scope.length) ? 'review' : 'ok';
+  const reason = violations[0]?.detail ?? conflicts[0]?.detail ?? (unresolved.length ? `unresolved targets: ${unresolved.join(', ')}` : undecidable ? `standing constraints on ${constraints.map((c) => c.target).join(', ')} and no action declared` : self_check.length ? 'semantic rules need operator review' : pattern_hits.length ? 'copy matches an operator pattern' : pending.length ? 'pending records in scope' : !scope.length ? 'nothing resolved and nothing constrained' : constraints.length ? `no violations; standing constraints on ${constraints.map((c) => c.target).join(', ')} do not conflict with ${proposal.action}` : 'no applicable violations or constraints');
   return {
-    mode: 'check', brand: ctx.brand, targets: scope, unresolved_targets: unresolved, rules, requirements, standing_constraints: constraints, lift_requires: LIFT_REQUIRES,
+    mode: 'check', brand: ctx.brand, targets: scope, unresolved_targets: unresolved, ...(unresolved.length ? { registry: ctx.targets.map((t) => ({ id: t.id, name: t.name, kind: t.kind })), ...(suggestionMap(ctx.targets, unresolved) ? { unresolved_suggestions: suggestionMap(ctx.targets, unresolved) } : {}), next: UNRESOLVED_NEXT } : {}), rules, requirements, standing_constraints: constraints, lift_requires: LIFT_REQUIRES,
     last_decisions: Object.fromEntries(scope.map((t) => [t.id, ctx.history.filter((d) => d.status === 'confirmed' && d.target === t.id).sort((a, b) => Date.parse(b.decided_at) - Date.parse(a.decided_at))[0] ?? null])),
     pending, violations, conflicts, self_check, pattern_hits, verdict, verdict_reason: `${verdict}: ${reason}`,
   };
