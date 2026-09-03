@@ -1,20 +1,140 @@
-# ecom-context v1
+# ecom-context
 
-Two-tool MCP server for bounded, operator-authored e-commerce context. `context.check` is the mechanism: it resolves targets, evaluates typed rules, compiles confirmed history into standing constraints, and returns a verdict — `ok`, `review`, `blocked`, or `unchecked` when nothing was proposed. `history.record` records an agent-proposed decision pending operator confirmation.
+**Your AI agent does not know your business. This gives it the parts that matter, and stops it contradicting decisions you already made.**
 
-Design: `/tmp/fleet/ecom-context-DESIGN.md` (v1 design, amended 2026-09-03). This README states what is built and what was measured, and keeps every earlier measurement, including the losing ones.
+Ask an agent to write a campaign and it will happily reverse a call you made six months ago, because nothing in front of it says otherwise. You have forgotten too, so you approve it.
 
-## Run
+A real example, from the test fixture:
+
+> In March you stopped Meta prospecting after your cost per acquisition went from $40 to $72. You wrote "not a maybe."
+>
+> In September someone says CPMs look cheap and proposes restarting it with 35% off and joint-stiffness copy.
+>
+> Your agent, given this week's Slack thread, says yes. It does not know about March. It does not know your discount cap is 20%. It does not know you sell dog treats and may not make medical claims.
+
+With this connected, the agent asks first and gets back: Meta is stopped and why, the discount cap, and the rule against medical claims. It stops the proposal instead of writing it.
+
+**Measured, pooled across two models on that task:** the agent given a paste made 1.6 errors per run. Given your whole context as a document, 0.5. With this server, 0. It costs more tokens, not fewer — see [What it does not do](#what-it-does-not-do).
+
+## Who it is for
+
+You, if your operation has more history than one person reliably remembers, or several agents that each need the same rules, or an agent that can actually execute rather than just draft.
+
+**Not you**, if a well-kept context file works. If you can paste every fact that matters in a few hundred words, do that instead — it is cheaper and it wins on our own small-task measurement. This tool starts earning its keep when the answer depends on something nobody has in front of them.
+
+## Quick start
 
 ```sh
-npm install
-npm run build
-ECOM_CONTEXT_STORE="$PWD/store" node dist/index.js      # default store dir is ./store
+git clone https://github.com/finsilabs/ecom-context && cd ecom-context
+npm install && npm run build
 ```
 
-The store contains only `brand.md` (maximum 4,096 bytes), `targets.json`, `governance.json`, and `history.json`. `memory.json` and `channels.json` are refused with a migration message; `ecom-context migrate` converts a pre-v1 store in place (approaches become `test` decisions, notes concatenate into `brand.md`, performance metrics are dropped, the old files are renamed `*.migrated`). `generated_at` is absent from all payloads. Tool results are emitted as compact JSON: every byte of a tool result is input on every later turn.
+Point your agent at it. For Claude Desktop or Claude Code, in your MCP config:
 
-Cross-file validation on load: ids, names and aliases must resolve uniquely across targets (case-insensitive); `applies_to` entries must be target ids or kinds; `superseded_by` must name a rule; every decision must target a registry id.
+```json
+{
+  "mcpServers": {
+    "ecom-context": {
+      "command": "node",
+      "args": ["/absolute/path/to/ecom-context/dist/index.js"],
+      "env": { "ECOM_CONTEXT_STORE": "/absolute/path/to/your/store" }
+    }
+  }
+}
+```
+
+Then write your store: four files you own and can edit by hand.
+
+```
+store/
+  brand.md          what you sell, who buys it, how you talk  (plain text, max 4 KB)
+  targets.json      the things decisions are about: channels, campaigns, audiences
+  governance.json   what the agent must never or always do
+  history.json      decisions you made, when, and what happened
+```
+
+`store/` in this repo is a working example. Copy it and edit.
+
+These are real records from the example store, not a sketch:
+
+```json
+// targets.json — the things decisions are about
+{ "targets": [
+  { "id": "meta", "name": "Meta prospecting", "kind": "channel",
+    "status": "paused", "aliases": ["facebook"] }
+]}
+
+// governance.json — a discount cap of 20%, as a typed predicate
+{ "rules": [
+  { "id": "gov_discount_cap", "effect": "forbid", "domain": "offers",
+    "action": "discount", "object": "maximum_discount_pct",
+    "op": "gt", "value": 20,
+    "created_at": "2026-01-01T00:00:00Z", "created_by": "operator" }
+]}
+
+// history.json — March's stop, with the number behind it
+{ "decisions": [
+  { "id": "dec_meta_stop", "decided_at": "2026-03-08T00:00:00Z",
+    "actor": "operator", "action": "stop", "target": "meta",
+    "outcome": "negative", "metric": "cac", "before": 40, "after": 72,
+    "status": "confirmed", "recorded_by": "operator" }
+]}
+```
+
+Rules are predicates, not prose, which is the whole bet: an agent can obey `discount > 20 is forbidden`, where it can only interpret a paragraph. The server refuses free text in `governance.json` and `history.json` and tells you to put it in `brand.md`.
+
+## Instructions for your AI agent
+
+Paste this into your agent's system prompt, `CLAUDE.md`, or equivalent. Without it the agent will not reliably call the tool — we measured that, and it is the honest caveat.
+
+```markdown
+## ecom-context — call this before you draft, recommend, or act
+
+You have an `ecom-context` MCP server holding this business's brand, targets,
+governance rules and decision history. You do not know this business; it does.
+
+Two calls, in this order:
+
+1. **Orient.** Call `context.check` with no `proposal` (optionally `targets`) to
+   get the brand and the standing constraints. This returns `unchecked`.
+   `unchecked` is NOT permission — it means nothing was evaluated yet.
+
+2. **Check your proposal.** Before you write copy, recommend a change, or take an
+   action, call `context.check` again with a typed `proposal`: the action
+   (start / stop / change / test / keep / send / publish), the target, and any of
+   `discount_pct`, `free_shipping`, `compare_at`, `guarantee`, `claims`, `text`,
+   `mentions_competitor`, `uses_ugc`.
+
+   You get one of:
+   - `blocked` — a rule forbids it. Do not do it. Tell the operator which rule.
+   - `review` — it conflicts with a past decision or a constraint. Say what the
+     conflict is and let the operator decide. Do not silently proceed.
+   - `ok` — no rule or precedent objects. Proceed.
+
+Rules:
+- Never assert a fact about this business that did not come from the store.
+- A `review` verdict is not a yes. Surface the conflict in your reply.
+- When the operator states a new decision ("we're pausing Meta"), record it with
+  `history.record`. It lands as *proposed* and does nothing until the operator
+  confirms it with `ecom-context confirm <id>`. Do not treat your own record as
+  established fact.
+- If a target name does not resolve, the response tells you so and lists the
+  registry. Ask which one; do not guess.
+```
+
+## What it does not do
+
+- **It does not save tokens.** Measured: a hand-written paste is 390–581 input tokens; this server's answer is 2,295 on one model and 19,138 on another. If the pitch you want is "cheaper", this is not it. The claim is correctness.
+- **It does not help when a paste already works.** On our small task both models made zero errors without it, so the result is void by our own gate.
+- **It does not read your platforms.** No Shopify, Klaviyo or ad-platform integration. You write the store; the platform owns performance data.
+- **It does not decide.** A conflict returns `review`, not `blocked`, because precedent is yours to override. It only makes sure you see it first.
+- **Two gates are still unmeasured** (over-caution on a control task, and cost as the store grows), so this repo's own verdict is RESHAPE, not SHIP. The numbers below are what we have.
+
+---
+
+# Reference
+
+Everything below is the exact contract, the standing-constraint semantics, and the full measurement record including the runs that did not favour the tool.
 
 ## Tools
 
@@ -27,7 +147,7 @@ Input: optional `targets: string[]` (ids, names or aliases) and an optional type
 | no `proposal` (orientation) | `orientation` | always `unchecked` | brand, standing constraints for the resolved targets (for every constrained target when nothing resolved; the registry index and a count instead once more than 24 targets are constrained), unresolved names plus the registry when something did not resolve, `next` |
 | `proposal` with at least one evaluable field | `check` | `blocked` / `review` / `ok` | brand, scope, applicable rules and requirements, standing constraints, last decision per target, pending records, violations, conflicts, semantic self-checks, pattern hits, `verdict_reason` |
 
-`proposal: {}` or a proposal that names only a `target` is refused with a message listing the evaluable fields: an evaluation that did not happen is never rendered as one that passed. `unchecked` is not permission; the description tells the agent to call again with a proposal before it drafts, recommends, or acts. `ok` is never returned with unresolved targets, an empty scope, or standing constraints in scope.
+`proposal: {}` or a proposal that names only a `target` is refused with a message listing the evaluable fields: an evaluation that did not happen is never rendered as one that passed. `unchecked` is not permission; the description tells the agent to call again with a proposal before it drafts, recommends, or acts. `ok` is never returned with unresolved targets, an empty scope, pending records, semantic self-checks, or a standing constraint the server cannot rule on (one in scope while the proposal declares no `action`). A constraint that cannot conflict with the declared action, such as email's `protect` on a plain `send`, is returned for visibility and does not gate the verdict; one that does conflict appears in `conflicts` and makes the verdict `review`. Conflicts are raised only against targets the proposal touches: when nothing resolved, every constrained target's constraint is listed and the verdict is `review`, but a launch email named in words the registry does not know does not "conflict" with Meta's stop. Both rules were tightened after the control task measured the looser versions (see below).
 
 The orientation response is a closed type: a field is added to it only with a measurement showing the material is obeyed rather than weighed (brand: 0/12 wrong-business errors with it vs 4/4 without; compiled constraints: 0/3 reversals vs 3/3 for the raw record; design §4). Rules, decision records and the registry-as-list are excluded, and a test pins the key set and asserts the payload carries no rule. The MCP SDK's `outputSchema` accepts only an object schema, so on the wire the union is one object whose refinement enforces each mode's exact key set.
 
@@ -118,6 +238,36 @@ Reading the table:
 - **Pooled over models** (the design's primary comparison): B0 1.6, B1 0.5, T 0 errors/run. Every measured gate passes; RESHAPE because the control-task and store-size gates are unmeasured.
 - **Small task:** VOID on both models, as the design predicted for a paste that holds every fact. The full-store document is cheaper than the paste here because the v1 store is four small files.
 - **The first large-Claude attempt is kept.** Two of its five paste-arm completions ended with `end_turn` and no text block; the loop now retries an empty completion twice and records it, and the benchmark was re-run in full. Both files are in the repo.
+
+### Control task: does the tool add caution where none is due?
+
+Design §7.2 task 4 and §7.4 `over_caution`. `benchmark/fixture-control` is a plain launch email for a new SKU to the existing list with a 15% offer, run against the large store: 15% is under the 20% cap, email is the active channel, no medical claim is asked for, no stopped channel is touched. `over_caution` counts a refusal, a `blocked`/`review`/`verdict` mention, a cap stated at anything but 20%, or email described as paused or forbidden; it is validated before the run like the other checks (`CONTROL_MUST_FIRE`, `CONTROL_MUST_STAY_QUIET`). The §7.5 gate: T's over_caution + errors per run ≤ B0's.
+
+<!-- control:begin -->
+<!-- control:end -->
+
+<!-- control-reading:begin -->
+<!-- control-reading:end -->
+
+### Store size: is the tool's cost flat where the document's is linear?
+
+Design §7.1 and §7.5. `benchmark/fixture-scale/{10,50,200}` hold the large store with 10, 50 and 200 confirmed decisions (`src/benchmark/generateScaledStores.ts`: the six stops and three positive keeps are present at every size, filler is `keep`/positive on healthy channels and inconclusive tests on organic, and the script asserts the compiled constraint set is identical at every size and that Meta's constraint is still the March stop). Same trap task, B1 and T arms, n = 5. The gate: T's input tokens at 200 decisions ≤ B1's at 200, with B1 growing monotonically.
+
+<!-- scale:begin -->
+<!-- scale:end -->
+
+<!-- scale-reading:begin -->
+<!-- scale-reading:end -->
+
+### Does the model call the tool when nothing tells it to?
+
+Design §9.2 and §10: every measurement so far had a system prompt naming `context.check`. `--system neutral` runs the T arm with "You are an e-commerce operator's assistant. Do not invent governance, performance, or history." and nothing else, so the call rests on the tool description alone. This is the harness, not a real host; it is the closest measurement available without one.
+
+<!-- neutral:begin -->
+<!-- neutral:end -->
+
+<!-- neutral-reading:begin -->
+<!-- neutral-reading:end -->
 
 ### Earlier measurements, kept
 
