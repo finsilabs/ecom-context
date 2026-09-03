@@ -1,6 +1,7 @@
 {
-  "ran_at": "2026-09-02T22:24:20.433Z",
+  "ran_at": "2026-09-03T11:06:03.341Z",
   "model": "gpt-4o-mini",
+  "fixture": "small",
   "task": "Draft a Spring wellness campaign for Marrow & Co.\n\nReturn exactly:\n1. Email subject line\n2. Three body bullets\n3. CTA line (include the offer if you use one)\n4. A recommendation: restart Meta prospecting this month, or not, with the facts you are relying on\n\nIf you are unsure of a fact, say you are unsure. Do not invent performance numbers, legal policy, or past decisions.",
   "grader": {
     "must_fire": "INSTRUMENT_MUST_FIRE in src/benchmark/grader.ts",
@@ -12,32 +13,36 @@
     "model": "gpt-4o-mini",
     "rounds": 1,
     "tokens_in": 420,
-    "tokens_out": 171,
-    "tokens_total": 591,
+    "tokens_out": 168,
+    "tokens_total": 588,
     "error_count": 0,
     "errors": [],
-    "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Health with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing essential nutrients without any medical claims.\n   - Enjoy 20% off your next order and give your dog the wellness boost they need this season!\n\n3. CTA line: \"Shop now and enjoy 20% off your order—because your dog deserves to thrive this spring!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
+    "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Diet with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing a natural boost to their diet.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and enjoy 20% off your order—because your dog deserves a spring refresh!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
   },
   "with": {
     "label": "with_server",
     "model": "gpt-4o-mini",
-    "rounds": 2,
+    "rounds": 6,
     "tool_calls": [
-      "context.brief",
-      "channels.performance",
-      "channels.performance"
+      "context.check",
+      "context.check",
+      "context.check",
+      "context.check",
+      "context.check"
     ],
-    "tokens_in": 1909,
-    "tokens_out": 238,
-    "tokens_total": 2147,
+    "tokens_in": 12216,
+    "tokens_out": 618,
+    "tokens_total": 12834,
     "error_count": 0,
     "errors": [],
-    "answer": "1. **Email Subject Line:** \"Spring into Wellness: Nourish Your Pup with Marrow & Co!\"\n\n2. **Three Body Bullets:**\n   - Discover the benefits of our freeze-dried organ treats, packed with nutrients to support your dog's health and vitality.\n   - Join us this spring for exclusive tips on enhancing your pet's diet and wellness routine.\n   - Enjoy a special offer: Get 15% off your first order of our premium organ treats!\n\n3. **CTA Line:** \"Shop now and give your furry friend the gift of health with 15% off your first order!\"\n\n4. **Recommendation:** Restarting Meta prospecting this month is not advisable. The previous campaign resulted in a negative outcome with a significant increase in customer acquisition cost (CAC) from $40 to $72, indicating that the approach did not yield a positive return on investment."
+    "answer": "1. **Email Subject Line:** Spring into Wellness with Marrow & Co!\n\n2. **Three Body Bullets:**\n   - Enhance your dog's diet with our premium freeze-dried organ treats.\n   - Revitalize your pet's meals with our wholesome ingredients.\n   - Enjoy 20% off your first order this spring!\n\n3. **CTA Line:** Shop now and take 20% off your first order!\n\n4. **Recommendation:** I recommend restarting Meta prospecting this month. The email channel has shown a positive revenue increase from $15,100 to $18,420 over the last 30 days, indicating strong engagement and potential for further growth through targeted advertising."
   },
   "delta": {
-    "tokens_in": 1489,
-    "tokens_out": 67,
-    "tokens_total": 1556,
+    "tokens_in": 11796,
+    "tokens_out": 450,
+    "tokens_total": 12246,
     "error_count": 0
-  }
+  },
+  "verdict": "STOP",
+  "verdict_basis": "SHIP only when the connected arm has fewer graded contradictions than the paste baseline; otherwise STOP."
 }

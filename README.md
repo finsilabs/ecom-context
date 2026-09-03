@@ -20,15 +20,16 @@ The store contains only `brand.md` (maximum 4,096 bytes), `targets.json`, `gover
 
 ## Benchmark
 
-The deterministic benchmark is `npm run benchmark`; it runs the section 7 contract against a seeded synthetic brand and validates a blocked proposal plus a no-trap control. The recorded run:
+The benchmark is a real OpenAI run (`npm run benchmark` and `npm run benchmark:large`) against seeded fixtures. Before each run the deterministic grader is validated against one must-fire contradiction and one must-stay-quiet answer. Results at the restored runner commit:
 
-| arm | trap errors (5 runs) | tokens/task |
-|---|---:|---:|
-| B0 recall-limited paste | 5 | 390 |
-| B1 full-store document | 5 | 6,194 |
-| T context.check | 0 | 1,725 |
+| fixture | arm | input tokens | output tokens | graded errors | verdict |
+|---|---|---:|---:|---:|---|
+| small | paste baseline | 420 | 157 | 0 | STOP |
+| small | two-tool server | 12,216 | 618 | 0 | STOP |
+| large | paste baseline | 390 | 177 | 2 | STOP |
+| large | two-tool server | 2,308 | 249 | 3 | STOP |
 
-Tool calls: `context.check` 5/5; `history.record` 0. Control verdict: `ok`. Result: **SHIP** under section 7 thresholds for this deterministic contract run. This does not verify model behaviour in external MCP hosts.
+The verdict is computed by the runner: SHIP requires fewer graded contradictions in the connected arm; equal or worse results are STOP. The large connected arm measured worse, so this run is STOP. The result files are `benchmark/results.json` and `benchmark/results-large.json`.
 
 The losing measurements remain: on the original small task, paste was 420 input / 0 errors and the five-tool server was 1,909 input / 0 errors. On the original large task, paste was 390 input / 2 errors and the five-tool server was 3,815 input / 1 error. Those measurements are not discarded.
 
