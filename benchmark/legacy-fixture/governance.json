@@ -6,8 +6,7 @@
       "domain": "copy",
       "action": "claim",
       "object": "medical_outcome",
-      "created_at": "2026-01-12T00:00:00.000Z",
-      "created_by": "operator"
+      "created_at": "2026-01-12T00:00:00.000Z"
     },
     {
       "id": "gov_discount_cap",
@@ -15,10 +14,8 @@
       "domain": "offers",
       "action": "discount",
       "object": "deeper_than_20_pct",
-      "op": "gt",
       "value": 20,
-      "created_at": "2026-02-03T00:00:00.000Z",
-      "created_by": "operator"
+      "created_at": "2026-02-03T00:00:00.000Z"
     }
   ]
 }

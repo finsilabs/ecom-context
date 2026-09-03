@@ -1,0 +1,18 @@
+{
+  "targets": [
+    {
+      "id": "email",
+      "name": "Klaviyo",
+      "kind": "channel",
+      "status": "active",
+      "aliases": []
+    },
+    {
+      "id": "meta",
+      "name": "Meta prospecting",
+      "kind": "channel",
+      "status": "paused",
+      "aliases": []
+    }
+  ]
+}

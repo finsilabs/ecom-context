@@ -1,10 +1,14 @@
 /**
- * Writes benchmark/fixture-large/store/*.json — a year of rules, months of
- * decisions, many channels. Run: npx tsx src/benchmark/generateLargeFixture.ts
+ * Writes benchmark/fixture-large/store/ (v1 layout) — a year of rules, months of
+ * decisions, many channels. The data is authored in the pre-v1 shape it was
+ * first measured in and converted through the same `migrateContext` the CLI
+ * uses, so the fixture is exactly what `ecom-context migrate` would produce.
+ * Run: npx tsx src/benchmark/generateLargeFixture.ts
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { migrateContext, writeV1 } from '../migrate.js';
 
 const dir = join(dirname(fileURLToPath(import.meta.url)), '../../benchmark/fixture-large/store');
 mkdirSync(dir, { recursive: true });
@@ -111,12 +115,7 @@ const notes = [
   { id: 'mem_email_core', written_at: iso('2026-08-02'), topic: 'email', text: 'Email is the core channel. Frequency test in Feb 2026 is the one that worked.' },
 ];
 
-function write(name: string, data: unknown) {
-  writeFileSync(join(dir, name), `${JSON.stringify(data, null, 2)}\n`);
-}
-
-write('channels.json', { channels });
-write('governance.json', { rules });
-write('history.json', { decisions: history });
-write('memory.json', { notes });
-console.log(`wrote ${dir} channels=${channels.length} rules=${rules.length} decisions=${history.length} notes=${notes.length}`);
+const { ctx, warnings } = migrateContext({ channels, rules, decisions: history, notes });
+for (const w of warnings) console.error(`warning: ${w}`);
+writeV1(dir, ctx);
+console.log(`wrote ${dir} targets=${ctx.targets.length} rules=${ctx.governance.length} decisions=${ctx.history.length} brand_bytes=${Buffer.byteLength(ctx.brand)}`);

@@ -13,5 +13,5 @@
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "src/benchmark/run.ts", "src/benchmark/generateLargeFixture.ts"]
+  "exclude": ["src/**/*.test.ts", "src/benchmark/generateLargeFixture.ts"]
 }

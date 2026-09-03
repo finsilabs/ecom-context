@@ -1,0 +1,131 @@
+{
+  "pooled_from": [
+    "benchmark/results.json",
+    "benchmark/results-claude-opus-5.json"
+  ],
+  "models": [
+    "gpt-4o-mini",
+    "claude-opus-5"
+  ],
+  "fixture": "small",
+  "grader_version": 2,
+  "arms": {
+    "B0": {
+      "n": 10,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 521,
+      "tokens_in_min": 420,
+      "tokens_in_max": 621,
+      "tokens_out_mean": 610,
+      "rounds_mean": 1
+    },
+    "B1": {
+      "n": 10,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 432,
+      "tokens_in_min": 340,
+      "tokens_in_max": 523,
+      "tokens_out_mean": 793,
+      "rounds_mean": 1
+    },
+    "T": {
+      "n": 10,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 5609,
+      "tokens_in_min": 1779,
+      "tokens_in_max": 12435,
+      "tokens_out_mean": 1074,
+      "rounds_mean": 2.7,
+      "tool_called_rate": 1,
+      "orientation_only_rate": 0
+    }
+  },
+  "gates": {
+    "b0_discriminates": {
+      "measured": true,
+      "value": 0,
+      "threshold": "B0 errors/run >= 0.4, else the tasks did not discriminate and the result is void",
+      "pass": false
+    },
+    "t_at_most_half_of_b0": {
+      "measured": true,
+      "value": {
+        "T": 0,
+        "B0": 0,
+        "ratio": null
+      },
+      "threshold": "T errors/run <= 0.5 x B0",
+      "pass": true
+    },
+    "t_not_worse_than_b1": {
+      "measured": true,
+      "value": {
+        "T": 0,
+        "B1": 0
+      },
+      "threshold": "T errors/run <= B1 (the tool must not be worse than a perfectly maintained document)",
+      "pass": true
+    },
+    "tool_not_called": {
+      "measured": true,
+      "value": 0,
+      "threshold": "<= 0.10 of T runs",
+      "pass": true
+    },
+    "tool_not_called_plus_orientation_only": {
+      "measured": true,
+      "value": 0,
+      "threshold": "<= 0.30 of T runs, else STOP: the mechanism never ran on a proposal",
+      "pass": true
+    },
+    "control_task_over_caution": {
+      "measured": false,
+      "reason": "this runner has no control task (design §7.2 task 4)"
+    },
+    "tokens_flat_in_store_size": {
+      "measured": false,
+      "reason": "needs the 10/50/200 decision-count sweep on one synthetic store (design §7.1); this runner has two fixtures of different shape"
+    }
+  },
+  "verdict": "VOID",
+  "verdict_basis": "B0 made 0 errors/run (< 0.4): the task does not discriminate, result void (design §7.5)"
+}

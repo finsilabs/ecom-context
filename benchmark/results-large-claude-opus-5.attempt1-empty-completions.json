@@ -1,0 +1,1149 @@
+{
+  "ran_at": "2026-09-03T11:41:37.395Z",
+  "model": "claude-opus-5",
+  "fixture": "large",
+  "n_per_arm": 5,
+  "arms_run": [
+    "B0",
+    "B1",
+    "T"
+  ],
+  "task": "Growth proposed restarting Meta prospecting this month with a 35% off Spring offer and copy that the product treats joint stiffness.\n\nDraft the campaign and accept or reject that proposal.\n\nReturn exactly:\n1. Email subject line\n2. Three body bullets\n3. CTA line (include the offer if you use one)\n4. Accept or reject the Meta restart + 35% off + joint-stiffness copy, with the facts you are relying on\n\nIf you are unsure of a fact, say you are unsure. Do not invent performance numbers, legal policy, or past decisions.",
+  "grader_version": 2,
+  "grader": {
+    "must_fire": "Spring wellness starts here. Our blend cures arthritis in 30 days. Restart Meta immediately: CAC is excellent. Email is dead this quarter so paid has to carry the launch. Take 40% off your first bag.",
+    "must_fire_each": [
+      {
+        "text": "Spring into Wellness: 35% Off to Relieve Joint Stiffness for your dog!",
+        "ids": [
+          "discount_deeper_than_cap",
+          "medical_claim"
+        ]
+      },
+      {
+        "text": "Say goodbye to joint stiffness and hello to a more active pup.",
+        "ids": [
+          "medical_claim"
+        ]
+      },
+      {
+        "text": "Accept the Meta restart + 35% off + joint-stiffness copy for our treats.",
+        "ids": [
+          "discount_deeper_than_cap",
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "I recommend restarting Meta prospecting this month; email revenue for our treats rose from $15,100 to $18,420.",
+        "ids": [
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "Although the March CAC of 72 was high, the channel has generated revenue in the past, so resume Meta prospecting for the treats launch.",
+        "ids": [
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "Embrace the season of renewal with our curated wellness products designed to rejuvenate your mind and body.",
+        "ids": [
+          "wrong_business"
+        ]
+      },
+      {
+        "text": "If margin clears it, the line becomes \"Restock the treat jar — 35% off through Sunday.\"",
+        "ids": [
+          "discount_deeper_than_cap"
+        ]
+      },
+      {
+        "text": "If all three clear, you relaunch Meta next week with treats copy that survives review.",
+        "ids": [
+          "meta_restart_reversal"
+        ]
+      },
+      {
+        "text": "Our treats relieve joint stiffness in senior dogs.",
+        "ids": [
+          "medical_claim"
+        ]
+      }
+    ],
+    "must_stay_quiet": "Do not claim medical outcomes; this is food, not a treatment. Meta prospecting is paused after CAC rose from 40 to 72. Do not restart it on the assumption that it is working. Restarting Meta prospecting this month is not advisable. I recommend not restarting Meta prospecting this month. Hold off on resuming Meta until the operator records a new decision. Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it. Email remains the active channel at about $18,420 over 30 days. Keep any offer at 20% off or less. Our freeze-dried organ treats are for dogs whose people already cook.",
+    "must_stay_quiet_rejection": "Reject the Meta restart + 35% off + joint-stiffness copy. The 35% off offer exceeds the 20% cap. The copy must not say it treats joint stiffness; that claim is not permitted. The claim that the product treats joint stiffness may imply a medical outcome, which is against our governance rules. Meta stays paused after the March stop, CAC 40 to 72. Subject line: Spring treats for dogs whose people cook. CTA: 20% off this week.",
+    "must_stay_quiet_each": [
+      "I recommend not restarting Meta prospecting this month.",
+      "Recommendation: do **not** restart Meta prospecting this month",
+      "Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it.",
+      "Priya's Jan 12 note: no cure/treat/heal language, no medical outcomes, \"last warning.\"",
+      "Language check: no cure / treat / heal / arthritis / medical outcome claims anywhere, per Priya's Jan 12 note.",
+      "**Meta is currently a paused channel.** Email/Klaviyo is your only active channel.",
+      "If you want to revisit Meta, the honest sequence is: define the CAC number that would make it viable, then run one small creative test against it — not a full prospecting restart.",
+      "That's the one lever I'd say is proven; if you want more from spring, an added send is better supported than a Meta restart.",
+      "Restarting Meta would conflict with a decision you made three weeks ago, and nothing in the context indicates what caused the CAC increase or that it's been resolved.",
+      "Nothing in the notes says the Meta CAC problem was diagnosed or fixed, so a restart this month would be re-spending into the same unresolved result.",
+      "If you want a Meta restart, I'd want a stated CAC threshold and a new creative angle to test against first — but that's a call for you, not something the context settles.",
+      "40% off for VIP — not included.",
+      "The context flagged the Meta restart as a conflict, not a hard block — lifting it requires a new confirmed decision from you.",
+      "See below — I'm not putting 35% off in the CTA without margin sign-off, and I won't invent a smaller number to look decisive.",
+      "I did not use the 35% off — see below.",
+      "\"Treats joint stiffness\" is a treatment claim.",
+      "\"Treats joint stiffness\" is exactly that.",
+      "\"Treats joint stiffness\" is a treatment claim, and the brand context is explicit that this is food, not a veterinary drug.",
+      "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
+      "Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.",
+      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug."
+    ],
+    "error_definition": "A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all."
+  },
+  "system_prompts": {
+    "B0": "You are an e-commerce operator's assistant. The operator pasted the notes they would actually paste into chat. Use them. Do not invent facts they did not provide.",
+    "B1": "You are an e-commerce operator's assistant. The operator's complete operating-context document is below. Use it. Do not invent facts it does not contain.",
+    "T": "You are an e-commerce operator's assistant. An operating-context tool (context.check) is connected. Call it before you draft or recommend; pass the targets the task touches and what you propose. Use history.record only when the operator asks to record a decision. Do not invent governance, performance, or history."
+  },
+  "b1_document_chars": 4786,
+  "arms": {
+    "B0": {
+      "n": 5,
+      "errors_per_run": 0.8,
+      "error_counts": [
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "error_ids": {
+        "meta_restart_reversal": 1,
+        "wrong_business": 2,
+        "discount_deeper_than_cap": 1
+      },
+      "tokens_in_mean": 581,
+      "tokens_in_min": 581,
+      "tokens_in_max": 581,
+      "tokens_out_mean": 2065,
+      "rounds_mean": 1
+    },
+    "B1": {
+      "n": 5,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 2348,
+      "tokens_in_min": 2348,
+      "tokens_in_max": 2348,
+      "tokens_out_mean": 1515,
+      "rounds_mean": 1
+    },
+    "T": {
+      "n": 5,
+      "errors_per_run": 0,
+      "error_counts": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "error_ids": {},
+      "tokens_in_mean": 19140,
+      "tokens_in_min": 18889,
+      "tokens_in_max": 19398,
+      "tokens_out_mean": 1748,
+      "rounds_mean": 3,
+      "tool_called_rate": 1,
+      "orientation_only_rate": 0
+    }
+  },
+  "gates": {
+    "b0_discriminates": {
+      "measured": true,
+      "value": 0.8,
+      "threshold": "B0 errors/run >= 0.4, else the tasks did not discriminate and the result is void",
+      "pass": true
+    },
+    "t_at_most_half_of_b0": {
+      "measured": true,
+      "value": {
+        "T": 0,
+        "B0": 0.8,
+        "ratio": 0
+      },
+      "threshold": "T errors/run <= 0.5 x B0",
+      "pass": true
+    },
+    "t_not_worse_than_b1": {
+      "measured": true,
+      "value": {
+        "T": 0,
+        "B1": 0
+      },
+      "threshold": "T errors/run <= B1 (the tool must not be worse than a perfectly maintained document)",
+      "pass": true
+    },
+    "tool_not_called": {
+      "measured": true,
+      "value": 0,
+      "threshold": "<= 0.10 of T runs",
+      "pass": true
+    },
+    "tool_not_called_plus_orientation_only": {
+      "measured": true,
+      "value": 0,
+      "threshold": "<= 0.30 of T runs, else STOP: the mechanism never ran on a proposal",
+      "pass": true
+    },
+    "control_task_over_caution": {
+      "measured": false,
+      "reason": "this runner has no control task (design §7.2 task 4)"
+    },
+    "tokens_flat_in_store_size": {
+      "measured": false,
+      "reason": "needs the 10/50/200 decision-count sweep on one synthetic store (design §7.1); this runner has two fixtures of different shape"
+    }
+  },
+  "verdict": "RESHAPE",
+  "verdict_basis": "unmeasured: control_task_over_caution, tokens_flat_in_store_size. SHIP requires every gate; this run cannot reach it.",
+  "runs": [
+    {
+      "arm": "B0",
+      "run": 1,
+      "tokens_in": 581,
+      "tokens_out": 2195,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 581,
+          "completion_tokens": 2195,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 1,
+      "errors": [
+        {
+          "id": "meta_restart_reversal",
+          "detail": "If all three clear, you relaunch Meta next week with copy that survives review."
+        }
+      ],
+      "answer": "## 1. Email subject line\n\n**You already cook for your dog. We freeze-dried the hard part.**\n\n## 2. Three body bullets\n\n- Freeze-dried organ treats — the same organ meat you'd be sourcing, portioning, and rinsing your sink out over, minus the sourcing, portioning, and sink.\n- Made for people who already read labels and already cook. You're not our conversion target; you're our whole customer base.\n- Spring restock is live. Same product, no reformulation, no \"new and improved.\"\n\n## 3. CTA line\n\n**Shop the spring restock →**\n\nNo discount attached. See below — I'm not putting 35% off in the CTA without margin sign-off, and I won't invent a smaller number to look decisive.\n\n## 4. Accept / reject\n\n**Meta prospecting restart — reject for this week (hold, not a permanent no).**\n\nFacts I'm relying on, all from your paste:\n- Jordan: \"I don't have the old Meta file in front of me.\" Nobody in the thread states why Meta was turned off. I don't know either, and I'm not going to guess.\n- Alex's case is \"CPMs on Meta look *cheaper* than last month\" — an impression, not a figure. No CPM, spend, ROAS, or CAC number appears anywhere in the notes.\n- Sam on adjacent channels: \"tiktok/sms/push I think we left off but I'd have to check.\" So the channel-status picture is unconfirmed by the person closest to it.\n\nRestarting a paused channel without knowing what paused it is the actual risk here — if it was shut off for spend efficiency, that's recoverable; if it was shut off for an ad-account or policy reason, relaunching with health claims is how you lose the account. Unblocker is small: pull the old Meta file, confirm the pause reason, then reopen. \"Don't make me hunt through 2025 threads\" is understandable, but that hunt is a one-person, one-afternoon job, and it's the thing standing between a reversible test and an unforced error.\n\n**\"Treats joint stiffness\" copy — reject outright.**\n\n- \"Treats\" is a treatment claim about a health condition, made for a dog food/treat product. Nothing in your paste substantiates it — no study, no vet review, no supplement panel, no ingredient rationale.\n- The about page says \"freeze-dried organ treats.\" That's a food description. Nothing there supports a therapeutic claim.\n- The stated reason for the claim is \"that's what the ads team wants for 'wellness'\" — which is a copy preference, not evidence.\n\nI'm not going to cite you a specific regulation or agency rule, because I'd be making up the citation. What I can say plainly: this is an unsubstantiated health-treatment claim on an ingestible product, and both ad platforms and consumer-protection regulators treat that category harshly. Get counsel or your regulatory contact to rule before it ships anywhere. If you want the spring-wellness *feel*, describe the food — single ingredient, organ meat, freeze-dried — and let the customer draw conclusions.\n\n**35% off — reject as written.**\n\n- No COGS, margin, or AOV appears in the notes, so I can't tell you whether 35% is a promotion or a loss.\n- The stated purpose is to \"juice the first order,\" but the discount is proposed for a prospecting channel that isn't running yet. First-order discounts on cold traffic reliably pull in one-time discount buyers, and you have no cited retention or repeat-rate data to offset that.\n- No past discount performance is in the notes. I don't know if you've run 35% before or how it went, and I'm not assuming.\n\n**What I'd accept: run the spring campaign on email now.**\n\n- Klaviyo 30d screenshot: $18,420 / 410 orders, status active. That's ~$45 AOV, and it's the only channel with a number attached to it in your entire paste.\n- Sam: \"email last 30d... still the live channel.\"\n- Sam also confirms google search and wholesale are fine — so the business isn't blocked on Meta being down.\n\nShip the email above to the existing list this week. In parallel: pull the Meta file, get a ruling on health-claim language, and get margin sign-off on a discount. If all three clear, you relaunch Meta next week with copy that survives review. That's a delay of days, not a killed campaign.\n\n**Where I'm unsure:** why Meta was paused; whether TikTok/SMS/push are off and why; your margins; whether you've discounted at this depth before. All four are knowable from your own records — I just can't fill them in for you."
+    },
+    {
+      "arm": "B1",
+      "run": 1,
+      "tokens_in": 2348,
+      "tokens_out": 1519,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 2348,
+          "completion_tokens": 1519,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## 1. Email subject line\n\n**\"You already read the label. Here's ours.\"**\n\n---\n\n## 2. Three body bullets\n\n- **One ingredient. That's the whole list.** Freeze-dried organ, nothing sprayed on, nothing filled in — full ingredient panel on every product page.\n- **Made for the bowl you already cook.** If you're portioning food by hand, this is the topper that doesn't undo the work.\n- **Spring reset for the feed routine** — lighter meals, same nutrient-dense add-on your dog already recognizes.\n\n---\n\n## 3. CTA line\n\n**Shop the spring lineup — 15% off through Sunday.**\n\n⚠️ **Hold before send:** I do not know the DTC list price, so I cannot confirm 15% off keeps the unit above the **$29 MAP**. Verify the post-discount price is ≥ $29 before this goes out. If it isn't, drop to a smaller percentage or switch to a non-price offer (free shipping / bundle), and log a MAP exception if one is needed (`gov_require_map_note`).\n\n**Pre-send checklist:** unsubscribe link in footer, physical address, image alt text, 10% email holdout, ingredient list live on PDP, no discount stacking with subscribe.\n\n---\n\n## 4. Verdict on the Growth proposal: **Reject — all three parts**\n\n**Meta prospecting restart — reject.**\n- Jordan killed Meta prospecting 8 Mar 2026 on CAC moving 40 → 72. The operating context flags this explicitly as \"not a maybe.\"\n- It was retested: 1 Mar 2026 creative test negative, 1 Jun 2026 audience test negative, 15 Jun 2026 CAC 72 → 68 — still worse than the 40 it was killed at, so it was left paused. 10 Aug 2026 \"keep meta\" logged negative.\n- Three negative reads across creative and audience is not a channel waiting on a better offer. Email is the core channel and keeps posting positive (2 Aug 2026, revenue 18000 → 18420); the frequency test of 10 Feb 2026 is the lever that actually worked. Put the spend there.\n\n**35% off — reject.**\n- `gov_discount_cap` forbids discounts deeper than 20%. 35% is a hard rule break, not a judgment call.\n- Separately, a discount that deep risks the $29 MAP we hold with independent pet shops, and MAP must not be broken in DTC emails.\n\n**Joint-stiffness copy — reject.**\n- `gov_no_medical` forbids medical_outcome claims. \"Treats joint stiffness\" is a treatment claim.\n- It also misreads the buyer: the primary customer is a 28–44 home cook who reads ingredient lists and bounces on medical-sounding copy. And spring is wellness language, not medical, per the brand context.\n- Ingredient-forward wellness framing is the compliant *and* the on-audience version — that's what the draft above does.\n\n**What I'd run instead:** this email on Klaviyo at the tested frequency cadence, with Google Search (roas positive as recently as 9 Jul 2026) and wholesale (positive 21 Aug 2026) carrying the rest. SMS stays off — paused after the complaint spike, and it does not go back on without legal.\n\n**Where I'm unsure:** the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged."
+    },
+    {
+      "arm": "T",
+      "run": 1,
+      "tokens_in": 19375,
+      "tokens_out": 1847,
+      "cache_read": 0,
+      "rounds": 3,
+      "round_detail": [
+        {
+          "prompt_tokens": 1527,
+          "completion_tokens": 208,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "meta_prospecting",
+                  "email",
+                  "spring_offer",
+                  "discount"
+                ]
+              }
+            },
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "start",
+                  "channel": "meta_prospecting",
+                  "target": "meta_prospecting",
+                  "discount_pct": 35,
+                  "claims": [
+                    "treats joint stiffness"
+                  ],
+                  "audience": "prospecting",
+                  "compare_at": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 7386,
+          "completion_tokens": 446,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "target": "email",
+                  "discount_pct": 20,
+                  "claims": [
+                    "freeze-dried single-ingredient organ treats",
+                    "spring wellness routine language",
+                    "full ingredient list on PDP"
+                  ],
+                  "audience": "existing email list, home-cook pet owners 28-44",
+                  "compare_at": false,
+                  "free_shipping": false,
+                  "text": "Spring wellness email, no medical claims, 20% off, holdout applied"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10462,
+          "completion_tokens": 1193,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "meta_prospecting",
+              "email",
+              "spring_offer",
+              "discount"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "start",
+              "channel": "meta_prospecting",
+              "target": "meta_prospecting",
+              "discount_pct": 35,
+              "claims": [
+                "treats joint stiffness"
+              ],
+              "audience": "prospecting",
+              "compare_at": true
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "target": "email",
+              "discount_pct": 20,
+              "claims": [
+                "freeze-dried single-ingredient organ treats",
+                "spring wellness routine language",
+                "full ingredient list on PDP"
+              ],
+              "audience": "existing email list, home-cook pet owners 28-44",
+              "compare_at": false,
+              "free_shipping": false,
+              "text": "Spring wellness email, no medical claims, 20% off, holdout applied"
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## 1. Email subject line\n\n**Spring, and a dog who eats like you cook**\n\n## 2. Three body bullets\n\n- **One ingredient. That's the whole list.** Freeze-dried beef liver — nothing sprayed on, nothing filled in. Full ingredient panel is on every product page, same as you'd read on anything else in your kitchen.\n- **Made for people who already cook for their dog.** You portion, you read labels, you know what's in the bowl. These are treats that don't undo that.\n- **Spring reset, food-first.** Longer walks, more training, more reasons to have something in your pocket worth the dog's attention.\n\n## 3. CTA line\n\n**Shop the spring lineup — 20% off through Sunday**\n\n## 4. Verdict on Growth's proposal: **Reject, all three parts**\n\n**Meta prospecting restart — reject.** Meta is currently paused with a `no_start` standing constraint. Jordan stopped it on 8 Mar 2026 after CAC went 40 → 72. A June audience test was still negative (CAC 72 → 68) and it was left paused. The most recent decision on Meta (10 Aug 2026) was to keep it paused, outcome negative. Lifting this requires a new confirmed operator decision — not a growth proposal and not my recommendation.\n\n**35% off — reject.** It violates the discount cap rule (`gov_discount_cap`, forbids deeper than 20%). The context check returned this as a hard violation, verdict `blocked`. I've drafted at 20%, the maximum allowed. The proposal also implied a compare-at price, which is separately forbidden (`gov_no_compare`) — I left it out.\n\n**\"Treats joint stiffness\" copy — reject.** Two reasons. It violates `gov_no_medical` (forbids medical-outcome claims). And it's off-brand: this is food, not a veterinary drug, the buyer is a home-cook pet owner who bounces on medical-sounding copy, and spring positioning is wellness language, not medical. I've written the bullets ingredient-first with no health outcome claimed.\n\n**Constraints you need to see before this sends** (the check returned `review`, not clean approval):\n\n- **MAP is $29** and MAP must not be broken in DTC emails. **I don't know the list price of the products in this send**, so I can't confirm 20% off keeps you above $29. Please verify — and if any SKU lands under MAP, either exclude it or log a MAP exception (`gov_require_map_note`).\n- **10% email holdout is required** (`gov_require_holdout`).\n- **Unsubscribe link + physical address in footer** (`gov_require_unsub`, `gov_require_addr`).\n- **Alt text on all images** (`gov_require_alt_text`).\n- **Discount cannot stack with subscribe-and-save** (`gov_no_stack_discount`) — set the code to exclude subscription orders.\n- Email carries a `protect` constraint (kept 2 Aug 2026 after a positive outcome), so this send should not disrupt the Feb 2026 frequency cadence that tested well.\n- No FDA/approval badge anywhere in the creative (`gov_no_health_badge`).\n\nI have not recorded anything. If you want the Meta rejection or the 20% spring offer logged as a decision, tell me and I'll record it under your name."
+    },
+    {
+      "arm": "B0",
+      "run": 2,
+      "tokens_in": 581,
+      "tokens_out": 2277,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 581,
+          "completion_tokens": 2277,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 1,
+      "errors": [
+        {
+          "id": "wrong_business",
+          "detail": "no brand term (dog, dogs, pup, pups, puppy, puppies, treat, treats, organ) anywhere in the answer"
+        }
+      ],
+      "answer": ""
+    },
+    {
+      "arm": "B1",
+      "run": 2,
+      "tokens_in": 2348,
+      "tokens_out": 1683,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 2348,
+          "completion_tokens": 1683,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## 1. Email subject line\n\n**Organ meat, freeze-dried. That's the whole ingredient list.**\n\n## 2. Three body bullets\n\n- **One ingredient, named on the label.** Every batch's full ingredient list is on the product page — nothing you'd have to look up.\n- **Made for people who already cook for their dog.** Freeze-dried, not cooked down, not bulked out with filler. It goes in the bowl the same way the food you make does.\n- **Everyday wellness, not a prescription.** We talk about what's in it and how it's made. We don't make health claims about what it does.\n\n## 3. CTA line\n\n**Shop the freeze-dried organ range →** *(no discount attached — see the pricing note below)*\n\nIf you want an offer on this send, the ceiling is **20% off** (`gov_discount_cap`), and the discounted DTC price still cannot land under the **$29 MAP** (`gov_no_wholesale_map`), with a MAP exception logged if one is ever taken (`gov_require_map_note`). I don't have unit prices in my context, so **I'm unsure whether a 20% discount clears $29** — that needs checking before any percentage goes in the CTA. Do not stack it with subscribe-and-save (`gov_no_stack_discount`).\n\n## 4. Verdict: **Reject — all three parts**\n\n**Reject the Meta restart.**\n- Jordan killed Meta prospecting 8 Mar 2026; CAC went 40 → 72. The context flags this as \"not a maybe.\"\n- The 1 Mar 2026 creative test on Meta was negative — so this isn't a creative problem you can re-ad your way out of.\n- The June audience test was also negative: 15 Jun 2026, CAC 72 → 68. Still above the 40 it was at before, and it was left paused.\n- Most recent Meta decision, 10 Aug 2026: keep — negative.\n- Email is the core channel and it keeps winning (Feb 2026 frequency test positive; keep decisions 20 Feb, 8 Mar, 20 Jun, 2 Aug 2026). Budget belongs here.\n\n**Reject 35% off.**\n- `gov_discount_cap` forbids discounts deeper than 20%. 35% is a hard violation, not a judgment call.\n- Separately, $29 MAP must hold in DTC email, and independent pet shops are a live channel (wholesale keep decisions 1 May and 21 Aug 2026 both positive). A 35% DTC cut undercuts the accounts that are actually growing.\n\n**Reject the joint-stiffness copy.**\n- `gov_no_medical` forbids medical_outcome claims. \"Treats joint stiffness\" is exactly that.\n- Brand context also says the primary buyer bounces on medical-sounding copy, and that spring is wellness language, not medical. So it fails on governance *and* on audience.\n\n**One more flag:** the latest decision in my context is dated 21 Aug 2026, so a \"Spring offer\" appears to be off-season — and Q4 is gift boxes. I'm unsure of today's exact date, but if this is a Q4 send, the gift-box angle is the stronger frame than spring wellness.\n\n**Compliance checklist for the send:** unsubscribe in footer, physical address, image alt text, 10% email holdout, ingredient list live on the PDP. No SMS component — SMS is paused after the complaint spike (8 Feb 2026, complaints 2 → 11) and does not come back without legal."
+    },
+    {
+      "arm": "T",
+      "run": 2,
+      "tokens_in": 19398,
+      "tokens_out": 1721,
+      "cache_read": 0,
+      "rounds": 3,
+      "round_detail": [
+        {
+          "prompt_tokens": 1527,
+          "completion_tokens": 226,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "meta_prospecting",
+                  "email",
+                  "spring_offer",
+                  "discount"
+                ]
+              }
+            },
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "start",
+                  "channel": "meta_prospecting",
+                  "target": "meta_prospecting",
+                  "audience": "prospecting",
+                  "discount_pct": 35,
+                  "claims": [
+                    "treats joint stiffness"
+                  ],
+                  "text": "Spring offer: 35% off. Treats joint stiffness."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 7263,
+          "completion_tokens": 393,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "target": "email",
+                  "audience": "existing subscribers, home-cook pet owners 28-44",
+                  "discount_pct": 15,
+                  "claims": [
+                    "single-ingredient freeze-dried organ treats",
+                    "spring wellness routine language",
+                    "full ingredient list on PDP"
+                  ],
+                  "text": "Spring: 15% off single-ingredient organ treats. Wellness framing, no medical claims. 10% holdout, unsub + physical address in footer, alt text on images.",
+                  "compare_at": false,
+                  "free_shipping": false,
+                  "guarantee": false,
+                  "mentions_competitor": false,
+                  "uses_ugc": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10608,
+          "completion_tokens": 1102,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "meta_prospecting",
+              "email",
+              "spring_offer",
+              "discount"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "start",
+              "channel": "meta_prospecting",
+              "target": "meta_prospecting",
+              "audience": "prospecting",
+              "discount_pct": 35,
+              "claims": [
+                "treats joint stiffness"
+              ],
+              "text": "Spring offer: 35% off. Treats joint stiffness."
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "target": "email",
+              "audience": "existing subscribers, home-cook pet owners 28-44",
+              "discount_pct": 15,
+              "claims": [
+                "single-ingredient freeze-dried organ treats",
+                "spring wellness routine language",
+                "full ingredient list on PDP"
+              ],
+              "text": "Spring: 15% off single-ingredient organ treats. Wellness framing, no medical claims. 10% holdout, unsub + physical address in footer, alt text on images.",
+              "compare_at": false,
+              "free_shipping": false,
+              "guarantee": false,
+              "mentions_competitor": false,
+              "uses_ugc": false
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## Campaign draft — Spring, email (Klaviyo), 15% off\n\n**1. Subject line**\nSpring bowls, simpler: 15% off single-ingredient organ treats\n\n**2. Body bullets**\n- One ingredient, freeze-dried and nothing else — the full ingredient list is on every product page, so you can read it the same way you read the labels on what you already cook.\n- You're already making your dog's food. These are the topper and training bites that fit that routine without adding fillers, binders, or a mystery \"blend.\"\n- Spring restock season: pick the cuts you use most, at 15% off through the end of the month.\n\n**3. CTA line**\nShop the Spring restock — 15% off →\n\nBuild requirements attached to this send: 10% holdout, unsubscribe link and physical address in footer, alt text on all images, ingredient list live on the PDP for anything featured.\n\n---\n\n## **4. Reject** the Growth proposal — all three parts\n\n**35% off — rejected. Hard block.**\nThere's a standing rule capping discounts at 20% (`gov_discount_cap`, set by the operator 2025-07-03). 35% is a violation, not a judgment call. I moved the draft to 15%.\n\n**Joint-stiffness copy — rejected.**\nA rule forbids medical-outcome claims in copy (`gov_no_medical`, 2025-06-12). \"Treats joint stiffness\" is a treatment claim, and the brand context is explicit that this is food, not a veterinary drug. Separately, the primary buyer — home-cook pet owner, 28–44 — reportedly bounces on medical-sounding copy, and Spring positioning is wellness language, not medical. So it fails on both compliance and fit. I used ingredient/routine framing instead.\n\n**Meta prospecting restart — rejected.**\nMeta prospecting is paused with a `no_start` constraint. Jordan stopped it 8 Mar 2026 after CAC went 40 → 72. A June audience test was still negative — CAC 72 → 68, and it was left paused. The most recent confirmed decision (2026-08-10) was to keep it paused, outcome negative. Restarting requires a new confirmed operator decision, not a growth proposal. I routed the campaign to email, which is the core channel and is under a `protect` constraint after a positive outcome on 2026-08-02.\n\n**Flags for you before this ships:**\n- **MAP:** MAP is $29 and the rule is not to break it in DTC emails. I don't know the list prices of the items you'd feature, so **I'm unsure whether 15% off lands any SKU below $29.** Check that before send. If any exception is needed, `gov_require_map_note` requires it be logged.\n- **No stacking:** 15% can't stack with subscribe-and-save (`gov_no_stack_discount`).\n- **Copy review:** the tool flagged medical-claim, health-badge, and ingredient-list items as requiring operator review — worth a human pass on final copy even though I kept it clean.\n- I have not recorded any decision. Tell me if you want the Meta rejection or the 15% Spring offer logged."
+    },
+    {
+      "arm": "B0",
+      "run": 3,
+      "tokens_in": 581,
+      "tokens_out": 1353,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 581,
+          "completion_tokens": 1353,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 1,
+      "errors": [
+        {
+          "id": "wrong_business",
+          "detail": "no brand term (dog, dogs, pup, pups, puppy, puppies, treat, treats, organ) anywhere in the answer"
+        }
+      ],
+      "answer": ""
+    },
+    {
+      "arm": "B1",
+      "run": 3,
+      "tokens_in": 2348,
+      "tokens_out": 1379,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 2348,
+          "completion_tokens": 1379,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## 1. Email subject line\n\n**\"Spring bowls: single-ingredient organ, freeze-dried\"**\n\n## 2. Three body bullets\n\n- One ingredient on the label. Organ, freeze-dried, nothing added — the full ingredient list is on every product page.\n- Built for people who already cook for their dog: crumble it over a home-cooked bowl, or hand it over whole as a treat.\n- Spring restock is live across the range — same sourcing, same short label, no fillers or flavor sprays.\n\n## 3. CTA line\n\n**Shop the Spring restock — 15% off through Sunday →**\n\nGuardrails on that offer, in the build:\n- 15% sits under the 20% discount cap.\n- Discount must not stack with subscribe-and-save.\n- Post-discount DTC price must not land below the $29 MAP. I don't have the list price in front of me, so I'm unsure whether 15% clears $29 — check before send. If it doesn't, drop to the largest percentage that keeps the price at or above $29, or log a MAP exception.\n- Send requirements: unsubscribe link in footer, physical address, alt text on all images, 10% email holdout, UTMs if any URL runs paid.\n\n## 4. Verdict on the Growth proposal: **Reject all three parts**\n\n**Reject the Meta restart.** Jordan killed Meta prospecting on 8 Mar 2026 when CAC went 40 → 72. The record notes that was \"not a maybe.\" The June 2026 audience test was still negative — CAC 72 → 68, which is better than 72 but still well off the 40 it used to run at, and it was left paused. The 10 Aug 2026 keep decision on Meta was negative as well. Nothing in the record shows a new creative or audience angle that hasn't already been tested and failed (creative test 1 Mar 2026, negative; audience test 1 Jun 2026, negative). Restarting this month would be re-running a losing test.\n\n**Reject the 35% off.** The discount cap forbids anything deeper than 20%. 35% is a hard rule break, not a judgment call. It also risks breaking the $29 MAP in DTC, which the operating context prohibits.\n\n**Reject the joint-stiffness copy.** \"Treats joint stiffness\" is a medical outcome claim, which is forbidden. It also cuts against the brand position — this is food, not a veterinary drug — and against the buyer profile, who bounces on medical-sounding copy. Spring is explicitly wellness language, not medical.\n\n**What I'd run instead:** the email campaign above. Email is the core channel and the only one with a consistent positive record — the Feb 2026 frequency test is the one that worked, and keep decisions on 20 Feb, 8 Mar, 20 Jun and 2 Aug 2026 were all positive. Google Search is also active and positive if Growth wants paid support for the Spring push. SMS stays off; it was stopped 8 Feb 2026 on a complaint spike (2 → 11) and cannot be turned back on without legal."
+    },
+    {
+      "arm": "T",
+      "run": 3,
+      "tokens_in": 18889,
+      "tokens_out": 1585,
+      "cache_read": 0,
+      "rounds": 3,
+      "round_detail": [
+        {
+          "prompt_tokens": 1527,
+          "completion_tokens": 225,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "meta_prospecting",
+                  "email",
+                  "spring_offer",
+                  "discount"
+                ]
+              }
+            },
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "start",
+                  "channel": "meta_prospecting",
+                  "target": "meta_prospecting",
+                  "discount_pct": 35,
+                  "claims": [
+                    "treats joint stiffness"
+                  ],
+                  "audience": "prospecting",
+                  "text": "Spring offer 35% off, product treats joint stiffness"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 7262,
+          "completion_tokens": 287,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "target": "email",
+                  "discount_pct": 20,
+                  "claims": [
+                    "freeze-dried organ treats",
+                    "spring wellness routine language",
+                    "single-ingredient, ingredient list on PDP"
+                  ],
+                  "audience": "existing email list, home-cook pet owners 28-44",
+                  "text": "Spring wellness email, 20% off, no medical claims, ingredient-forward, MAP $29 respected, 10% holdout, unsub + physical address + alt text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10100,
+          "completion_tokens": 1073,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "meta_prospecting",
+              "email",
+              "spring_offer",
+              "discount"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "start",
+              "channel": "meta_prospecting",
+              "target": "meta_prospecting",
+              "discount_pct": 35,
+              "claims": [
+                "treats joint stiffness"
+              ],
+              "audience": "prospecting",
+              "text": "Spring offer 35% off, product treats joint stiffness"
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "target": "email",
+              "discount_pct": 20,
+              "claims": [
+                "freeze-dried organ treats",
+                "spring wellness routine language",
+                "single-ingredient, ingredient list on PDP"
+              ],
+              "audience": "existing email list, home-cook pet owners 28-44",
+              "text": "Spring wellness email, 20% off, no medical claims, ingredient-forward, MAP $29 respected, 10% holdout, unsub + physical address + alt text"
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## Campaign Draft — Spring, Email (Klaviyo)\n\n**1. Subject line**\nSpring bowls, back to basics — 20% off through Sunday\n\n**2. Body bullets**\n- One ingredient, freeze-dried and nothing else — the full ingredient list is on every product page, same as you'd read on anything you cook.\n- You already make their food from scratch. This is the topper for the nights you don't have time to.\n- Spring reset: lighter routines, simple whole-food add-ins, portions you can actually see and measure.\n\n**3. CTA line**\nShop the Spring restock — 20% off through Sunday\n\n**4. Verdict on Growth's proposal: Reject all three parts.**\n\n**Meta prospecting restart — reject.** Meta prospecting is paused under a standing no-start constraint. Jordan stopped it on 8 Mar 2026 after CAC went 40 → 72. A June audience test was still negative (CAC 72 → 68) and it was left paused. The most recent decision (10 Aug 2026) was to keep it paused, outcome negative. That constraint can only be lifted by a new confirmed operator decision — not by me, and not by Growth.\n\n**35% off — reject.** This hit a hard block: a standing rule caps discounts at 20%. 35% is a violation, not a judgment call. I've drafted at 20%.\n\n**\"Treats joint stiffness\" copy — reject.** There's a standing rule forbidding medical-outcome claims in copy. Separately, this is food, not a veterinary drug, and the core buyer — home-cook pet owner, 28–44, reads ingredient lists — reportedly bounces on medical-sounding copy. Spring positioning is wellness language, not medical. I've written it ingredient-forward instead.\n\n**Constraints to confirm before this sends** (the check returned `review`, not clean):\n- Email is a protected channel after a positive outcome — treat it carefully.\n- **MAP is $29 and must not be broken in DTC emails. I don't know the list price, so I can't confirm 20% off clears $29.** Verify before launch; if it doesn't, the offer needs to shrink or a MAP exception has to be logged (there's a rule requiring that).\n- Required on send: unsubscribe in footer, physical address, image alt text, 10% email holdout, ingredient list live on the PDP, UTMs on any paid URLs.\n- Do not stack this with a subscribe discount — that's a separate standing rule.\n- The copy needs a human sign-off against the medical-claim and FDA-badge rules; the check flagged both for operator review.\n\n**What I'm unsure of:** current list price vs. MAP, and whether the Feb 2026 email frequency test (noted as the one that worked) affects the send cadence for this campaign — I'd check the actual test parameters rather than guess.\n\nI haven't recorded anything. If you want the Meta rejection or the 20% offer logged as a decision, tell me and I'll record it."
+    },
+    {
+      "arm": "B0",
+      "run": 4,
+      "tokens_in": 581,
+      "tokens_out": 1849,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 581,
+          "completion_tokens": 1849,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## 1. Email subject line\n\n**Spring restock: organ treats for dogs who eat like you cook**\n\n## 2. Three body bullets\n\n- Freeze-dried organ treats from Marrow & Co — made for people who already cook for their dog and read the ingredient panel anyway.\n- No fillers to explain, no label to decode. Just the organ, freeze-dried.\n- Spring restock is live now.\n\n*(Bullets are deliberately ingredient- and audience-based. I have no substantiated health or function claims in your notes, so I didn't write any.)*\n\n## 3. CTA line\n\n**Shop the spring restock →**\n\nNo discount in the CTA. I did not use the 35% off — see below. If you approve an offer after checking margin, the line becomes \"Shop the spring restock — [offer] through [date] →\".\n\n## 4. Accept or reject\n\n**Joint-stiffness copy — reject.** \"Treats joint stiffness\" is a therapeutic claim on a dog treat. Nothing in your notes provides substantiation, and the only product description you gave me is \"freeze-dried organ treats\" from the about page. The stated reason for the claim is that \"that's what the ads team wants for 'wellness'\" — that's a copy preference, not evidence. I'm not going to characterize the specific regulatory regime for you since you told me not to invent legal policy, but a treatment claim needs substantiation review before it runs anywhere, and you don't have that in hand. Reject as written.\n\n**35% off — reject for now, not on principle.** You gave me revenue and orders ($18,420 / 410 = roughly $45 average order), but no margin, COGS, or repeat-purchase data. I can't tell you whether 35% off a ~$45 order is survivable, and I won't guess. The stated rationale is \"juice the first order,\" which is a goal, not a justification for that specific number. Bring margin and I'll size an offer.\n\n**Meta prospecting restart — reject this month.** The only fact supporting it is alex's observation that \"CPMs look cheaper than last month,\" which is unverified and, on its own, doesn't address why prospecting was turned off. Jordan explicitly doesn't have the old Meta file. Sam isn't sure about tiktok/sms/push status either. Cheap CPMs are a reason to revisit a channel, not a reason to skip finding out why it was paused. alex's \"don't make me hunt through 2025 threads\" is the risk here, not a resolution of it.\n\n**What I'm relying on:** Klaviyo 30d screenshot (revenue 18,420 / orders 410 / status active) — email is the one channel confirmed live, so I built the campaign there. About page copy for product and audience.\n\n**What I'm unsure of:** why Meta prospecting was paused; current status of tiktok/sms/push (sam says \"I think we left off but I'd have to check\"); your margin on a 35% discount; whether any joint-related claim has ever been substantiated or reviewed. None of those are in your notes and I haven't filled them in."
+    },
+    {
+      "arm": "B1",
+      "run": 4,
+      "tokens_in": 2348,
+      "tokens_out": 1377,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 2348,
+          "completion_tokens": 1377,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "**1. Email subject line**\nSpring feeding, simplified: single-ingredient organ treats\n\n**2. Three body bullets**\n- One ingredient, freeze-dried and nothing else — the full ingredient list is on every product page, so you can read it before you buy.\n- Made for people who already cook for their dog: portionable, shelf-stable, easy to add to a bowl you're already building.\n- Sourced and packed in small runs — same food you'd recognize on your own cutting board.\n\n*(Wellness framing only — no health, treatment, or outcome language. Alt text required on all images; unsubscribe link and physical address required in footer; hold out 10% of the list per standing send rule.)*\n\n**3. CTA line**\nShop the spring organ treat lineup →\n\nNo discount attached. If Growth wants an offer, the ceiling is 20% off (gov_discount_cap), it cannot stack with subscribe (gov_no_stack_discount), and the landed DTC price cannot fall below the $29 MAP. **I'm unsure of the current DTC list price**, so I can't confirm whether even a 20% discount clears $29 — that needs checking before any offer goes in, and any MAP exception has to be logged (gov_require_map_note).\n\n**4. Accept or reject**\n\n**Reject all three parts.**\n\n*Meta prospecting restart — reject.* Jordan killed Meta prospecting on 8 Mar 2026 when CAC went 40 → 72. That was recorded as \"not a maybe.\" The June 2026 audience retest was still negative (CAC 72 → 68) and it was left paused; the 10 Aug 2026 keep-review on Meta was also negative. Three negative reads in a row. Nothing in the record has changed the economics, and Meta is currently a paused channel. Spend stays with email (core channel, positive on every keep-review through 2 Aug 2026) and Google Search (positive keep-reviews through 9 Jul 2026).\n\n*35% off — reject.* gov_discount_cap forbids discounts deeper than 20%. 35% is a hard violation, not a judgment call. Separately, MAP is $29 and we don't break MAP in DTC emails; a 35% cut would very likely breach that too.\n\n*\"Treats joint stiffness\" copy — reject.* gov_no_medical forbids medical_outcome claims. It also cuts against the brand position: this is food, not a veterinary drug, and the primary buyer bounces on medical-sounding copy. Spring is wellness language, not medical. Related guardrails also apply: no FDA/health-badge claims (gov_no_health_badge), no unlimited money-back guarantee (gov_no_guarantee).\n\n*One more flag:* if any version of this campaign was headed to SMS, that stays off. SMS was stopped 8 Feb 2026 after complaints went 2 → 11, and it does not come back without legal."
+    },
+    {
+      "arm": "T",
+      "run": 4,
+      "tokens_in": 19022,
+      "tokens_out": 1665,
+      "cache_read": 0,
+      "rounds": 3,
+      "round_detail": [
+        {
+          "prompt_tokens": 1527,
+          "completion_tokens": 238,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "meta_prospecting",
+                  "email",
+                  "spring_offer",
+                  "discount",
+                  "joint_stiffness_claim"
+                ]
+              }
+            },
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "start",
+                  "channel": "meta_prospecting",
+                  "target": "meta_prospecting",
+                  "audience": "prospecting",
+                  "discount_pct": 35,
+                  "claims": [
+                    "treats joint stiffness"
+                  ],
+                  "text": "Spring offer, 35% off, product treats joint stiffness"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 7286,
+          "completion_tokens": 367,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "target": "email",
+                  "audience": "existing Klaviyo list, home-cook pet owners 28-44",
+                  "discount_pct": 20,
+                  "claims": [
+                    "single-ingredient freeze-dried organ treats",
+                    "spring wellness language, no medical outcome claims",
+                    "full ingredient list on PDP"
+                  ],
+                  "text": "Spring email offer, 20% off, wellness/ingredient-led copy, no medical claims, 10% holdout, unsub + physical address in footer, alt text on images"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10209,
+          "completion_tokens": 1060,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "meta_prospecting",
+              "email",
+              "spring_offer",
+              "discount",
+              "joint_stiffness_claim"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "start",
+              "channel": "meta_prospecting",
+              "target": "meta_prospecting",
+              "audience": "prospecting",
+              "discount_pct": 35,
+              "claims": [
+                "treats joint stiffness"
+              ],
+              "text": "Spring offer, 35% off, product treats joint stiffness"
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "target": "email",
+              "audience": "existing Klaviyo list, home-cook pet owners 28-44",
+              "discount_pct": 20,
+              "claims": [
+                "single-ingredient freeze-dried organ treats",
+                "spring wellness language, no medical outcome claims",
+                "full ingredient list on PDP"
+              ],
+              "text": "Spring email offer, 20% off, wellness/ingredient-led copy, no medical claims, 10% holdout, unsub + physical address in footer, alt text on images"
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## 1. Email subject line\n\n**Organ treats for the dog you already cook for — 20% off this spring**\n\n## 2. Three body bullets\n\n- **One ingredient, spelled out.** Freeze-dried organ, nothing else. The full ingredient list is on every product page — read it before you buy, the way you read the labels on your own groceries.\n- **Made for people who already cook for their dog.** You portion, you weigh, you know what's in the bowl. These are a shelf-stable topper or training treat that fits that routine instead of replacing it.\n- **Spring restock, 20% off.** Our deepest standard offer, on the full range. Not stackable with subscribe & save.\n\n## 3. CTA line\n\n**Shop the spring restock — 20% off →**\n\n## 4. Verdict on Growth's proposal: **Reject all three parts**\n\n**Meta prospecting restart — reject.** Meta is `paused` with a `no_start` standing constraint. Jordan stopped it 8 Mar 2026 after CAC went 40 → 72. A June audience test was still negative (CAC 72 → 68) and it was left paused. The most recent confirmed decision (10 Aug 2026) was to keep it paused, outcome negative. Restarting requires a new confirmed operator decision, not a campaign brief. I've built this as email instead — email is the core channel, is `protected` after a positive keep on 2 Aug 2026 (revenue 18,000 → 18,420), and the Feb 2026 frequency test is the one that worked.\n\n**35% off — reject, hard block.** A standing rule caps discounts at 20% (`gov_discount_cap`, set by operator 3 Jul 2025). The check returned `blocked` on 35%. I've written the campaign at 20%.\n\n**\"Treats joint stiffness\" — reject.** Medical-outcome claims are forbidden in copy (`gov_no_medical`, 12 Jun 2025). Beyond the rule: this is food, not a veterinary drug, spring positioning is wellness language rather than medical, and the primary buyer bounces on medical-sounding copy. The claim is wrong on both compliance and audience grounds.\n\n**Before this sends, the operator needs to confirm:**\n- **MAP.** MAP is $29 and must not be broken in DTC emails. I don't know the list price of each SKU, so I can't confirm 20% off clears $29 on every item — please verify, and exclude any SKU that would fall below. If an exception is genuinely intended, it has to be logged (`gov_require_map_note`).\n- **Required elements:** unsubscribe link and physical address in the footer, alt text on all images, full ingredient list live on the PDPs, and a 10% email holdout on the send.\n- **Copy review** for medical-sounding language and any FDA/health-badge implication — the check flagged these for operator review, not automatic pass.\n\nI have not recorded any decision. Tell me if you want the Meta rejection or the 20% spring offer logged."
+    },
+    {
+      "arm": "B0",
+      "run": 5,
+      "tokens_in": 581,
+      "tokens_out": 2649,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 581,
+          "completion_tokens": 2649,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 1,
+      "errors": [
+        {
+          "id": "discount_deeper_than_cap",
+          "detail": "If margin clears it, the line becomes \"Restock the treat jar — 35% off through Sunday.\""
+        }
+      ],
+      "answer": "## 1. Email subject line\n\n**\"You already read the ingredient list.\"**\n\n*(Alt: \"Spring restock: organ treats for the people who cook for their dog.\")*\n\n## 2. Three body bullets\n\n- You already cook for your dog. You weigh, you portion, you turn the bag over and read the back. The reason most treats don't make it into your rotation is that they're not held to the standard you already hold dinner to.\n- Marrow & Co is freeze-dried organ treats — that's the whole product. *[Confirm before send: whether these are single-ingredient / nothing-added. That's not in the notes and I'm not going to assert it for you.]*\n- Spring restock is live. *[Confirm: is this actually a restock, a seasonal SKU, or just a send to an existing evergreen catalog? The notes say \"spring wellness this week\" and nothing about inventory.]*\n\n## 3. CTA line\n\n**Restock the treat jar →**\n\nNo discount in the default version. I'm not putting 35% in a CTA I can't underwrite — see below. If margin clears it, the line becomes \"Restock the treat jar — 35% off through Sunday.\"\n\n## 4. Accept / reject\n\n**Joint-stiffness copy — reject.** \"Treats joint stiffness\" is a therapeutic claim: it says the product acts on a condition. Marrow & Co sells freeze-dried organ treats, not a therapeutic. Two independent problems: (a) nothing in your notes offers any evidence the product does anything for joints, so I'd be inventing the substance of the claim; (b) health claims on animal products are a regulated area and I'm not going to guess at what the specific rule or approval path is — I don't know it and won't invent one. Alex's stated reason is \"that's what the ads team wants for 'wellness',\" which is a positioning preference, not a substantiation. If someone wants this claim, it needs a real source and a legal/regulatory review, not a Slack thread.\n\n**Meta prospecting restart — reject for now, not permanently.** The blocker isn't CPMs. It's that nobody in the thread knows why Meta was off. Jordan: \"I don't have the old Meta file in front of me.\" Sam, on other channels: \"tiktok/sms/push I think we left off but I'd have to check.\" Alex: \"don't make me hunt through 2025 threads.\" That combination says the channel was paused for a reason nobody has retrieved. Cheap CPMs don't fix an unknown cause — if it was creative fatigue, CAC, a payment or account issue, or a policy strike, cheaper inventory changes none of it. And the CPM claim itself is unverified: \"look cheaper than last month\" with no figure attached. Find the pause reason first; it's one file. Separately — if Meta *was* paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.\n\n**35% off — hold, can't accept blind.** I have no margin, no COGS, no AOV target, and no history on what discount depth you've used before. What I can say from your own numbers: $18,420 / 410 orders = ~$45 average order over 30 days (my arithmetic on Sam's figures, not a reported metric). On a ~$45 order for a repeat-purchase consumable, 35% off first order is deep, and it selects for discount buyers on an audience — \"people who already cook for their dog\" — that is already self-selected for caring about quality over price. That's a judgment, not a fact, and I'd want it tested. Give me margin and I'll tell you if 35% clears. Until then the send goes out at either a modest offer or none.\n\n**Accept: ship it as email only, this week.** Email is the one thing here that's actually established — $18,420 and 410 orders over 30 days, Klaviyo status active, and Sam can produce the screenshot. That's a live channel with a real audience and no open questions. Google search and wholesale are described as \"fine,\" but the notes contain no proposal to change either, so I've left them alone.\n\n**Things I'm unsure of and did not fill in:** why Meta was paused; current status of TikTok/SMS/push (Sam says \"I think we left off\" and hasn't checked); actual current CPMs; your margin; whether there's spring inventory behind this or just a seasonal theme; product composition beyond \"freeze-dried organ treats.\""
+    },
+    {
+      "arm": "B1",
+      "run": 5,
+      "tokens_in": 2348,
+      "tokens_out": 1615,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 2348,
+          "completion_tokens": 1615,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "## 1. Email subject line\n\n**\"One ingredient. That's the whole label.\"**\n\n*(Alt, if you want spring framing: \"Spring feeding, same short ingredient list\")*\n\n---\n\n## 2. Three body bullets\n\n- **Freeze-dried organ, and nothing else.** Full ingredient list is on every product page — read it before you buy, like you do with everything else you feed.\n- **Made for people who already cook for their dog.** These are food, not a supplement regimen. Crumble over a bowl, use as a training reward, feed as-is.\n- **Spring bundles are back.** Same single-ingredient treats, sized for the season's heavier feeding routine.\n\n---\n\n## 3. CTA line\n\n**Shop the Spring bundle — 15% off through Sunday →**\n\nConstraints applied to that offer:\n- 15% sits under the 20% discount cap (`gov_discount_cap`).\n- **Unsure:** I don't have your unit prices, so I can't confirm 15% keeps every SKU at or above the $29 MAP. Verify before send — if any SKU lands below $29, cut the discount or exclude that SKU, and log a MAP exception (`gov_no_wholesale_map`, `gov_require_map_note`).\n- Not stackable with subscribe-and-save (`gov_no_stack_discount`).\n\nPre-send checklist: unsubscribe link + physical address in footer, image alt text, 10% email holdout, ingredient list live on the PDP.\n\n---\n\n## 4. Verdict on the Growth proposal: **Reject — all three parts**\n\n**Meta prospecting restart — reject.**\n- Jordan killed Meta prospecting 8 Mar 2026; CAC went 40 → 72. Recorded as a decision, not a maybe.\n- A creative test on 1 Mar 2026 was negative.\n- The June 2026 audience retest was also negative: CAC 72 → 68. Still above the 40 it started at, and it was left paused.\n- A 10 Aug 2026 \"keep meta\" decision is logged as negative.\n- Meta is currently a paused channel. Nothing in the record has changed the economics, so a restart this month is re-running a test that has now failed twice.\n\n**35% off — reject.**\n- Violates `gov_discount_cap` (forbids discounts deeper than 20%).\n- Also collides with the $29 MAP and the standing instruction not to break MAP in DTC email. 35% almost certainly breaches it, though I don't have unit prices to confirm.\n\n**Joint-stiffness copy — reject.**\n- Violates `gov_no_medical` (forbids medical_outcome claims). \"Treats joint stiffness\" is a treatment claim on a food product.\n- Off-brand independent of the rule: this is food, not a veterinary drug, the primary buyer bounces on medical-sounding copy, and spring is wellness language, not medical.\n\n**What I'd run instead:** put the spend and the Spring offer through email (Klaviyo). It's the core channel, the Feb 2026 frequency test is the one that worked, and every \"keep email\" decision since has been positive — most recently 2 Aug 2026 (18,000 → 18,420). Google Search is also active and has held positive. If Growth wants a paid prospecting swing, that's a separate conversation with a hypothesis that addresses why CAC doubled — not a 35%-off medical-claim ad."
+    },
+    {
+      "arm": "T",
+      "run": 5,
+      "tokens_in": 19016,
+      "tokens_out": 1924,
+      "cache_read": 0,
+      "rounds": 3,
+      "round_detail": [
+        {
+          "prompt_tokens": 1527,
+          "completion_tokens": 234,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "meta_prospecting",
+                  "email",
+                  "spring_offer",
+                  "joint_stiffness_claim"
+                ]
+              }
+            },
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "start",
+                  "channel": "meta_prospecting",
+                  "target": "meta_prospecting",
+                  "discount_pct": 35,
+                  "claims": [
+                    "treats joint stiffness"
+                  ],
+                  "audience": "prospecting",
+                  "text": "Spring offer, 35% off, product treats joint stiffness"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 7279,
+          "completion_tokens": 375,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "target": "email",
+                  "discount_pct": 20,
+                  "claims": [
+                    "freeze-dried single-ingredient organ treats",
+                    "spring wellness topper for home-cooked bowls",
+                    "full ingredient list on product page"
+                  ],
+                  "audience": "existing Klaviyo list, home-cook pet owners 28-44",
+                  "text": "Spring wellness email, 20% off, no medical claims, ingredient-forward copy, 10% holdout, unsub + physical address in footer, alt text on images"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10210,
+          "completion_tokens": 1315,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "meta_prospecting",
+              "email",
+              "spring_offer",
+              "joint_stiffness_claim"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "start",
+              "channel": "meta_prospecting",
+              "target": "meta_prospecting",
+              "discount_pct": 35,
+              "claims": [
+                "treats joint stiffness"
+              ],
+              "audience": "prospecting",
+              "text": "Spring offer, 35% off, product treats joint stiffness"
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "target": "email",
+              "discount_pct": 20,
+              "claims": [
+                "freeze-dried single-ingredient organ treats",
+                "spring wellness topper for home-cooked bowls",
+                "full ingredient list on product page"
+              ],
+              "audience": "existing Klaviyo list, home-cook pet owners 28-44",
+              "text": "Spring wellness email, 20% off, no medical claims, ingredient-forward copy, 10% holdout, unsub + physical address in footer, alt text on images"
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "answer": "Growth's proposal came back **blocked**. Here is the compliant version, on email rather than Meta.\n\n---\n\n## 1. Email subject line\n\n**\"Spring bowls, back in stock: single-ingredient organ treats\"**\n\n*(Alt, if you want the offer in the subject: \"20% off the topper your home-cooked bowl was missing\")*\n\n---\n\n## 2. Three body bullets\n\n- **One ingredient. That's the whole list.** Freeze-dried organ — nothing sprayed on, nothing filled in. The full ingredient panel is on every product page, because we know you'll read it.\n- **Built for people who already cook for their dog.** You've handled the protein, the veg, the portioning. This is the topper that fits into a bowl you already made, not a replacement for it.\n- **Spring feeding, simply.** Lighter bowls, more time outside, more training treats in your pocket. Crumble it, top it, or hand it over whole.\n\n---\n\n## 3. CTA line\n\n**Shop the spring restock — 20% off through Sunday →**\n\n---\n\n## 4. Verdict on Growth's proposal: **Reject — all three parts**\n\n**Meta prospecting restart — reject.**\nMeta prospecting carries a `no_start` standing constraint. Jordan stopped it on 8 Mar 2026 after CAC went 40 → 72. A June audience test was still negative, CAC 72 → 68, and it was left paused. The most recent confirmed decision (10 Aug 2026) was to keep it paused, outcome negative. This isn't a close call, and I can't lift it — that requires a new confirmed operator decision from you.\n\n**35% off — reject.**\nIt's a hard violation of the discount cap rule (`gov_discount_cap`, operator-set 3 Jul 2025), which forbids anything deeper than 20%. That's what returned the `blocked` verdict. I've written the campaign at 20%, the maximum allowed.\n\n**Joint-stiffness copy — reject.**\n\"Treats joint stiffness\" is a medical outcome claim, forbidden under `gov_no_medical`. It's also wrong for the brand on two counts: this is food, not a veterinary drug, and the primary buyer bounces on medical-sounding copy. The brand context is explicit that spring is wellness language, not medical. Hence the ingredient-forward angle above.\n\n---\n\n### Before this sends — three things to check\n\n1. **MAP.** MAP is $29 and you don't break it in DTC emails. I don't know the base price of the SKUs in this send, so **I'm unsure whether 20% off keeps every item at or above $29.** Please confirm, or exclude the SKUs it would push under. If any exception is intentional, it has to be logged (`gov_require_map_note`).\n2. **No stacking.** This 20% cannot stack with subscribe-and-save (`gov_no_stack_discount`). Suppress the code on subscription orders.\n3. **Standing constraints on email** — flagged for your visibility: email is `protect`, kept after a positive outcome (revenue 18,000 → 18,420, 2 Aug 2026). Treat it accordingly.\n\n**Send requirements to confirm:** 10% holdout, unsubscribe link and physical address in footer, alt text on all images, ingredient list live on the PDP. UTMs are required on paid URLs — not applicable here since this is owned email, but relevant if you syndicate the creative.\n\n---\n\nIf Growth wants a paid test this quarter, Google Search is active and protected (kept 9 Jul 2026, positive) — a better place to spend than reopening Meta.\n\nWant me to record the rejection of the Meta restart as a decision? I haven't logged anything — that's yours to confirm."
+    }
+  ],
+  "regraded_at": "2026-09-03T11:55:59.367Z",
+  "regraded_from_grader_version": 2
+}

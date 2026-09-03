@@ -6,7 +6,8 @@
       "domain": "copy",
       "action": "claim",
       "object": "medical_outcome",
-      "created_at": "2025-06-12T00:00:00.000Z"
+      "created_at": "2025-06-12T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_discount_cap",
@@ -14,8 +15,10 @@
       "domain": "offers",
       "action": "discount",
       "object": "deeper_than_20_pct",
+      "op": "gt",
       "value": 20,
-      "created_at": "2025-07-03T00:00:00.000Z"
+      "created_at": "2025-07-03T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_competitor",
@@ -23,7 +26,8 @@
       "domain": "copy",
       "action": "mention_competitor",
       "object": "named_brand",
-      "created_at": "2025-08-01T00:00:00.000Z"
+      "created_at": "2025-08-01T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_kids",
@@ -31,7 +35,8 @@
       "domain": "audience",
       "action": "target_audience",
       "object": "children",
-      "created_at": "2025-08-20T00:00:00.000Z"
+      "created_at": "2025-08-20T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_ugc",
@@ -39,7 +44,8 @@
       "domain": "copy",
       "action": "use_ugc",
       "object": "without_release",
-      "created_at": "2025-09-09T00:00:00.000Z"
+      "created_at": "2025-09-09T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_compare",
@@ -47,7 +53,8 @@
       "domain": "offers",
       "action": "compare_at",
       "object": "inflated_compare_at",
-      "created_at": "2025-10-02T00:00:00.000Z"
+      "created_at": "2025-10-02T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_sms_late",
@@ -55,7 +62,8 @@
       "domain": "channel",
       "action": "send",
       "object": "sms_after_21h",
-      "created_at": "2025-11-11T00:00:00.000Z"
+      "created_at": "2025-11-11T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_guarantee",
@@ -63,7 +71,8 @@
       "domain": "legal",
       "action": "guarantee",
       "object": "unlimited_money_back",
-      "created_at": "2025-12-01T00:00:00.000Z"
+      "created_at": "2025-12-01T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_health_badge",
@@ -71,7 +80,8 @@
       "domain": "copy",
       "action": "claim",
       "object": "fda_approved",
-      "created_at": "2026-01-08T00:00:00.000Z"
+      "created_at": "2026-01-08T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_stack_discount",
@@ -79,7 +89,8 @@
       "domain": "offers",
       "action": "discount",
       "object": "stack_with_subscribe",
-      "created_at": "2026-02-14T00:00:00.000Z"
+      "created_at": "2026-02-14T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_tiktok_sound",
@@ -87,7 +98,8 @@
       "domain": "channel",
       "action": "use_ugc",
       "object": "unlicensed_audio",
-      "created_at": "2026-03-02T00:00:00.000Z"
+      "created_at": "2026-03-02T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_no_wholesale_map",
@@ -95,7 +107,8 @@
       "domain": "offers",
       "action": "discount",
       "object": "below_map",
-      "created_at": "2026-04-18T00:00:00.000Z"
+      "created_at": "2026-04-18T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_unsub",
@@ -103,7 +116,8 @@
       "domain": "legal",
       "action": "send",
       "object": "unsubscribe_in_footer",
-      "created_at": "2025-06-12T00:00:00.000Z"
+      "created_at": "2025-06-12T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_addr",
@@ -111,7 +125,8 @@
       "domain": "legal",
       "action": "send",
       "object": "physical_address",
-      "created_at": "2025-06-12T00:00:00.000Z"
+      "created_at": "2025-06-12T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_ingredient",
@@ -119,7 +134,8 @@
       "domain": "copy",
       "action": "claim",
       "object": "ingredient_list_on_pdp",
-      "created_at": "2025-09-01T00:00:00.000Z"
+      "created_at": "2025-09-01T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_utm",
@@ -127,7 +143,8 @@
       "domain": "ops",
       "action": "send",
       "object": "utm_on_paid_urls",
-      "created_at": "2025-10-20T00:00:00.000Z"
+      "created_at": "2025-10-20T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_holdout",
@@ -135,7 +152,8 @@
       "domain": "channel",
       "action": "send",
       "object": "email_holdout_10pct",
-      "created_at": "2026-01-15T00:00:00.000Z"
+      "created_at": "2026-01-15T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_consent",
@@ -143,7 +161,8 @@
       "domain": "audience",
       "action": "send",
       "object": "sms_explicit_consent",
-      "created_at": "2026-02-01T00:00:00.000Z"
+      "created_at": "2026-02-01T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_alt_text",
@@ -151,7 +170,8 @@
       "domain": "copy",
       "action": "send",
       "object": "image_alt_text",
-      "created_at": "2026-05-05T00:00:00.000Z"
+      "created_at": "2026-05-05T00:00:00.000Z",
+      "created_by": "operator"
     },
     {
       "id": "gov_require_map_note",
@@ -159,7 +179,8 @@
       "domain": "offers",
       "action": "discount",
       "object": "map_exception_logged",
-      "created_at": "2026-06-06T00:00:00.000Z"
+      "created_at": "2026-06-06T00:00:00.000Z",
+      "created_by": "operator"
     }
   ]
 }

@@ -14,7 +14,9 @@
     "start": "node dist/index.js",
     "benchmark": "npm run build && tsx src/benchmark/run.ts",
     "benchmark:large": "npm run build && tsx src/benchmark/run.ts --large",
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "benchmark:pool": "tsx src/benchmark/run.ts --pool",
+    "benchmark:regrade": "tsx src/benchmark/run.ts --regrade"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +34,9 @@
     "zod": "^4.5.4"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.123.0",
     "@types/node": "^26.4.1",
+    "gpt-tokenizer": "^4.0.0",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   }
