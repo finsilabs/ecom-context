@@ -32,6 +32,16 @@ Tool calls: `context.check` 5/5; `history.record` 0. Control verdict: `ok`. Resu
 
 The losing measurements remain: on the original small task, paste was 420 input / 0 errors and the five-tool server was 1,909 input / 0 errors. On the original large task, paste was 390 input / 2 errors and the five-tool server was 3,815 input / 1 error. Those measurements are not discarded.
 
+Round 2 evaluator payload measurements after the no-proposal fix (repository fixture; approximate JSON token count is UTF-8 characters divided by four, since this package does not bundle a model tokenizer):
+
+| call shape | payload chars | approximate tokens |
+|---|---:|---:|
+| proposal supplied | 1,373 | 344 |
+| proposal absent, target supplied | 379 | 95 |
+| empty input | 379 | 95 |
+
+The no-proposal response contains only `brand`, `standing_constraints`, and `unresolved_targets`; it does not return the rule list, target registry, or decision log.
+
 ## Scope and assumptions
 
 No connectors, cloud, auth, UI, importer, embeddings, performance metrics, or migrations. The design still assumes agents call the tool, operators confirm proposed records, target aliases remain stable, semantic rules are pattern-limited, and external hosts present tool descriptions. The benchmark is synthetic and does not establish those assumptions.
