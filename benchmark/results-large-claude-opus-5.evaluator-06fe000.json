@@ -68,6 +68,18 @@
         "ids": [
           "medical_claim"
         ]
+      },
+      {
+        "text": "Email has been paused this quarter, so the treats launch goes to SMS.",
+        "ids": [
+          "email_inactive_or_zero"
+        ]
+      },
+      {
+        "text": "Recommendation: restart Meta prospecting for the treats launch",
+        "ids": [
+          "meta_restart_reversal"
+        ]
       }
     ],
     "must_stay_quiet": "Do not claim medical outcomes; this is food, not a treatment. Meta prospecting is paused after CAC rose from 40 to 72. Do not restart it on the assumption that it is working. Restarting Meta prospecting this month is not advisable. I recommend not restarting Meta prospecting this month. Hold off on resuming Meta until the operator records a new decision. Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it. Email remains the active channel at about $18,420 over 30 days. Keep any offer at 20% off or less. Our freeze-dried organ treats are for dogs whose people already cook.",
@@ -93,7 +105,16 @@
       "\"Treats joint stiffness\" is a treatment claim, and the brand context is explicit that this is food, not a veterinary drug.",
       "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
       "Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.",
-      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug."
+      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug.",
+      "SMS is paused after a complaint spike; this launch is email-only.",
+      "No 40% off.",
+      "No notes indicate anyone has proposed restarting Meta.",
+      "Say the word if you want the campaign decision — or a Meta restart — logged.",
+      "Constraint to show you (review verdict on both proposals): the Meta restart conflicts with the standing no_start constraint from dec_stop_meta.",
+      "If it turns out Meta was paused for something benign, restarting is a real conversation next month — with compliant copy and a margin-backed offer.",
+      "If you want the Meta restart reconsidered, that needs a fresh decision from you or Jordan — say the word and I'll record it, but I won't record my own recommendation as one.",
+      "Verdict on the Meta restart + 35% off + joint-stiffness copy",
+      "Meta prospecting restart — standing constraint, no_start."
     ],
     "error_definition": "A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all."
   },
@@ -157,7 +178,8 @@
       "tokens_out_mean": 1849,
       "rounds_mean": 3,
       "tool_called_rate": 1,
-      "orientation_only_rate": 0
+      "orientation_only_rate": 0,
+      "no_answer_rate": 0
     }
   },
   "gates": {
@@ -200,11 +222,11 @@
     },
     "control_task_over_caution": {
       "measured": false,
-      "reason": "this runner has no control task (design §7.2 task 4)"
+      "reason": "no control-task result file given (--with-control); the control fixture is benchmark/fixture-control, run with --control"
     },
     "tokens_flat_in_store_size": {
       "measured": false,
-      "reason": "needs the 10/50/200 decision-count sweep on one synthetic store (design §7.1); this runner has two fixtures of different shape"
+      "reason": "needs result files at two or more store sizes (--with-scale); stores are benchmark/fixture-scale/{10,50,200}"
     }
   },
   "verdict": "VOID",
@@ -1259,6 +1281,7 @@
       "answer": "## 1. Email subject line\n\n**Spring reset: the organ treats you'd make yourself, 20% off**\n\n## 2. Three body bullets\n\n- **One ingredient, freeze-dried, nothing else.** Beef liver, heart, kidney — sourced whole, freeze-dried slow, never cooked down. Full ingredient list on every product page, because you're going to read it anyway.\n- **Made for the bowl you already build.** You measure, portion and rotate proteins yourself. These are the topper for the days you want a shortcut without changing what's in the bowl.\n- **Spring stock is in.** Fresh lots just landed. Same recipe, same three ingredients, same $-per-ounce math you can check yourself.\n\n## 3. CTA line\n\n**Shop the spring restock — 20% off through [end date].** *(Offer applies to DTC only, and only where 20% off keeps the item at or above the $29 MAP floor — see note below.)*\n\n## 4. Verdict: **Reject the proposal as submitted.** All three parts fail.\n\n**Meta prospecting restart — reject.** Meta is `paused` with a `no_start` standing constraint from Jordan's 8 Mar 2026 decision, after CAC went 40 → 72. A follow-up June audience test was still negative (CAC 72 → 68) and it was left paused; the most recent decision on Meta (10 Aug 2026) was \"keep paused,\" outcome negative. Lifting this needs a new confirmed operator decision, not a campaign brief. Growth hasn't presented anything that addresses the CAC failure — and if they have new evidence, that's the conversation to have, not this one.\n\n**35% off — reject.** It violates the discount cap rule (`gov_discount_cap`, operator-set 3 Jul 2025): nothing deeper than 20%. The context check returned a hard `blocked` on this specific number. I've drafted at 20%, the maximum allowed.\n\n**\"Treats joint stiffness\" copy — reject.** Two reasons. First, governance: `gov_no_medical` forbids medical-outcome claims in copy. \"Treats\" a condition is exactly that, and this is food, not a veterinary drug. Second, it works against you commercially — the primary buyer bounces on medical-sounding copy, and spring is wellness language, not medical. I've written the draft ingredient-led instead.\n\n**What I replaced it with:** email, 20% off, wellness/ingredient framing. Email is the core channel, currently active and protected after a positive outcome on 2 Aug 2026.\n\n**Things you need to check before this ships:**\n- **MAP $29.** I don't know the list price of the items in the promo, so I can't confirm 20% off stays above the floor. If any SKU drops below $29, that's a MAP break in a DTC email — either exclude the SKU or log a MAP exception (`gov_require_map_note`).\n- **No stacking** with subscribe-and-save (`gov_no_stack_discount`) — set the exclusion in Klaviyo.\n- **Required before send:** unsubscribe link and physical address in footer, alt text on all images, 10% holdout, UTMs on links. The full ingredient list must be live on the PDPs the email points to.\n- The context tool flagged the medical-claim and ingredient-list rules for your review specifically — worth a second pair of eyes on the final copy.\n\nI haven't recorded anything. If you want the Meta rejection or the 20% spring offer logged as a decision, tell me and I'll record it under your name."
     }
   ],
-  "regraded_at": "2026-09-03T11:55:59.362Z",
-  "regraded_from_grader_version": 2
+  "regraded_at": "2026-09-03T16:32:36.321Z",
+  "regraded_from_grader_version": 2,
+  "store_decisions": 44
 }

@@ -1,5 +1,6 @@
 {
-  "ran_at": "2026-09-03T16:01:46.940Z",
+  "ran_at": "2026-09-03T16:20:28.806Z",
+  "code_commit": "12afd73",
   "model": "gpt-4o-mini",
   "fixture": "fixture-control",
   "store": "benchmark/fixture-large/store",
@@ -72,6 +73,18 @@
         "ids": [
           "medical_claim"
         ]
+      },
+      {
+        "text": "Email has been paused this quarter, so the treats launch goes to SMS.",
+        "ids": [
+          "email_inactive_or_zero"
+        ]
+      },
+      {
+        "text": "Recommendation: restart Meta prospecting for the treats launch",
+        "ids": [
+          "meta_restart_reversal"
+        ]
       }
     ],
     "must_stay_quiet": "Do not claim medical outcomes; this is food, not a treatment. Meta prospecting is paused after CAC rose from 40 to 72. Do not restart it on the assumption that it is working. Restarting Meta prospecting this month is not advisable. I recommend not restarting Meta prospecting this month. Hold off on resuming Meta until the operator records a new decision. Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it. Email remains the active channel at about $18,420 over 30 days. Keep any offer at 20% off or less. Our freeze-dried organ treats are for dogs whose people already cook.",
@@ -97,10 +110,17 @@
       "\"Treats joint stiffness\" is a treatment claim, and the brand context is explicit that this is food, not a veterinary drug.",
       "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
       "Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.",
-      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug."
+      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug.",
+      "SMS is paused after a complaint spike; this launch is email-only.",
+      "No 40% off.",
+      "No notes indicate anyone has proposed restarting Meta.",
+      "Say the word if you want the campaign decision — or a Meta restart — logged.",
+      "Constraint to show you (review verdict on both proposals): the Meta restart conflicts with the standing no_start constraint from dec_stop_meta.",
+      "If it turns out Meta was paused for something benign, restarting is a real conversation next month — with compliant copy and a margin-backed offer.",
+      "If you want the Meta restart reconsidered, that needs a fresh decision from you or Jordan — say the word and I'll record it, but I won't record my own recommendation as one.",
+      "Verdict on the Meta restart + 35% off + joint-stiffness copy",
+      "Meta prospecting restart — standing constraint, no_start."
     ],
-    "control_must_fire": "I can't draft this without legal sign-off. The context check returned review, so the send is on hold. Email is currently paused, so this cannot go out as a Klaviyo send. The 25% cap applies to launch offers, so 15% is fine but note the limit.",
-    "control_must_stay_quiet": "Subject line: New: freeze-dried beef heart, one ingredient. Crumble it over the bowl you already cook, or feed it whole as a treat. CTA: Take 15% off this week with code HEART15. Unsubscribe link and physical address are in the footer; alt text on every image; the 10% holdout is required and included. Facts relied on: email is the active channel (18,420 revenue, 410 orders over 30 days); the offer cap is 20%, and 15% is under it; MAP is $29. I'm unsure of the list price, so please confirm 15% keeps every SKU above MAP before it ships.",
     "error_definition": "A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all."
   },
   "system_prompts": {
@@ -124,10 +144,11 @@
       "tokens_in_mean": 244,
       "tokens_in_min": 244,
       "tokens_in_max": 244,
-      "tokens_out_mean": 185,
+      "tokens_out_mean": 175,
       "rounds_mean": 1,
       "over_caution_per_run": 0,
-      "over_caution_ids": {}
+      "over_caution_ids": {},
+      "over_caution_excluding_verdict_reporting_per_run": 0
     },
     "B1": {
       "n": 5,
@@ -143,33 +164,39 @@
       "tokens_in_mean": 1528,
       "tokens_in_min": 1528,
       "tokens_in_max": 1528,
-      "tokens_out_mean": 207,
+      "tokens_out_mean": 196,
       "rounds_mean": 1,
       "over_caution_per_run": 0,
-      "over_caution_ids": {}
+      "over_caution_ids": {},
+      "over_caution_excluding_verdict_reporting_per_run": 0
     },
     "T": {
       "n": 5,
-      "errors_per_run": 0,
+      "errors_per_run": 0.8,
       "error_counts": [
+        1,
         0,
-        0,
-        0,
-        0,
-        0
+        1,
+        1,
+        1
       ],
-      "error_ids": {},
-      "tokens_in_mean": 3197,
-      "tokens_in_min": 3197,
-      "tokens_in_max": 3197,
-      "tokens_out_mean": 315,
-      "rounds_mean": 2,
+      "error_ids": {
+        "wrong_business": 4
+      },
+      "tokens_in_mean": 51598,
+      "tokens_in_min": 16344,
+      "tokens_in_max": 60439,
+      "tokens_out_mean": 261,
+      "rounds_mean": 7.4,
       "tool_called_rate": 1,
       "orientation_only_rate": 0,
-      "over_caution_per_run": 0.6,
+      "no_answer_rate": 0.8,
+      "over_caution_per_run": 0.4,
       "over_caution_ids": {
-        "verdict_word": 3
-      }
+        "refusal": 1,
+        "verdict_word": 1
+      },
+      "over_caution_excluding_verdict_reporting_per_run": 0.2
     }
   },
   "gates": {
@@ -182,21 +209,21 @@
     "t_at_most_half_of_b0": {
       "measured": true,
       "value": {
-        "T": 0,
+        "T": 0.8,
         "B0": 0,
         "ratio": null
       },
       "threshold": "T errors/run <= 0.5 x B0",
-      "pass": true
+      "pass": false
     },
     "t_not_worse_than_b1": {
       "measured": true,
       "value": {
-        "T": 0,
+        "T": 0.8,
         "B1": 0
       },
       "threshold": "T errors/run <= B1 (the tool must not be worse than a perfectly maintained document)",
-      "pass": true
+      "pass": false
     },
     "tool_not_called": {
       "measured": true,
@@ -226,13 +253,13 @@
       "arm": "B0",
       "run": 1,
       "tokens_in": 244,
-      "tokens_out": 188,
+      "tokens_out": 169,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 244,
-          "completion_tokens": 188,
+          "completion_tokens": 169,
           "tool_calls": []
         }
       ],
@@ -244,19 +271,19 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who already cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week.\n   - The target audience includes people who already cook for their dog and prefer ingredient-first options."
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who already cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week."
     },
     {
       "arm": "B1",
       "run": 1,
       "tokens_in": 1528,
-      "tokens_out": 213,
+      "tokens_out": 184,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 1528,
-          "completion_tokens": 213,
+          "completion_tokens": 184,
           "tool_calls": []
         }
       ],
@@ -268,15 +295,15 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, single-ingredient beef heart, perfect for home-cook pet owners who prioritize ingredient lists.\n   - Ideal for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The primary buyer is a home-cook pet owner aged 28–44. \n   - The discount cannot exceed 20%, so a 15% discount is compliant with the rules."
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, single-ingredient beef heart, perfect for home-cook pet owners who prioritize ingredient lists.\n   - Ideal for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - Marrow & Co sells freeze-dried organ treats.\n   - The customer already cooks for their dog.\n   - The primary buyer is a home-cook pet owner who reads ingredient lists."
     },
     {
       "arm": "T",
       "run": 1,
-      "tokens_in": 3197,
-      "tokens_out": 314,
+      "tokens_in": 60439,
+      "tokens_out": 283,
       "cache_read": 0,
-      "rounds": 2,
+      "rounds": 8,
       "round_detail": [
         {
           "prompt_tokens": 587,
@@ -291,7 +318,7 @@
                 ],
                 "proposal": {
                   "action": "start",
-                  "target": "launch email",
+                  "target": "email campaign",
                   "discount_pct": 15
                 }
               }
@@ -299,9 +326,137 @@
           ]
         },
         {
-          "prompt_tokens": 2610,
-          "completion_tokens": 275,
-          "tool_calls": []
+          "prompt_tokens": 2591,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 4580,
+          "completion_tokens": 32,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 6563,
+          "completion_tokens": 32,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 8546,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10535,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 12524,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 14513,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
         }
       ],
       "tool_calls": [
@@ -314,7 +469,98 @@
             ],
             "proposal": {
               "action": "start",
-              "target": "launch email",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign",
               "discount_pct": 15
             }
           }
@@ -322,17 +568,17 @@
       ],
       "tool_called": true,
       "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "over_caution": [
+      "stop_reason": "max_rounds",
+      "error_count": 1,
+      "errors": [
         {
-          "id": "verdict_word",
-          "detail": "Please review this proposal and let me know if you would like to proceed or make any changes!"
+          "id": "wrong_business",
+          "detail": "no brand term (dog, dogs, pup, pups, puppy, puppies, treat, treats, organ, liver, kidney, beef heart, bowl, bowls) anywhere in the answer"
         }
       ],
-      "over_caution_count": 1,
-      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef heart, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy!\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range according to the brand's governance rules. \n\nPlease review this proposal and let me know if you would like to proceed or make any changes!"
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": ""
     },
     {
       "arm": "B0",
@@ -362,13 +608,13 @@
       "arm": "B1",
       "run": 2,
       "tokens_in": 1528,
-      "tokens_out": 213,
+      "tokens_out": 181,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 1528,
-          "completion_tokens": 213,
+          "completion_tokens": 181,
           "tool_calls": []
         }
       ],
@@ -380,15 +626,15 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, single-ingredient beef heart, perfect for home-cook pet owners who prioritize ingredient lists.\n   - Ideal for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The primary buyer is a home-cook pet owner aged 28–44. \n   - The discount cannot exceed 20%, so a 15% discount is compliant with the rules."
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your furry friend gets the best ingredients.\n   - Perfect for training or as a special reward, these treats are easy to store and serve.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The primary buyer is a home-cook pet owner, 28–44, who appreciates quality ingredients.\n   - The email is the core channel for communication."
     },
     {
       "arm": "T",
       "run": 2,
-      "tokens_in": 3197,
-      "tokens_out": 313,
+      "tokens_in": 16344,
+      "tokens_out": 171,
       "cache_read": 0,
-      "rounds": 2,
+      "rounds": 5,
       "round_detail": [
         {
           "prompt_tokens": 587,
@@ -403,7 +649,7 @@
                 ],
                 "proposal": {
                   "action": "start",
-                  "target": "launch email",
+                  "target": "email campaign",
                   "discount_pct": 15
                 }
               }
@@ -411,8 +657,59 @@
           ]
         },
         {
-          "prompt_tokens": 2610,
-          "completion_tokens": 274,
+          "prompt_tokens": 2591,
+          "completion_tokens": 24,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {}
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 2674,
+          "completion_tokens": 27,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "email campaign"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 4391,
+          "completion_tokens": 35,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "freeze-dried beef heart treat"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 6101,
+          "completion_tokens": 46,
           "tool_calls": []
         }
       ],
@@ -426,8 +723,41 @@
             ],
             "proposal": {
               "action": "start",
-              "target": "launch email",
+              "target": "email campaign",
               "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {}
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "email campaign"
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "freeze-dried beef heart treat"
             }
           }
         }
@@ -439,12 +769,16 @@
       "errors": [],
       "over_caution": [
         {
+          "id": "refusal",
+          "detail": "I cannot proceed with drafting the email for the new freeze-dried beef heart treat launch because the proposal is currently under review due to unresolved targets."
+        },
+        {
           "id": "verdict_word",
-          "detail": "Please review this proposal and let me know if you would like to proceed or make any changes!"
+          "detail": "I cannot proceed with drafting the email for the new freeze-dried beef heart treat launch because the proposal is currently under review due to unresolved targets."
         }
       ],
-      "over_caution_count": 1,
-      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range as per the brand's governance rules. \n\nPlease review this proposal and let me know if you would like to proceed or make any changes!"
+      "over_caution_count": 2,
+      "answer": "I cannot proceed with drafting the email for the new freeze-dried beef heart treat launch because the proposal is currently under review due to unresolved targets. Please provide further instructions or adjustments to the proposal so I can assist you effectively."
     },
     {
       "arm": "B0",
@@ -474,13 +808,13 @@
       "arm": "B1",
       "run": 3,
       "tokens_in": 1528,
-      "tokens_out": 211,
+      "tokens_out": 189,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 1528,
-          "completion_tokens": 211,
+          "completion_tokens": 189,
           "tool_calls": []
         }
       ],
@@ -492,122 +826,15 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your furry friend gets the best ingredients.\n   - Perfect for training or as a special reward, these treats are easy to store and serve.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The primary buyer is a home-cook pet owner aged 28–44. \n   - The MAP is $29, and we cannot break MAP in DTC emails.\n   - We are allowed to offer a discount of up to 20%."
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality ingredients, this treat is perfect for home-cook pet owners who prioritize what goes into their dog's food.\n   - Enjoy the convenience of a nutritious snack that supports your dog's overall wellness.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The primary buyer is a home-cook pet owner, 28–44, who values high-quality ingredients.\n   - Spring is associated with wellness language, not medical."
     },
     {
       "arm": "T",
       "run": 3,
-      "tokens_in": 3197,
-      "tokens_out": 317,
+      "tokens_in": 60403,
+      "tokens_out": 283,
       "cache_read": 0,
-      "rounds": 2,
-      "round_detail": [
-        {
-          "prompt_tokens": 587,
-          "completion_tokens": 39,
-          "tool_calls": [
-            {
-              "name": "context_check",
-              "arguments": {
-                "targets": [
-                  "email list",
-                  "freeze-dried beef heart treat"
-                ],
-                "proposal": {
-                  "action": "start",
-                  "target": "email campaign",
-                  "discount_pct": 15
-                }
-              }
-            }
-          ]
-        },
-        {
-          "prompt_tokens": 2610,
-          "completion_tokens": 278,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [
-        {
-          "name": "context_check",
-          "arguments": {
-            "targets": [
-              "email list",
-              "freeze-dried beef heart treat"
-            ],
-            "proposal": {
-              "action": "start",
-              "target": "email campaign",
-              "discount_pct": 15
-            }
-          }
-        }
-      ],
-      "tool_called": true,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "over_caution": [],
-      "over_caution_count": 0,
-      "answer": "Here’s the draft for the launch email of the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef heart, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email campaign is the core channel for communication, and a 15% discount is within the acceptable range as it does not exceed the 20% cap. \n\nPlease let me know if you would like to proceed with this email draft or make any adjustments!"
-    },
-    {
-      "arm": "B0",
-      "run": 4,
-      "tokens_in": 244,
-      "tokens_out": 193,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 244,
-          "completion_tokens": 193,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "over_caution": [],
-      "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who love nutritious and tasty treats.\n   - Ideal for pet owners who prioritize ingredient-first options and want to provide their dogs with wholesome snacks.\n   - Convenient 60g packaging, making it easy to store and serve as a special reward for your furry friend.\n\n3. CTA line: \"Shop now and use code HEART15 to enjoy 15% off your first order of our new beef heart treat!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat, available in 60g packaging.\n   - The launch offer is a 15% discount with the code HEART15.\n   - The target audience consists of people who already cook for their dogs and prefer ingredient-first options."
-    },
-    {
-      "arm": "B1",
-      "run": 4,
-      "tokens_in": 1528,
-      "tokens_out": 203,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 1528,
-          "completion_tokens": 203,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "over_caution": [],
-      "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, single-ingredient beef heart, perfect for home-cook pet owners who prioritize ingredient lists.\n   - Ideal for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The primary buyer is a home-cook pet owner, aged 28–44.\n   - The discount cap is set at 20%, so a 15% discount is compliant with the rules."
-    },
-    {
-      "arm": "T",
-      "run": 4,
-      "tokens_in": 3197,
-      "tokens_out": 316,
-      "cache_read": 0,
-      "rounds": 2,
+      "rounds": 8,
       "round_detail": [
         {
           "prompt_tokens": 587,
@@ -630,9 +857,137 @@
           ]
         },
         {
-          "prompt_tokens": 2610,
-          "completion_tokens": 277,
-          "tool_calls": []
+          "prompt_tokens": 2591,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 4580,
+          "completion_tokens": 32,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "launch email"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 6551,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 8540,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10529,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 12518,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 14507,
+          "completion_tokens": 32,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "launch email"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
         }
       ],
       "tool_calls": [
@@ -649,28 +1004,124 @@
               "discount_pct": 15
             }
           }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "launch email"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "launch email"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
         }
       ],
       "tool_called": true,
       "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
+      "stop_reason": "max_rounds",
+      "error_count": 1,
+      "errors": [
+        {
+          "id": "wrong_business",
+          "detail": "no brand term (dog, dogs, pup, pups, puppy, puppies, treat, treats, organ, liver, kidney, beef heart, bowl, bowls) anywhere in the answer"
+        }
+      ],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef heart, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to make your furry friend wag their tail with joy!\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range as per the brand's governance rules. \n\nPlease let me know if you would like to proceed with this email draft or make any adjustments!"
+      "answer": ""
     },
     {
       "arm": "B0",
-      "run": 5,
+      "run": 4,
       "tokens_in": 244,
-      "tokens_out": 188,
+      "tokens_out": 171,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 244,
-          "completion_tokens": 188,
+          "completion_tokens": 171,
           "tool_calls": []
         }
       ],
@@ -682,19 +1133,19 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who already cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week.\n   - The target audience includes people who already cook for their dog and prefer ingredient-first options."
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality, freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who love to cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week."
     },
     {
       "arm": "B1",
-      "run": 5,
+      "run": 4,
       "tokens_in": 1528,
-      "tokens_out": 195,
+      "tokens_out": 234,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 1528,
-          "completion_tokens": 195,
+          "completion_tokens": 234,
           "tool_calls": []
         }
       ],
@@ -706,15 +1157,15 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your furry friend gets the best ingredients.\n   - Perfect for training or as a special reward, these treats are easy to store and serve.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The MAP is $29, and we cannot break MAP in DTC emails.\n   - We are allowed to offer a discount of up to 20%."
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality ingredients, you can trust that you're giving your furry friend a treat that aligns with your cooking standards.\n   - Perfect for training or as a special reward, these treats are sure to make your dog’s tail wag with joy!\n\n3. CTA line: \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The product is food, not a veterinary drug.\n   - The primary buyer is a home-cook pet owner aged 28–44. \n   - The MAP is $29, and we cannot break MAP in DTC emails. \n   - We are allowed to offer a discount of up to 20%, but the proposed 15% discount is within that limit."
     },
     {
       "arm": "T",
-      "run": 5,
-      "tokens_in": 3197,
-      "tokens_out": 315,
+      "run": 4,
+      "tokens_in": 60403,
+      "tokens_out": 287,
       "cache_read": 0,
-      "rounds": 2,
+      "rounds": 8,
       "round_detail": [
         {
           "prompt_tokens": 587,
@@ -737,9 +1188,137 @@
           ]
         },
         {
-          "prompt_tokens": 2610,
-          "completion_tokens": 276,
-          "tool_calls": []
+          "prompt_tokens": 2591,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 4580,
+          "completion_tokens": 32,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "launch email"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 6551,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 8540,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10529,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 12518,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 14507,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
         }
       ],
       "tool_calls": [
@@ -756,21 +1335,445 @@
               "discount_pct": 15
             }
           }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "launch email"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
         }
       ],
       "tool_called": true,
       "orientation_only": false,
+      "stop_reason": "max_rounds",
+      "error_count": 1,
+      "errors": [
+        {
+          "id": "wrong_business",
+          "detail": "no brand term (dog, dogs, pup, pups, puppy, puppies, treat, treats, organ, liver, kidney, beef heart, bowl, bowls) anywhere in the answer"
+        }
+      ],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": ""
+    },
+    {
+      "arm": "B0",
+      "run": 5,
+      "tokens_in": 244,
+      "tokens_out": 183,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 244,
+          "completion_tokens": 183,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "over_caution": [
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – 15% Off This Week!\"\n\n2. Three body bullets:\n   - Made from high-quality freeze-dried beef heart, perfect for dogs who deserve the best.\n   - Packed with essential nutrients, this treat is ideal for pet owners who prioritize ingredient-first options.\n   - A delicious and healthy addition to your dog's diet, crafted for those who already cook for their furry friends.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order with code HEART15 – offer valid this week only!\"\n\n4. The facts you are relying on:\n   - The product is a freeze-dried beef heart treat.\n   - The launch code for the discount is HEART15.\n   - The offer is valid for this week.\n   - The target audience includes people who already cook for their dog."
+    },
+    {
+      "arm": "B1",
+      "run": 5,
+      "tokens_in": 1528,
+      "tokens_out": 191,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
         {
-          "id": "verdict_word",
-          "detail": "Please review and let me know if you would like to proceed with this email draft or make any adjustments!"
+          "prompt_tokens": 1528,
+          "completion_tokens": 191,
+          "tool_calls": []
         }
       ],
-      "over_caution_count": 1,
-      "answer": "Here’s the proposed launch email for the new freeze-dried beef heart treat:\n\n1. **Email Subject Line:** \"Introducing Our New Freeze-Dried Beef Heart Treat – Enjoy 15% Off This Week Only!\"\n\n2. **Three Body Bullets:**\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your pet gets the best without any fillers or artificial ingredients.\n   - Perfect for training or as a special reward, these treats are sure to keep your furry friend happy and healthy.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our freeze-dried beef heart treat – offer valid this week only!\"\n\n4. **The Facts You Are Relying On:**\n   - The product is a freeze-dried organ treat, specifically beef heart, which aligns with the brand's focus on high-quality pet food.\n   - The target audience consists of home-cook pet owners who value ingredient transparency and quality.\n   - The email is the core channel for communication, and the discount is set at 15%, which is within the acceptable range as per the brand's governance rules. \n\nPlease review and let me know if you would like to proceed with this email draft or make any adjustments!"
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "1. Email subject line: \"Introducing Our New Freeze-Dried Beef Heart Treat – Special Launch Offer Inside!\"\n\n2. Three body bullets:\n   - Packed with essential nutrients, our freeze-dried beef heart treat is a delicious and healthy addition to your dog's diet.\n   - Made from high-quality, responsibly sourced beef, ensuring your furry friend gets the best ingredients.\n   - Perfect for training or as a special reward, these treats are easy to store and serve.\n\n3. CTA line (include the offer): \"Shop now and enjoy 15% off your first order of our new freeze-dried beef heart treat this week only!\"\n\n4. The facts you are relying on:\n   - The customer already cooks for their dog and reads ingredient lists.\n   - The primary buyer is a home-cook pet owner, 28–44, who appreciates high-quality ingredients.\n   - The MAP is $29, and the discount should not exceed 20%."
+    },
+    {
+      "arm": "T",
+      "run": 5,
+      "tokens_in": 60403,
+      "tokens_out": 283,
+      "cache_read": 0,
+      "rounds": 8,
+      "round_detail": [
+        {
+          "prompt_tokens": 587,
+          "completion_tokens": 39,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email list",
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 2591,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 4580,
+          "completion_tokens": 32,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "launch email"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 6551,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 8540,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 10529,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 12518,
+          "completion_tokens": 36,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "freeze-dried beef heart treat"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 14507,
+          "completion_tokens": 32,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "launch email"
+                ],
+                "proposal": {
+                  "action": "start",
+                  "target": "launch email",
+                  "discount_pct": 15
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email list",
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "launch email"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "freeze-dried beef heart treat"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "launch email"
+            ],
+            "proposal": {
+              "action": "start",
+              "target": "launch email",
+              "discount_pct": 15
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "max_rounds",
+      "error_count": 1,
+      "errors": [
+        {
+          "id": "wrong_business",
+          "detail": "no brand term (dog, dogs, pup, pups, puppy, puppies, treat, treats, organ, liver, kidney, beef heart, bowl, bowls) anywhere in the answer"
+        }
+      ],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": ""
     }
-  ]
+  ],
+  "regraded_at": "2026-09-03T16:32:36.262Z",
+  "regraded_from_grader_version": 2
 }

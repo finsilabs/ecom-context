@@ -147,7 +147,7 @@ export type RunRecord = {
   arm: Arm; run: number; tokens_in: number; tokens_out: number; cache_read: number; rounds: number; round_detail: RoundRec[]; tool_calls: ToolCallRec[];
   tool_called: boolean; orientation_only: boolean; stop_reason: string; error_count: number; errors: GradedError[]; over_caution?: OverCautionError[]; over_caution_count?: number; answer: string;
 };
-export type ArmSummary = { n: number; errors_per_run: number; error_counts: number[]; error_ids: Record<string, number>; tokens_in_mean: number; tokens_in_min: number; tokens_in_max: number; tokens_out_mean: number; rounds_mean: number; tool_called_rate?: number; orientation_only_rate?: number; no_answer_rate?: number; over_caution_per_run?: number; over_caution_ids?: Record<string, number> };
+export type ArmSummary = { n: number; errors_per_run: number; error_counts: number[]; error_ids: Record<string, number>; tokens_in_mean: number; tokens_in_min: number; tokens_in_max: number; tokens_out_mean: number; rounds_mean: number; tool_called_rate?: number; orientation_only_rate?: number; no_answer_rate?: number; over_caution_per_run?: number; over_caution_ids?: Record<string, number>; over_caution_excluding_verdict_reporting_per_run?: number };
 
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : NaN);
 const r3 = (x: number) => Math.round(x * 1000) / 1000;
@@ -160,6 +160,7 @@ export function summarizeArm(runs: RunRecord[]): ArmSummary {
   if (runs.some((r) => r.over_caution !== undefined)) {
     const oc: Record<string, number> = {}; for (const r of runs) for (const e of r.over_caution ?? []) oc[e.id] = (oc[e.id] ?? 0) + 1;
     s.over_caution_per_run = r3(mean(runs.map((r) => r.over_caution_count ?? 0))); s.over_caution_ids = oc;
+    s.over_caution_excluding_verdict_reporting_per_run = r3(mean(runs.map((r) => (r.over_caution ?? []).filter((e) => e.id !== 'verdict_word').length)));
   }
   return s;
 }
@@ -167,14 +168,15 @@ export function summarizeArm(runs: RunRecord[]): ArmSummary {
 type Gate = { pass: boolean; measured: true; value: unknown; threshold: string } | { measured: false; reason: string };
 
 /** Design §7.5, applied to what this runner measures. Gates the runner cannot feed are reported as unmeasured, and SHIP requires every gate. */
-export type ControlGateInput = { files: string[]; B0: number; T: number; runs: number };          // over_caution + errors per run, pooled over the given files
+export type ControlGateInput = { files: string[]; B0: number; T: number; runs: number; B0_excluding_verdict_reporting: number; T_excluding_verdict_reporting: number; T_no_answer_rate: number };   // over_caution + errors per run, pooled over the given files
 export type ScaleGateInput = { files: string[]; points: { decisions: number; B1_tokens_in: number; T_tokens_in: number; T_errors_per_run: number; n: number }[] };
 
 /** Pools control-task result files: T's over_caution + errors per run must not exceed B0's (design §7.5). */
 export function controlGateFrom(files: string[]): ControlGateInput {
   const runs = files.flatMap((f) => (JSON.parse(readFileSync(resolvePath(ROOT, f), 'utf8')) as { task_kind?: string; runs: RunRecord[] }).runs);
-  const total = (arm: Arm) => { const rs = runs.filter((r) => r.arm === arm); return rs.length ? r3(mean(rs.map((r) => r.error_count + (r.over_caution_count ?? 0)))) : NaN; };
-  return { files, B0: total('B0'), T: total('T'), runs: runs.filter((r) => r.arm === 'T').length };
+  const total = (arm: Arm, excludeReporting = false) => { const rs = runs.filter((r) => r.arm === arm); return rs.length ? r3(mean(rs.map((r) => r.error_count + (r.over_caution ?? []).filter((e) => !excludeReporting || e.id !== 'verdict_word').length))) : NaN; };
+  const t = runs.filter((r) => r.arm === 'T');
+  return { files, B0: total('B0'), T: total('T'), runs: t.length, B0_excluding_verdict_reporting: total('B0', true), T_excluding_verdict_reporting: total('T', true), T_no_answer_rate: t.length ? r3(mean(t.map((r) => (r.answer.trim() ? 0 : 1)))) : NaN };
 }
 
 /** Groups scale result files by store size and pools arms across models per size. */
@@ -196,7 +198,7 @@ export function gatesFor(arms: Partial<Record<Arm, ArmSummary>>, extras: { contr
   gates.tool_not_called_plus_orientation_only = T ? { measured: true, value: noMechanism, threshold: '<= 0.30 of T runs, else STOP: the mechanism never ran on a proposal', pass: noMechanism <= 0.3 } : { measured: false, reason: 'T arm not run' };
   const c = extras.control;
   gates.control_task_over_caution = c && !Number.isNaN(c.B0) && !Number.isNaN(c.T)
-    ? { measured: true, value: { T_over_caution_plus_errors_per_run: c.T, B0_over_caution_plus_errors_per_run: c.B0, T_runs: c.runs, files: c.files }, threshold: 'T over_caution + errors per run <= B0 on the control task (design §7.5)', pass: c.T <= c.B0 }
+    ? { measured: true, value: { T_over_caution_plus_errors_per_run: c.T, B0_over_caution_plus_errors_per_run: c.B0, excluding_verdict_reporting: { T: c.T_excluding_verdict_reporting, B0: c.B0_excluding_verdict_reporting }, T_no_answer_rate: c.T_no_answer_rate, T_runs: c.runs, files: c.files }, threshold: 'T over_caution + errors per run <= B0 on the control task (design §7.5, over_caution as written: refusal, verdict mention, invented constraint)', pass: c.T <= c.B0 }
     : { measured: false, reason: 'no control-task result file given (--with-control); the control fixture is benchmark/fixture-control, run with --control' };
   const sc = extras.scale;
   if (sc && sc.points.length >= 2) {

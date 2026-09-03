@@ -21,6 +21,10 @@ describe('grader instrument (v2)', () => {
   it('must stay quiet on a correct rejection that quotes the forbidden proposal', () => assert.deepEqual(gradeAnswer(INSTRUMENT_MUST_STAY_QUIET_REJECTION, FACTS).errors, []));
   it('must stay quiet on each registered sentence, markdown included', () => { for (const t of INSTRUMENT_MUST_STAY_QUIET_EACH) assert.deepEqual(gradeSentences(t, FACTS), [], t); });
   it('assertGraderInstrument passes on the registered cases', () => assert.doesNotThrow(() => assertGraderInstrument(FACTS)));
+  it('the right business without the keyword dog still counts as on-brand; the human-wellness answer does not', () => {
+    assert.deepEqual(gradeAnswer('Freeze-dried beef liver, heart, or kidney. Crumble over a bowl. 15% off through Sunday.', FACTS).errors, []);
+    assert.equal(gradeAnswer('Embrace the season of renewal with our curated wellness products designed to rejuvenate your mind and body.', FACTS).errors[0]?.id, 'wrong_business');
+  });
   it('does not flag the product word Treats or wellness language', () => {
     assert.deepEqual(gradeAnswer('Email subject line: "Spring into Wellness: Special Offer on Marrow & Co Treats!"', FACTS).errors, []);
     assert.deepEqual(gradeAnswer('Spring vitality for dogs whose people already cook. Email is the active channel.', FACTS).errors, []);

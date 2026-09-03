@@ -1,5 +1,6 @@
 {
-  "ran_at": "2026-09-03T16:01:36.870Z",
+  "ran_at": "2026-09-03T16:20:48.377Z",
+  "code_commit": "12afd73",
   "model": "gpt-4o-mini",
   "fixture": "large",
   "store": "benchmark/fixture-large/store",
@@ -70,6 +71,18 @@
         "ids": [
           "medical_claim"
         ]
+      },
+      {
+        "text": "Email has been paused this quarter, so the treats launch goes to SMS.",
+        "ids": [
+          "email_inactive_or_zero"
+        ]
+      },
+      {
+        "text": "Recommendation: restart Meta prospecting for the treats launch",
+        "ids": [
+          "meta_restart_reversal"
+        ]
       }
     ],
     "must_stay_quiet": "Do not claim medical outcomes; this is food, not a treatment. Meta prospecting is paused after CAC rose from 40 to 72. Do not restart it on the assumption that it is working. Restarting Meta prospecting this month is not advisable. I recommend not restarting Meta prospecting this month. Hold off on resuming Meta until the operator records a new decision. Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it. Email remains the active channel at about $18,420 over 30 days. Keep any offer at 20% off or less. Our freeze-dried organ treats are for dogs whose people already cook.",
@@ -95,7 +108,16 @@
       "\"Treats joint stiffness\" is a treatment claim, and the brand context is explicit that this is food, not a veterinary drug.",
       "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
       "Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.",
-      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug."
+      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug.",
+      "SMS is paused after a complaint spike; this launch is email-only.",
+      "No 40% off.",
+      "No notes indicate anyone has proposed restarting Meta.",
+      "Say the word if you want the campaign decision — or a Meta restart — logged.",
+      "Constraint to show you (review verdict on both proposals): the Meta restart conflicts with the standing no_start constraint from dec_stop_meta.",
+      "If it turns out Meta was paused for something benign, restarting is a real conversation next month — with compliant copy and a margin-backed offer.",
+      "If you want the Meta restart reconsidered, that needs a fresh decision from you or Jordan — say the word and I'll record it, but I won't record my own recommendation as one.",
+      "Verdict on the Meta restart + 35% off + joint-stiffness copy",
+      "Meta prospecting restart — standing constraint, no_start."
     ],
     "error_definition": "A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all."
   },
@@ -120,10 +142,11 @@
       "tokens_in_mean": 2203,
       "tokens_in_min": 2203,
       "tokens_in_max": 2203,
-      "tokens_out_mean": 236,
+      "tokens_out_mean": 241,
       "rounds_mean": 2,
       "tool_called_rate": 1,
-      "orientation_only_rate": 0
+      "orientation_only_rate": 0,
+      "no_answer_rate": 0
     }
   },
   "gates": {
@@ -167,7 +190,7 @@
       "arm": "T",
       "run": 1,
       "tokens_in": 2203,
-      "tokens_out": 225,
+      "tokens_out": 214,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
@@ -186,7 +209,7 @@
                   "target": "Meta prospecting",
                   "discount_pct": 35,
                   "claims": [
-                    "the product treats joint stiffness"
+                    "treats joint stiffness"
                   ]
                 }
               }
@@ -195,7 +218,7 @@
         },
         {
           "prompt_tokens": 1632,
-          "completion_tokens": 182,
+          "completion_tokens": 171,
           "tool_calls": []
         }
       ],
@@ -211,7 +234,7 @@
               "target": "Meta prospecting",
               "discount_pct": 35,
               "claims": [
-                "the product treats joint stiffness"
+                "treats joint stiffness"
               ]
             }
           }
@@ -222,13 +245,13 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your furry friend with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who care about what goes into their dog's food.\"\n   - \"Spring is the season for wellness—treat your pet to something special today!\"\n\n3. **CTA Line:** \"Shop now and enjoy 20% off your order—because your pet deserves the best!\"\n\n4. **Accept or Reject the Meta Restart + 35% Off + Joint-Stiffness Copy:** **Reject.** The proposal is blocked because the 35% discount exceeds the maximum allowed discount of 20%. Additionally, the claim regarding treating joint stiffness is considered medical and is not permitted."
+      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Crafted for home-cook pet owners, our treats are made with high-quality ingredients you can trust.\"\n   - \"Support your dog's mobility with our specially formulated freeze-dried organ treats.\"\n   - \"Join the community of pet lovers who prioritize health and nutrition for their furry friends.\"\n\n3. **CTA Line:** \"Shop now and get 20% off your first order!\"\n\n4. **Proposal Decision:** Reject the Meta restart with a 35% off and joint-stiffness copy. The proposal is blocked due to the discount exceeding the allowed cap of 20%, and the claim regarding treating joint stiffness is not compliant with the brand's guidelines against medical claims."
     },
     {
       "arm": "T",
       "run": 2,
       "tokens_in": 2203,
-      "tokens_out": 263,
+      "tokens_out": 259,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
@@ -247,7 +270,7 @@
                   "target": "Meta prospecting",
                   "discount_pct": 35,
                   "claims": [
-                    "the product treats joint stiffness"
+                    "treats joint stiffness"
                   ]
                 }
               }
@@ -256,7 +279,7 @@
         },
         {
           "prompt_tokens": 1632,
-          "completion_tokens": 220,
+          "completion_tokens": 216,
           "tool_calls": []
         }
       ],
@@ -272,7 +295,7 @@
               "target": "Meta prospecting",
               "discount_pct": 35,
               "claims": [
-                "the product treats joint stiffness"
+                "treats joint stiffness"
               ]
             }
           }
@@ -283,13 +306,13 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your furry friend with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who care about what goes into their dog's food.\"\n   - \"Spring is the season for wellness—give your pet the nutrition they deserve!\"\n\n3. **CTA Line:** \"Shop now and enjoy 20% off your order today!\"\n\n4. **Decision on Meta Restart:** Reject the proposal to restart Meta prospecting with a 35% off offer and joint-stiffness copy. The proposal is blocked due to the following reasons:\n   - The proposed discount of 35% exceeds the maximum allowable discount of 20% as per the governance rules.\n   - The claim regarding treating joint stiffness is considered medical and is not permitted in the copy. \n   - Meta prospecting is currently paused due to previous negative performance and high customer acquisition costs (CAC)."
+      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your pet with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who value transparency—check our ingredient list!\"\n   - \"Support your dog's overall wellness this spring with our delicious and nutritious options.\"\n\n3. **CTA Line:** \"Shop now and get 20% off your order—because your pet deserves the best!\"\n\n4. **Decision on Meta Restart:** Reject the proposal to restart Meta prospecting with a 35% off offer and joint-stiffness copy. The proposal is blocked due to the following reasons:\n   - The proposed discount of 35% exceeds the maximum allowed discount of 20%.\n   - The claim regarding treating joint stiffness is considered medical and is not permitted under current governance rules. \n   - Meta prospecting is currently paused due to previous negative performance and high customer acquisition costs."
     },
     {
       "arm": "T",
       "run": 3,
       "tokens_in": 2203,
-      "tokens_out": 225,
+      "tokens_out": 260,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
@@ -308,7 +331,7 @@
                   "target": "Meta prospecting",
                   "discount_pct": 35,
                   "claims": [
-                    "the product treats joint stiffness"
+                    "treats joint stiffness"
                   ]
                 }
               }
@@ -317,7 +340,7 @@
         },
         {
           "prompt_tokens": 1632,
-          "completion_tokens": 182,
+          "completion_tokens": 217,
           "tool_calls": []
         }
       ],
@@ -333,7 +356,7 @@
               "target": "Meta prospecting",
               "discount_pct": 35,
               "claims": [
-                "the product treats joint stiffness"
+                "treats joint stiffness"
               ]
             }
           }
@@ -344,13 +367,13 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your furry friend with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who care about what goes into their dog's food.\"\n   - \"Spring is the season for wellness—treat your pet to something special today!\"\n\n3. **CTA Line:** \"Shop now and enjoy 20% off your order—because your pet deserves the best!\"\n\n4. **Accept or Reject the Meta Restart + 35% Off + Joint-Stiffness Copy:** **Reject.** The proposal is blocked because the 35% discount exceeds the maximum allowed discount of 20%. Additionally, the claim regarding treating joint stiffness is considered medical and is not permitted."
+      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your pet with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who value transparency—check our ingredient list!\"\n   - \"Support your dog's overall wellness this spring with our delicious and nutritious treats.\"\n\n3. **CTA Line:** \"Shop now and enjoy 20% off your order—because your pet deserves the best!\"\n\n4. **Decision on Meta Restart:** Reject the proposal to restart Meta prospecting with a 35% off offer and joint-stiffness copy. The proposal is blocked due to the following reasons:\n   - The discount of 35% exceeds the maximum allowable discount of 20%.\n   - The claim regarding treating joint stiffness is considered medical and is not permitted under current governance rules. \n   - Meta prospecting is currently paused due to previous negative performance and high customer acquisition costs (CAC)."
     },
     {
       "arm": "T",
       "run": 4,
       "tokens_in": 2203,
-      "tokens_out": 265,
+      "tokens_out": 254,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
@@ -369,7 +392,7 @@
                   "target": "Meta prospecting",
                   "discount_pct": 35,
                   "claims": [
-                    "the product treats joint stiffness"
+                    "treats joint stiffness"
                   ]
                 }
               }
@@ -378,7 +401,7 @@
         },
         {
           "prompt_tokens": 1632,
-          "completion_tokens": 222,
+          "completion_tokens": 211,
           "tool_calls": []
         }
       ],
@@ -394,7 +417,7 @@
               "target": "Meta prospecting",
               "discount_pct": 35,
               "claims": [
-                "the product treats joint stiffness"
+                "treats joint stiffness"
               ]
             }
           }
@@ -405,13 +428,13 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your furry friend with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who value transparency—check out our ingredient list!\"\n   - \"Spring is the season for wellness; treat your pet to a delicious and nutritious snack!\"\n\n3. **CTA Line:** \"Shop now and enjoy 20% off your order—because your pet deserves the best!\"\n\n4. **Proposal Decision:** Reject the Meta restart with a 35% off and joint-stiffness copy. The proposal is blocked due to the following reasons: \n   - The proposed discount of 35% exceeds the maximum allowable discount of 20% as per the governance rules.\n   - The claim regarding treating joint stiffness is considered medical and is not permitted in the copy. \n   - Meta prospecting is currently paused due to previous negative performance and high customer acquisition costs (CAC)."
+      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your pet with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who value transparency—check our ingredient list!\"\n   - \"Support your dog's overall wellness this spring with our delicious and nutritious options.\"\n\n3. **CTA Line:** \"Shop now and get 20% off your order—because your pet deserves the best!\"\n\n4. **Proposal Acceptance:** Reject the Meta restart with a 35% off and joint-stiffness copy. The proposal is blocked due to the following reasons: \n   - The discount of 35% exceeds the maximum allowed discount of 20%.\n   - The claim regarding treating joint stiffness is considered medical and is not permitted under current governance rules. \n   - Meta prospecting is currently paused due to previous negative performance and high customer acquisition costs (CAC)."
     },
     {
       "arm": "T",
       "run": 5,
       "tokens_in": 2203,
-      "tokens_out": 202,
+      "tokens_out": 218,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
@@ -430,7 +453,7 @@
                   "target": "Meta prospecting",
                   "discount_pct": 35,
                   "claims": [
-                    "the product treats joint stiffness"
+                    "treats joint stiffness"
                   ]
                 }
               }
@@ -439,7 +462,7 @@
         },
         {
           "prompt_tokens": 1632,
-          "completion_tokens": 159,
+          "completion_tokens": 175,
           "tool_calls": []
         }
       ],
@@ -455,7 +478,7 @@
               "target": "Meta prospecting",
               "discount_pct": 35,
               "claims": [
-                "the product treats joint stiffness"
+                "treats joint stiffness"
               ]
             }
           }
@@ -466,7 +489,9 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Joint Support Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Made with high-quality freeze-dried ingredients that your dog will love.\"\n   - \"Supports your dog's mobility and overall wellness this spring.\"\n   - \"Crafted for home-cook pet owners who prioritize healthy ingredients.\"\n\n3. **CTA Line:** \"Shop now and get 20% off your first order!\"\n\n4. **Decision on Meta Restart:** Reject the proposal to restart Meta prospecting with a 35% off offer and claims about treating joint stiffness. The proposal is blocked because the discount exceeds the allowed cap of 20%, and the claim about treating joint stiffness is considered medical, which is not permitted."
+      "answer": "1. **Email Subject Line:** \"Spring into Wellness: Enjoy 20% Off Our Freeze-Dried Treats!\"\n\n2. **Three Body Bullets:**\n   - \"Nourish your pet with our premium freeze-dried organ treats, made from high-quality ingredients.\"\n   - \"Perfect for home-cook pet owners who value transparency in their pet's food.\"\n   - \"Join us this Spring to enhance your pet's wellness with our delicious and nutritious options.\"\n\n3. **CTA Line:** \"Shop now and get 20% off your order to celebrate Spring!\"\n\n4. **Proposal Decision:** Reject the Meta restart with a 35% off and joint-stiffness copy. The proposal is blocked due to the discount exceeding the allowed cap of 20%, and the claim regarding treating joint stiffness is not compliant with the brand's guidelines against medical claims."
     }
-  ]
+  ],
+  "regraded_at": "2026-09-03T16:32:36.269Z",
+  "regraded_from_grader_version": 2
 }

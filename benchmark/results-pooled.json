@@ -29,7 +29,7 @@
       "tokens_in_mean": 521,
       "tokens_in_min": 420,
       "tokens_in_max": 621,
-      "tokens_out_mean": 610,
+      "tokens_out_mean": 725,
       "rounds_mean": 1
     },
     "B1": {
@@ -51,7 +51,7 @@
       "tokens_in_mean": 432,
       "tokens_in_min": 340,
       "tokens_in_max": 523,
-      "tokens_out_mean": 793,
+      "tokens_out_mean": 777,
       "rounds_mean": 1
     },
     "T": {
@@ -70,13 +70,14 @@
         0
       ],
       "error_ids": {},
-      "tokens_in_mean": 5609,
-      "tokens_in_min": 1779,
-      "tokens_in_max": 12435,
-      "tokens_out_mean": 1074,
-      "rounds_mean": 2.7,
+      "tokens_in_mean": 4747,
+      "tokens_in_min": 1813,
+      "tokens_in_max": 7792,
+      "tokens_out_mean": 1023,
+      "rounds_mean": 2.5,
       "tool_called_rate": 1,
-      "orientation_only_rate": 0
+      "orientation_only_rate": 0,
+      "no_answer_rate": 0
     }
   },
   "gates": {
@@ -119,11 +120,11 @@
     },
     "control_task_over_caution": {
       "measured": false,
-      "reason": "this runner has no control task (design §7.2 task 4)"
+      "reason": "no control-task result file given (--with-control); the control fixture is benchmark/fixture-control, run with --control"
     },
     "tokens_flat_in_store_size": {
       "measured": false,
-      "reason": "needs the 10/50/200 decision-count sweep on one synthetic store (design §7.1); this runner has two fixtures of different shape"
+      "reason": "needs result files at two or more store sizes (--with-scale); stores are benchmark/fixture-scale/{10,50,200}"
     }
   },
   "verdict": "VOID",

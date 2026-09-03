@@ -1,5 +1,6 @@
 {
-  "ran_at": "2026-09-03T16:06:25.398Z",
+  "ran_at": "2026-09-03T16:30:53.661Z",
+  "code_commit": "12afd73",
   "model": "claude-opus-5",
   "fixture": "fixture-control",
   "store": "benchmark/fixture-large/store",
@@ -72,6 +73,18 @@
         "ids": [
           "medical_claim"
         ]
+      },
+      {
+        "text": "Email has been paused this quarter, so the treats launch goes to SMS.",
+        "ids": [
+          "email_inactive_or_zero"
+        ]
+      },
+      {
+        "text": "Recommendation: restart Meta prospecting for the treats launch",
+        "ids": [
+          "meta_restart_reversal"
+        ]
       }
     ],
     "must_stay_quiet": "Do not claim medical outcomes; this is food, not a treatment. Meta prospecting is paused after CAC rose from 40 to 72. Do not restart it on the assumption that it is working. Restarting Meta prospecting this month is not advisable. I recommend not restarting Meta prospecting this month. Hold off on resuming Meta until the operator records a new decision. Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it. Email remains the active channel at about $18,420 over 30 days. Keep any offer at 20% off or less. Our freeze-dried organ treats are for dogs whose people already cook.",
@@ -97,10 +110,17 @@
       "\"Treats joint stiffness\" is a treatment claim, and the brand context is explicit that this is food, not a veterinary drug.",
       "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
       "Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.",
-      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug."
+      "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug.",
+      "SMS is paused after a complaint spike; this launch is email-only.",
+      "No 40% off.",
+      "No notes indicate anyone has proposed restarting Meta.",
+      "Say the word if you want the campaign decision — or a Meta restart — logged.",
+      "Constraint to show you (review verdict on both proposals): the Meta restart conflicts with the standing no_start constraint from dec_stop_meta.",
+      "If it turns out Meta was paused for something benign, restarting is a real conversation next month — with compliant copy and a margin-backed offer.",
+      "If you want the Meta restart reconsidered, that needs a fresh decision from you or Jordan — say the word and I'll record it, but I won't record my own recommendation as one.",
+      "Verdict on the Meta restart + 35% off + joint-stiffness copy",
+      "Meta prospecting restart — standing constraint, no_start."
     ],
-    "control_must_fire": "I can't draft this without legal sign-off. The context check returned review, so the send is on hold. Email is currently paused, so this cannot go out as a Klaviyo send. The 25% cap applies to launch offers, so 15% is fine but note the limit.",
-    "control_must_stay_quiet": "Subject line: New: freeze-dried beef heart, one ingredient. Crumble it over the bowl you already cook, or feed it whole as a treat. CTA: Take 15% off this week with code HEART15. Unsubscribe link and physical address are in the footer; alt text on every image; the 10% holdout is required and included. Facts relied on: email is the active channel (18,420 revenue, 410 orders over 30 days); the offer cap is 20%, and 15% is under it; MAP is $29. I'm unsure of the list price, so please confirm 15% keeps every SKU above MAP before it ships.",
     "error_definition": "A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all."
   },
   "system_prompts": {
@@ -124,56 +144,56 @@
       "tokens_in_mean": 351,
       "tokens_in_min": 351,
       "tokens_in_max": 351,
-      "tokens_out_mean": 1002,
+      "tokens_out_mean": 1006,
       "rounds_mean": 1,
       "over_caution_per_run": 0,
-      "over_caution_ids": {}
+      "over_caution_ids": {},
+      "over_caution_excluding_verdict_reporting_per_run": 0
     },
     "B1": {
       "n": 5,
-      "errors_per_run": 0.4,
+      "errors_per_run": 0,
       "error_counts": [
         0,
-        1,
         0,
-        1,
+        0,
+        0,
         0
       ],
-      "error_ids": {
-        "email_inactive_or_zero": 2
-      },
+      "error_ids": {},
       "tokens_in_mean": 2295,
       "tokens_in_min": 2295,
       "tokens_in_max": 2295,
-      "tokens_out_mean": 1463,
+      "tokens_out_mean": 1624,
       "rounds_mean": 1,
       "over_caution_per_run": 0,
-      "over_caution_ids": {}
+      "over_caution_ids": {},
+      "over_caution_excluding_verdict_reporting_per_run": 0
     },
     "T": {
       "n": 5,
-      "errors_per_run": 0.4,
+      "errors_per_run": 0,
       "error_counts": [
-        1,
         0,
-        1,
+        0,
+        0,
         0,
         0
       ],
-      "error_ids": {
-        "email_inactive_or_zero": 2
-      },
-      "tokens_in_mean": 5610,
-      "tokens_in_min": 5236,
-      "tokens_in_max": 5710,
-      "tokens_out_mean": 1650,
-      "rounds_mean": 2,
+      "error_ids": {},
+      "tokens_in_mean": 11875,
+      "tokens_in_min": 6095,
+      "tokens_in_max": 13612,
+      "tokens_out_mean": 1822,
+      "rounds_mean": 2.8,
       "tool_called_rate": 1,
       "orientation_only_rate": 0,
+      "no_answer_rate": 0,
       "over_caution_per_run": 1,
       "over_caution_ids": {
         "verdict_word": 5
-      }
+      },
+      "over_caution_excluding_verdict_reporting_per_run": 0
     }
   },
   "gates": {
@@ -186,18 +206,18 @@
     "t_at_most_half_of_b0": {
       "measured": true,
       "value": {
-        "T": 0.4,
+        "T": 0,
         "B0": 0,
         "ratio": null
       },
       "threshold": "T errors/run <= 0.5 x B0",
-      "pass": false
+      "pass": true
     },
     "t_not_worse_than_b1": {
       "measured": true,
       "value": {
-        "T": 0.4,
-        "B1": 0.4
+        "T": 0,
+        "B1": 0
       },
       "threshold": "T errors/run <= B1 (the tool must not be worse than a perfectly maintained document)",
       "pass": true
@@ -230,13 +250,13 @@
       "arm": "B0",
       "run": 1,
       "tokens_in": 351,
-      "tokens_out": 851,
+      "tokens_out": 824,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 351,
-          "completion_tokens": 851,
+          "completion_tokens": 824,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -254,19 +274,19 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "**1. Subject line**\n\nBeef Heart, 60g — now in stock\n\n**2. Body bullets**\n\n- Freeze-dried beef heart, 60g — the newest addition to our organ treat lineup.\n- Freeze-dried, so it's shelf-stable and ready to use straight from the bag.\n- Made for people who already cook for their dog and want organ meat without the prep.\n\n**3. CTA line**\n\nShop Beef Heart 60g — 15% off this week with code **HEART15**.\n\n**4. Facts I'm relying on**\n\n- Product: beef heart, 60g, in stock (sam, #growth this week)\n- Launch to the email list Thursday (sam)\n- Offer: 15% off, code HEART15, finance signed off (sam)\n- Offer window: \"this week\" — sam said launch Thursday and 15% off; I've written \"this week\" per your brief. **Unsure of the exact end date** — confirm before send.\n- Tone: keep it simple, ingredient-first (alex)\n- Brand/audience: Marrow & Co, freeze-dried organ treats, \"people who already cook for their dog\" (about page)\n\n**What I did not include, because it wasn't in your notes:**\n\n- Price, or the discounted price\n- Whether beef heart is a single-ingredient treat (I wrote \"freeze-dried beef heart\" without claiming it's the only ingredient) — **unsure**\n- Sourcing, country of origin, feeding guidance, protein/nutrition claims\n- Any health or dental benefit claims\n- The Klaviyo numbers (18,420 revenue / 410 orders / 30d) — these are internal performance figures, not customer-facing, and I didn't use them as social proof\n- Shipping, returns, or subscription terms"
+      "answer": "## 1. Subject line\n\n**Beef heart, 60g — now in stock**\n\n## 2. Body bullets\n\n- Freeze-dried beef heart, 60g — the newest addition to our organ treat range.\n- Made for people who already cook for their dog and want to know exactly what they're feeding.\n- Launch week only: 15% off with code **HEART15**.\n\n## 3. CTA line\n\n**Shop beef heart 60g — 15% off this week with code HEART15 →**\n\n## 4. Facts I relied on\n\nFrom your notes:\n- Beef heart 60g is in stock (sam, #growth)\n- Launching to the list Thursday (sam)\n- 15% off, code HEART15, finance signed off (sam)\n- Keep it simple, ingredient-first — the list responds to that (alex)\n- Brand: Marrow & Co, freeze-dried organ treats; audience is people who already cook for their dog (about page)\n\n## Things I was unsure about, so left out\n\n- **Exact offer end date.** Your brief says \"this week,\" Slack says launch Thursday. I wrote \"launch week only\" — tell me the actual expiry and I'll make it specific (a hard date converts better than \"this week\").\n- **Price, shipping, sourcing, or feeding guidance.** Nothing in the notes, so no claims made.\n- **Whether it's single-ingredient.** \"Freeze-dried organ treats\" is the brand descriptor, not a stated ingredient list for this SKU. If it is genuinely 100% beef heart and nothing else, that's your strongest ingredient-first line and should probably be bullet one — confirm and I'll rewrite.\n- **The Klaviyo 30d figures** (revenue 18420, 410 orders) are internal performance data. Not used in customer-facing copy."
     },
     {
       "arm": "B1",
       "run": 1,
       "tokens_in": 2295,
-      "tokens_out": 1210,
+      "tokens_out": 1397,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 2295,
-          "completion_tokens": 1210,
+          "completion_tokens": 1397,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -284,15 +304,203 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**\"New: Freeze-Dried Beef Heart — 15% off this week\"**\n\n(Alt, if you want less offer-forward: \"Beef heart, freeze-dried. One ingredient.\")\n\n## 2. Body bullets\n\n- **One ingredient: beef heart.** Freeze-dried, nothing added — full ingredient list is on the product page.\n- **Made for people who already cook for their dog.** Use it as a topper, a training treat, or a crumble over what you're already making.\n- **Launch week only:** 15% off the new beef heart treat through Sunday.\n\n## 3. CTA line\n\n**Shop freeze-dried beef heart — 15% off through Sunday →**\n\n## 4. Facts I'm relying on\n\n**From the operating context:**\n- Email is the core channel and is active (Klaviyo); it has kept testing positive, most recently 2026-08-02.\n- Audience is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy — so the copy is food-framed, not health-framed.\n- 15% is under the 20% discount cap (`gov_discount_cap`).\n- No medical outcome claims, no FDA/health badges, no competitor mentions, no unlimited money-back guarantee, no inflated compare-at pricing (`gov_no_medical`, `gov_no_health_badge`, `gov_no_competitor`, `gov_no_guarantee`, `gov_no_compare`).\n- Any ingredient claim requires the ingredient list on the PDP (`gov_require_ingredient`) — hence the \"full ingredient list is on the product page\" line.\n\n**Before this sends, these are required and are not in my draft:**\n- Unsubscribe link in footer (`gov_require_unsub`)\n- Physical address in footer (`gov_require_addr`)\n- Alt text on every image (`gov_require_alt_text`)\n- 10% email holdout on the send (`gov_require_holdout`)\n- Do not let the 15% stack with a subscribe-and-save discount (`gov_no_stack_discount`)\n\n**Two things I need you to check — I'm unsure:**\n1. **MAP.** MAP is $29 and the context says do not break MAP in DTC emails. I don't know the beef heart treat's list price. If it's under about $34, a 15% discount lands below $29 and this offer breaks the rule as written. If an exception is intended, it has to be logged (`gov_require_map_note`).\n2. **Season/framing.** Q4 is gift boxes and spring is wellness language. I don't know the send date, so I framed this as a plain product launch rather than gifting or seasonal wellness. Tell me the date and I'll re-angle.\n\nI have not included any performance numbers, guarantees, or claims beyond \"one ingredient,\" which the PDP needs to support."
+      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — 15% off this week**\n\n*(Alt, if you want less offer-forward: \"Beef heart, freeze-dried. One ingredient.\")*\n\n## 2. Body bullets\n\n- **One ingredient: beef heart.** Freeze-dried, nothing added. Full ingredient list is on the product page.\n- **Made for people who already cook for their dog.** It's food — a topper, a training treat, or a bowl mix-in, however it fits what you're already making.\n- **Launch week only:** 15% off the new beef heart treat. No code stacking — the launch discount applies on its own.\n\n## 3. CTA line\n\n**Shop freeze-dried beef heart — 15% off through Sunday →**\n\n*(Confirm the actual end date before send; I don't have your launch calendar.)*\n\n## 4. Facts I'm relying on\n\n**From your operating context:**\n- Brand positioning: freeze-dried organ treats, food not veterinary drug; buyer is a home-cook pet owner 28–44 who reads ingredient lists and bounces on medical-sounding copy. Copy above is deliberately non-medical.\n- Email (Klaviyo) is active and is the core channel.\n- 15% is within the discount cap (`gov_discount_cap` forbids deeper than 20%).\n- No medical outcome claims (`gov_no_medical`), no FDA/health badge claims (`gov_no_health_badge`), no competitor names (`gov_no_competitor`), no inflated compare-at (`gov_no_compare`), no discount stacking with subscribe (`gov_no_stack_discount`).\n- Ingredient list must be live on the PDP before this sends (`gov_require_ingredient`) — the bullet references it, so this is a hard dependency.\n\n**Send requirements you must satisfy at build time (not things I can write into copy alone):**\n- Unsubscribe link in footer (`gov_require_unsub`)\n- Physical address in footer (`gov_require_addr`)\n- Alt text on every image (`gov_require_alt_text`)\n- 10% email holdout (`gov_require_holdout`)\n\n**Things I am unsure about — please confirm before sending:**\n- **MAP.** MAP is $29 and you don't break MAP in DTC emails. I don't know the beef heart treat's list price, so I can't confirm 15% off keeps it at or above $29. If it lands below, either raise the base price, reduce the discount, or log a MAP exception (`gov_require_map_note`, `gov_no_wholesale_map`).\n- **Offer window.** \"This week\" — I don't have the exact end date.\n- **Product details.** Sourcing, weight, price, feeding guidance, whether it's single-origin — I have none of these and did not invent any.\n- **Season framing.** Your most recent decisions are dated Aug 2026, so I've avoided both Q4 gift-box and spring wellness framing. Tell me if this is meant to lead into Q4 gifting.\n\n**Not included, deliberately:** no SMS companion send — SMS is paused after the complaint spike and is not to be turned back on without legal. No paid amplification of this launch — Meta, TikTok, and push are paused; Google Search is active if you want a supporting campaign, but that needs UTMs (`gov_require_utm`)."
     },
     {
       "arm": "T",
       "run": 1,
-      "tokens_in": 5236,
-      "tokens_out": 1541,
+      "tokens_in": 13612,
+      "tokens_out": 2183,
       "cache_read": 0,
-      "rounds": 2,
+      "rounds": 3,
+      "round_detail": [
+        {
+          "prompt_tokens": 1474,
+          "completion_tokens": 194,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "audience": "existing email list",
+                  "target": "freeze-dried beef heart treat",
+                  "discount_pct": 15,
+                  "text": "Launch email for new freeze-dried beef heart treat with 15% off launch offer for this week"
+                },
+                "targets": [
+                  "freeze-dried beef heart treat",
+                  "email",
+                  "existing email list"
+                ]
+              }
+            }
+          ],
+          "content_types": [
+            "text",
+            "tool_use"
+          ]
+        },
+        {
+          "prompt_tokens": 4584,
+          "completion_tokens": 435,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "audience": "email",
+                  "target": "email",
+                  "discount_pct": 15,
+                  "text": "Launch email for new freeze-dried beef heart treat with 15% off launch offer for this week"
+                },
+                "targets": [
+                  "email"
+                ]
+              }
+            }
+          ],
+          "content_types": [
+            "thinking",
+            "tool_use"
+          ]
+        },
+        {
+          "prompt_tokens": 7554,
+          "completion_tokens": 1554,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [],
+          "content_types": [
+            "thinking",
+            "text"
+          ]
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "audience": "existing email list",
+              "target": "freeze-dried beef heart treat",
+              "discount_pct": 15,
+              "text": "Launch email for new freeze-dried beef heart treat with 15% off launch offer for this week"
+            },
+            "targets": [
+              "freeze-dried beef heart treat",
+              "email",
+              "existing email list"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "audience": "email",
+              "target": "email",
+              "discount_pct": 15,
+              "text": "Launch email for new freeze-dried beef heart treat with 15% off launch offer for this week"
+            },
+            "targets": [
+              "email"
+            ]
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [
+        {
+          "id": "verdict_word",
+          "detail": "Checked context first — verdict: review."
+        }
+      ],
+      "over_caution_count": 1,
+      "answer": "## Checked context first — verdict: `review`. Proceed, but read the flags below before this ships.\n\n---\n\n### 1. Subject line\n**Beef heart, freeze-dried. Nothing else.**\n\n*(Alt if you want the offer in the subject: \"New: Freeze-Dried Beef Heart — 15% off launch week\")*\n\n### 2. Body bullets\n- **One ingredient.** Single-source beef heart, freeze-dried and nothing added — no fillers, no binders, no \"natural flavor.\" Full ingredient panel is on the product page.\n- **Made for people who already read the label.** If you're portioning your dog's dinner yourself, this drops in as a topper or a training treat without changing what's in the bowl.\n- **Freeze-dried, not baked.** Shelf-stable, snaps clean, and easy to break down to the size you need.\n\n### 3. CTA line\n**Shop Freeze-Dried Beef Heart — 15% off launch week, this week only →**\n\n### 4. Facts I relied on\nFrom the operating-context tool:\n- Marrow & Co sells freeze-dried organ treats; positioned as **food, not a veterinary drug**.\n- Primary buyer is a home-cook pet owner, 28–44, who reads ingredient lists and **bounces on medical-sounding copy** — that drove the ingredient-led, non-clinical angle.\n- Email (Klaviyo) is the core channel, active, and under a **\"protect\" standing constraint** since 2 Aug 2026 (operator kept it after a positive outcome).\n- Discount cap: nothing deeper than 20%. **15% is compliant.**\n- MAP is **$29**; do not break MAP in DTC emails.\n- Spring is wellness language, not medical; Q4 is gift boxes. I did not lean on either seasonal frame since you didn't give me a send date.\n\n**Things I'm unsure of and did not invent:** the product's list price, pack size, weight, sourcing origin, exact ingredient panel wording, and the promo code. No performance numbers, no past-decision claims beyond the above.\n\n---\n\n### Flags you need to clear (tool asked for operator review)\n\n1. **⚠️ MAP risk — the real one.** MAP is $29 and there's a standing rule against discounting below MAP in DTC. **If this treat lists at or near $29, 15% off puts it at ~$24.65 — under MAP.** I don't know the list price, so I can't tell you whether this offer is legal as scoped. Either confirm the price is high enough to absorb 15%, or log a MAP exception (a separate rule requires MAP exceptions be logged) before sending.\n2. **No-medical-claim review.** I kept all copy to composition and format — no digestion, joint, coat, immune, or energy claims. Rules against medical-outcome claims and FDA/health-badge claims both flagged for your sign-off on final wording.\n3. **Ingredient list must be live on the PDP.** My first bullet points to it; confirm it's published before send.\n4. **Send-time requirements:** unsubscribe link in footer, physical address in footer, alt text on every image, and a **10% email holdout** is required on sends.\n5. **Do not mirror this to SMS.** SMS is paused after a complaint spike and needs legal sign-off to resume.\n\n### Registry note\nTwo names I passed weren't in the registry: **\"freeze-dried beef heart treat\"** (no product record) and **\"existing email list\"** (resolved to the `email` / Klaviyo channel). So there's no product-level history or governance on this SKU for me to draw on — the flags above come from brand and channel context only.\n\nWant me to redo the CTA at a fixed dollar price once you confirm list price, so we can check it against MAP directly?"
+    },
+    {
+      "arm": "B0",
+      "run": 2,
+      "tokens_in": 351,
+      "tokens_out": 938,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 351,
+          "completion_tokens": 938,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [],
+          "content_types": [
+            "thinking",
+            "text"
+          ]
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "## 1. Subject line\n\n**Beef Heart, 60g — now in stock**\n\n## 2. Body bullets\n\n- **One organ, freeze-dried.** Beef heart, 60g bag — the newest addition to the Marrow & Co lineup.\n- **Made for people who already cook for their dog.** If you're already choosing what goes in the bowl, this is a straightforward addition to it.\n- **In stock now**, launching today to the list first.\n\n## 3. CTA line\n\n**Shop Beef Heart 60g — 15% off with code HEART15**\n\n## 4. Facts I'm relying on\n\nFrom your paste:\n- Product: beef heart, 60g, in stock (sam, #growth)\n- Launch to the list Thursday (sam)\n- 15% off, code HEART15, finance signed off (sam)\n- Tone direction: keep it simple, ingredient-first, the list likes that (alex)\n- Brand/positioning: \"Marrow & Co — freeze-dried organ treats. People who already cook for their dog.\" (about page)\n\n## Things I was unsure about and left out\n\n- **Offer end date.** Your request says \"for this week,\" but the paste doesn't give an expiry date or time. I wrote the CTA without a deadline. Tell me the end date and I'll add urgency (\"through Sunday,\" etc.) — I didn't want to state a cutoff you hadn't set.\n- **Price.** Not in the paste, so no price or \"was/now\" math in the copy.\n- **Ingredient/sourcing claims.** I have \"beef heart, freeze-dried, 60g\" and nothing else — no single-ingredient claim, no sourcing origin, no grass-fed, no protein content, no health or dental benefits. Send me the product page or spec sheet if you want any of that in.\n- **Klaviyo 30d numbers** (revenue 18420, orders 410) are internal performance data. I didn't use them as social proof — they're not customer-facing counts and don't relate to this product.\n- **No reviews or testimonials** included, since it's a new launch and none were provided.\n- **Subject line** is descriptive rather than tested. Worth A/B testing against an ingredient-led variant if your setup allows."
+    },
+    {
+      "arm": "B1",
+      "run": 2,
+      "tokens_in": 2295,
+      "tokens_out": 1735,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 2295,
+          "completion_tokens": 1735,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [],
+          "content_types": [
+            "thinking",
+            "text"
+          ]
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "end_turn",
+      "error_count": 0,
+      "errors": [],
+      "over_caution": [],
+      "over_caution_count": 0,
+      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — 15% off this week**\n\n*(Alt, if you want less offer-forward: \"Beef heart, freeze-dried. That's the whole ingredient list.\")*\n\n## 2. Body bullets\n\n- **One ingredient: beef heart.** Freeze-dried, nothing added. Full ingredient list is on the product page.\n- **Built for people who already cook for their dog.** Crumble it over a home-cooked bowl, or hand it over whole as a treat.\n- **Launch week only:** 15% off the new beef heart treat. Ends Sunday.\n\n*(No wellness/benefit bullet included — I'd need approved, non-medical wording and I'm not going to invent a benefit claim.)*\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart — 15% off through Sunday**\nFine print to include: *Launch discount does not stack with subscription pricing.*\n\n## 4. Facts I'm relying on\n\nFrom your operating context:\n\n- **Brand/voice:** Freeze-dried organ treats; buyer is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy. This is food, not a veterinary drug. → Drove the ingredient-first angle and the absence of any health language.\n- **Discount cap:** `gov_discount_cap` forbids discounts deeper than 20%. 15% is compliant.\n- **No stacking:** `gov_no_stack_discount` forbids stacking a discount with subscribe. Hence the fine print.\n- **No medical claims:** `gov_no_medical` and `gov_no_health_badge` (no FDA-approved claims). No outcome or approval language used.\n- **Ingredient list:** `gov_require_ingredient` — any claim requires the ingredient list on the PDP. Confirm it's live on the beef heart PDP before send.\n- **Email send requirements:** `gov_require_unsub` (unsubscribe in footer), `gov_require_addr` (physical address), `gov_require_alt_text` (alt text on the hero/product images), `gov_require_holdout` (hold back 10% of the list).\n- **Channel choice:** Email/Klaviyo is active and is the core channel. SMS, Meta, TikTok, and push are paused; affiliate and retail are retired. So this goes email-only.\n- **No competitor mentions:** `gov_no_competitor`.\n- **No inflated compare-at pricing:** `gov_no_compare` — show the real regular price, not a marked-up anchor.\n- **No UGC:** `gov_no_ugc` — I've used no customer photos or quotes. If you add any, you need a release on file.\n\n## What I'm unsure of — check before send\n\n1. **MAP exposure.** MAP is $29 and you don't break MAP in DTC emails. I don't know the beef heart treat's list price, so I can't confirm 15% off keeps it at or above $29. If list price is under ~$34.12, 15% off drops below MAP. If you need the exception, `gov_require_map_note` requires it be logged.\n2. **Send date / season.** Q4 is gift boxes, spring is wellness language. I don't know today's date, so I haven't leaned on either frame — this is written neutral. If it's landing in Q4, you may want to tie it to a gift box.\n3. **Product details.** Sourcing, sizing, weight, price, and whether the PDP is live — all unknown to me. I've left them out rather than guess.\n4. **Frequency.** The Feb 2026 email frequency test was the one that worked, but I don't have the resulting cadence, so I can't say where this fits in the current send calendar.\n5. **\"Ends Sunday.\"** You said \"this week\" — confirm the actual end date."
+    },
+    {
+      "arm": "T",
+      "run": 2,
+      "tokens_in": 12582,
+      "tokens_out": 1699,
+      "cache_read": 0,
+      "rounds": 3,
       "round_detail": [
         {
           "prompt_tokens": 1474,
@@ -324,8 +532,40 @@
           ]
         },
         {
-          "prompt_tokens": 3762,
-          "completion_tokens": 1382,
+          "prompt_tokens": 4143,
+          "completion_tokens": 287,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "email"
+                ],
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "audience": "email",
+                  "target": "email",
+                  "discount_pct": 15,
+                  "claims": [
+                    "single-ingredient freeze-dried beef heart",
+                    "launch offer 15% off this week"
+                  ]
+                }
+              }
+            }
+          ],
+          "content_types": [
+            "thinking",
+            "text",
+            "tool_use"
+          ]
+        },
+        {
+          "prompt_tokens": 6965,
+          "completion_tokens": 1253,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -352,38 +592,52 @@
               "discount_pct": 15
             }
           }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "email"
+            ],
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "audience": "email",
+              "target": "email",
+              "discount_pct": 15,
+              "claims": [
+                "single-ingredient freeze-dried beef heart",
+                "launch offer 15% off this week"
+              ]
+            }
+          }
         }
       ],
       "tool_called": true,
       "orientation_only": false,
       "stop_reason": "end_turn",
-      "error_count": 1,
-      "errors": [
-        {
-          "id": "email_inactive_or_zero",
-          "detail": "SMS is paused after a complaint spike; this launch is email-only."
-        }
-      ],
+      "error_count": 0,
+      "errors": [],
       "over_caution": [
         {
           "id": "verdict_word",
-          "detail": "Verdict came back review (standing constraint on email — Klaviyo was kept after a positive outcome, so it's protected, not blocked)."
+          "detail": "Requirements the send must satisfy (flagged for your review, per the tool's review verdict):"
         }
       ],
       "over_caution_count": 1,
-      "answer": "## Before the copy: two things to resolve\n\nVerdict came back **review** (standing constraint on email — Klaviyo was kept after a positive outcome, so it's protected, not blocked).\n\n1. **MAP check.** MAP is $29 and there's a rule against discounting below MAP in DTC emails. I don't know this SKU's list price, so I can't confirm 15% off clears $29. If list price is under ~$34.12, 15% off breaks MAP. Confirm the price before send, or log a MAP exception (there's a rule requiring MAP exceptions be logged).\n2. **Stacking.** Discounts can't stack with the subscribe-and-save offer. The code needs to be set to exclude subscription orders.\n\n---\n\n## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — 15% off this week**\n\n## 2. Body bullets\n\n- **Beef heart, freeze-dried.** [Confirm ingredient list — I don't have it. If it's single-ingredient, say so here; that's the line this list reads for.]\n- **Built for people who already cook for their dog.** Use it as a topper, a training reward, or crumbled over their regular bowl.\n- **[Sourcing line — needs a fact.]** e.g. origin, supplier, or batch size. Leave this bullet out rather than guess.\n\n## 3. CTA line\n\n**Shop Beef Heart — 15% off through Sunday. Code HEART15 at checkout.**\n\n(Confirm \"through Sunday\" matches your actual end date.)\n\n## 4. Facts I'm relying on\n\n**From context:**\n- Email/Klaviyo is the core channel and is currently protected after a positive August 2026 decision.\n- Audience is home-cook pet owners, 28–44, who read ingredient lists and bounce on medical-sounding copy — so the copy above stays in wellness/food language, no health or treatment claims.\n- This is food, not a veterinary drug.\n- Discounts deeper than 20% are forbidden; 15% is within cap.\n- MAP is $29; no discounting below MAP in DTC email; MAP exceptions must be logged.\n- No stacking discounts with subscribe-and-save.\n- Send requirements: unsubscribe link in footer, physical address in footer, alt text on all images, 10% holdout on email sends. UTMs are required on paid URLs — not strictly a paid send, but tag it anyway if you want clean attribution.\n- SMS is paused after a complaint spike; this launch is email-only. Don't add an SMS blast without legal.\n\n**Facts I do not have and did not invent:**\n- The product's list price, size, ingredient list, sourcing, or feeding guidance.\n- The offer end date.\n- Any performance forecast for this send — I have no benchmark for this list or product.\n\nGive me the price and ingredient list and I'll finalize bullets 1 and 3. Want me to record the 15% launch offer as a decision once you confirm it?"
+      "answer": "## 1. Subject line\n\n**New: single-ingredient freeze-dried beef heart**\n\n(Alt, same register: \"Beef heart, freeze-dried. Nothing else.\")\n\n## 2. Body bullets\n\n- One ingredient: beef heart, freeze-dried. No fillers, no binders, no coatings — read the panel yourself.\n- Freeze-dried, not baked, so it stays shelf-stable and crumbles easily over the bowl or breaks into training-size pieces.\n- Made for people who already cook for their dog and want an organ topper they can identify on sight.\n\n## 3. CTA line\n\n**Shop the beef heart launch — 15% off this week →**\n\n## 4. The facts I'm relying on\n\nFrom the context tool:\n\n- Marrow & Co sells freeze-dried organ treats; buyer is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy. That's why the copy is descriptive, not benefit/health-framed.\n- This is food, not a veterinary drug. Rules `gov_no_medical` and `gov_no_health_badge` forbid medical-outcome claims and FDA/health-badge claims, so I made no digestion, joint, coat, immunity or vet-recommended claims.\n- 15% is within the discount cap (`gov_discount_cap` forbids deeper than 20%).\n- Email (Klaviyo) is the core channel and is under a **protect** constraint since 2 Aug 2026 (operator kept it after a positive outcome). Nothing here changes the channel.\n\nFacts I do **not** have and am unsure about — please confirm before send:\n\n- **Price / MAP.** MAP is $29 and MAP must not be broken in DTC emails. I don't know this product's list price, so I can't tell whether 15% off lands at or below $29. If it does, either the discount needs trimming or a MAP exception has to be logged (`gov_require_map_note`).\n- **Product specifics** — sourcing, country of origin, weight, piece size, whether it's grass-fed. I wrote around these rather than invent them.\n- **Launch window dates.** \"This week\" is your wording; I don't know the exact start/end.\n- No performance forecast from me — I have no data on this product.\n\nRequirements the send must satisfy (flagged for your review, per the tool's `review` verdict):\n\n- Unsubscribe link in footer (`gov_require_unsub`) and physical address (`gov_require_addr`).\n- Full ingredient list on the PDP the email links to (`gov_require_ingredient`).\n- Alt text on all images (`gov_require_alt_text`).\n- 10% email holdout (`gov_require_holdout`).\n- No stacking the 15% with a subscribe-and-save discount (`gov_no_stack_discount`).\n- UTMs on paid URLs (`gov_require_utm`) — applies if any of these links get reused in paid placements.\n\nTwo notes on scope: the tool flagged `gov_no_medical`, `gov_no_health_badge` and `gov_require_ingredient` as needing your review rather than auto-clearing, so give the final copy and PDP a look on those three. Also, SMS is paused after a complaint spike and must not be reactivated without legal — so this is email-only, no SMS companion send.\n\nI haven't recorded anything. Tell me if you want the 15% launch offer logged as a decision."
     },
     {
       "arm": "B0",
-      "run": 2,
+      "run": 3,
       "tokens_in": 351,
-      "tokens_out": 1006,
+      "tokens_out": 1229,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 351,
-          "completion_tokens": 1006,
+          "completion_tokens": 1229,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -401,19 +655,19 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**Beef heart, freeze-dried. Now in stock.**\n\n(Alt: **New: Freeze-Dried Beef Heart, 60g**)\n\n## 2. Body bullets\n\n- **Beef heart, freeze-dried** — the newest addition to our organ treat range, in a 60g bag.\n- **Made for people who already cook for their dog** — an organ you'd recognise from your own kitchen, in a shelf-stable form.\n- **In stock and shipping now** — launching to our list first.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart 60g — 15% off with code HEART15 this week.**\n\n## 4. Facts I'm relying on\n\nFrom your paste:\n- Beef heart 60g is in stock (sam, #growth).\n- Launch to the list is Thursday (sam).\n- 15% off, code HEART15, finance signed off (sam).\n- Copy direction: keep it simple, ingredient-first — the list responds to that (alex).\n- Brand positioning: \"Marrow & Co — freeze-dried organ treats. People who already cook for their dog.\" (about page).\n\n## Things I'm unsure of — please confirm before sending\n\n- **Offer end date.** Your brief says \"this week\"; the paste only says the launch is Thursday and doesn't state when HEART15 expires. I wrote \"this week\" — swap in a hard date/time if you have one, since a vague deadline is a support-ticket generator.\n- **Price.** Not in the paste, so I left it out of the CTA.\n- **Sourcing and ingredient details.** No confirmation of single-ingredient, additive-free, grass-fed, country of origin, or similar. I deliberately didn't claim any of these.\n- **Health or nutrition claims.** Nothing in the paste supports them, and they carry regulatory risk, so I made none.\n- **The Klaviyo 30d figures** (revenue 18,420 / orders 410 / active) — I read these as internal context, not customer-facing copy, so they don't appear in the email."
+      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart, 60g — 15% off this week**\n\n## 2. Body bullets\n\n- **Beef heart, freeze-dried.** Our newest organ treat, now in stock in a 60g bag.\n- **Made for people who already cook for their dog.** You read labels and think about what goes in the bowl — this is one more clean thing to add to it.\n- **Launch week only:** 15% off with code **HEART15**.\n\n## 3. CTA\n\n**Shop Freeze-Dried Beef Heart (60g) — 15% off with code HEART15, this week only →**\n\n## 4. Facts I relied on\n\nFrom your paste:\n- Beef heart, 60g size, is in stock (sam, #growth).\n- Launch to the list is Thursday (sam).\n- 15% off, code HEART15, finance signed off (sam).\n- Tone direction: keep it simple, ingredient-first — the list responds to that (alex).\n- Brand and audience: \"Marrow & Co — freeze-dried organ treats. People who already cook for their dog.\" (about page).\n\nDeliberately not used: the Klaviyo 30d figures (18,420 revenue / 410 orders). Those are internal and not a customer-facing claim.\n\n## Things I'm unsure of — please confirm before sending\n\n- **Offer end date.** You said \"this week\" and sam said launching Thursday, but I don't have an exact expiry. The copy says \"launch week only\" / \"this week only\" — swap in a hard date if you have one.\n- **Price.** Not in the notes, so I left it out.\n- **Single-ingredient claim.** I wrote \"beef heart, freeze-dried\" but did *not* say \"one ingredient\" or \"100% beef heart\" — that wasn't stated and it's a label claim I shouldn't guess at.\n- **Sourcing** (grass-fed, country of origin, USDA, etc.) — nothing in the notes, so no sourcing language.\n- **Feeding guidance / dog size suitability** — not provided, so omitted.\n- **Whether the code applies sitewide or only to this SKU** — the copy currently implies it's on the beef heart. Adjust if it's sitewide.\n- **Exclusions or stock limits** — unknown; no scarcity language included."
     },
     {
       "arm": "B1",
-      "run": 2,
+      "run": 3,
       "tokens_in": 2295,
-      "tokens_out": 1686,
+      "tokens_out": 1554,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 2295,
-          "completion_tokens": 1686,
+          "completion_tokens": 1554,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -427,28 +681,23 @@
       "tool_called": false,
       "orientation_only": false,
       "stop_reason": "end_turn",
-      "error_count": 1,
-      "errors": [
-        {
-          "id": "email_inactive_or_zero",
-          "detail": "SMS is paused after a complaint spike — this is email only, no SMS companion send without legal."
-        }
-      ],
+      "error_count": 0,
+      "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — 15% off this week**\n\n*(Alt, same rules: \"Beef heart, freeze-dried. One ingredient.\")*\n\n---\n\n## 2. Three body bullets\n\n- **One ingredient: beef heart.** Freeze-dried, nothing added. Full ingredient list is on the product page.\n- **Made for people who already cook for their dog.** If you read labels before you buy, this is the treat that doesn't need a translation.\n- **Snap it, crumble it, or serve it whole.** Works as a topper on food you already make, or as a training treat straight from the bag.\n\n*(No medical or functional-outcome language — no \"supports,\" \"boosts,\" \"aids,\" \"heals.\" Per gov_no_medical and the brand note that this buyer bounces on medical-sounding copy. Wellness-adjacent framing only.)*\n\n---\n\n## 3. CTA line\n\n**Shop Beef Heart — 15% off through Sunday →**\n*One offer per order; not combinable with subscription discounts.*\n\n---\n\n## 4. Facts I'm relying on\n\n**From the operating context:**\n- Email (Klaviyo) is active and is the core channel; the Feb 2026 frequency test is the one that worked, and email \"keep\" decisions have been consistently positive (most recently 2026-08-02, revenue 18000→18420).\n- Discount cap: 15% is under the 20% ceiling (gov_discount_cap).\n- gov_no_medical — no medical-outcome claims.\n- gov_require_ingredient — any claim requires the ingredient list on the PDP, so the bullet points to it.\n- gov_no_stack_discount — discount cannot stack with subscribe-and-save; hence the CTA fine print.\n- gov_require_unsub, gov_require_addr, gov_require_alt_text — the send needs an unsubscribe link in the footer, your physical address, and alt text on every image. Please confirm these are in the template before send.\n- gov_require_holdout — this send needs a 10% email holdout.\n- gov_no_compare — do not add a struck-through \"was $X\" price unless it's a genuine prior price.\n- gov_no_guarantee, gov_no_health_badge — no unlimited money-back language, no FDA/approved badges.\n- gov_no_competitor, gov_no_kids, gov_no_ugc — no named competitors, no kid-targeted framing, no customer photos without a signed release.\n- MAP is $29 and must not be broken in DTC emails.\n- SMS is paused after a complaint spike — this is email only, no SMS companion send without legal.\n- gov_require_utm applies to paid URLs; this is an owned-channel send, so I've not assumed paid tracking is required — add UTMs if you want attribution consistency.\n\n**Things I am unsure of / need from you:**\n- **The list price of the beef heart treat.** I don't have it. If 15% off takes the item below **$29**, the offer breaks MAP and needs to be repriced, or the exception logged (gov_require_map_note). I can't confirm this either way.\n- **Today's date / season.** The context says Q4 is gift boxes and spring is wellness language. My latest reference point is 2026-08-21, so I don't know which seasonal frame applies. I've written it season-neutral.\n- **Whether this SKU is also going to wholesale accounts.** If independent pet shops are carrying it, a public 15% DTC offer may create a MAP/channel-conflict conversation with them. Not a rule violation as written, but worth a check.\n- **Exact offer end date and promo code.** I've written \"through Sunday\" as a placeholder — confirm before send.\n- **Product details I did not invent:** sourcing (grass-fed, origin country), bag size, protein/nutrition figures, and whether it's single-sourced from one supplier. None of that is in my context, so none of it is in the copy."
+      "answer": "## 1. Subject line\n\n**\"New: single-ingredient beef heart — 15% off this week\"**\n\n(Alt if you want less offer-forward: \"Beef heart, freeze-dried. That's the whole ingredient list.\")\n\n## 2. Body bullets\n\n- **One ingredient: beef heart.** Freeze-dried, nothing added — the full ingredient list is on the product page.\n- **Made for people who already read labels.** If you cook for your dog, this drops into the bowl the same way your own ingredients do.\n- **Crumbles or feeds whole.** Break it over a home-cooked meal or hand it over as-is.\n\n## 3. CTA line\n\n**Shop the beef heart treat — 15% off through Sunday.** →\n\n## 4. Facts I'm relying on\n\nFrom your operating context:\n- Brand is freeze-dried organ treats; buyer is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy. That's why every bullet is ingredient- and usage-led, with zero health outcomes.\n- `gov_no_medical` forbids medical outcome claims; `gov_no_health_badge` forbids FDA-approved claims. Nothing here claims either.\n- `gov_discount_cap` forbids discounts deeper than 20%. 15% clears it.\n- `gov_require_ingredient` requires the ingredient list on the PDP — the copy points to it, so **confirm the beef heart PDP has the ingredient list live before send.**\n- Email is your core channel and is active; the Feb 2026 frequency test is the one that worked. This is a list send, not paid.\n- `gov_no_stack_discount` forbids stacking discounts with subscribe — the 15% code must be blocked from combining with subscription discounts.\n\nCompliance items to attach before send (all from your rules, not drafted above):\n- `gov_require_unsub` — unsubscribe link in footer\n- `gov_require_addr` — physical address in footer\n- `gov_require_alt_text` — alt text on every image\n- `gov_require_holdout` — 10% email holdout\n\n## Two things I'm unsure of — flagging, not guessing\n\n1. **MAP.** Your context says MAP is $29 and \"do not break MAP in DTC emails.\" I don't know the list price of the new beef heart treat, so I can't tell whether 15% off lands at or below $29. If it lands below, this offer conflicts with your MAP guidance and needs to change. Also, `gov_require_map_note` requires a logged MAP exception for discounts — I don't know whether one exists for this launch.\n2. **Seasonal framing.** Your context says Q4 is gift boxes and spring is wellness language. Your decision log ends 21 Aug 2026, and I don't know today's date, so I wrote season-neutral copy. If this is landing in Q4, the gift-box angle is probably the stronger frame and I'd rewrite.\n\nI have not included any performance numbers, guarantees (`gov_no_guarantee`), competitor mentions (`gov_no_competitor`), compare-at pricing (`gov_no_compare`), or UGC (`gov_no_ugc`). And per your context, SMS stays paused — no companion text without legal."
     },
     {
       "arm": "T",
-      "run": 2,
-      "tokens_in": 5692,
-      "tokens_out": 1807,
+      "run": 3,
+      "tokens_in": 13532,
+      "tokens_out": 1760,
       "cache_read": 0,
-      "rounds": 2,
+      "rounds": 3,
       "round_detail": [
         {
           "prompt_tokens": 1474,
-          "completion_tokens": 188,
+          "completion_tokens": 185,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [
@@ -459,18 +708,17 @@
                   "action": "send",
                   "channel": "email",
                   "audience": "existing email list",
-                  "target": "freeze-dried beef heart treat",
+                  "target": "freeze-dried beef heart treat launch",
                   "discount_pct": 15,
                   "claims": [
                     "new product launch",
-                    "15% off launch offer this week"
+                    "limited-time launch offer this week"
                   ]
                 },
                 "targets": [
-                  "freeze-dried beef heart treat",
                   "email",
-                  "existing email list",
-                  "launch discount"
+                  "freeze-dried beef heart treat",
+                  "existing email list"
                 ]
               }
             }
@@ -481,8 +729,39 @@
           ]
         },
         {
-          "prompt_tokens": 4218,
-          "completion_tokens": 1619,
+          "prompt_tokens": 4605,
+          "completion_tokens": 313,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "audience": "email",
+                  "target": "email",
+                  "discount_pct": 15,
+                  "claims": [
+                    "new product launch: freeze-dried beef heart treat",
+                    "15% off launch offer, this week only"
+                  ]
+                },
+                "targets": [
+                  "email"
+                ]
+              }
+            }
+          ],
+          "content_types": [
+            "thinking",
+            "tool_use"
+          ]
+        },
+        {
+          "prompt_tokens": 7453,
+          "completion_tokens": 1262,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -500,18 +779,36 @@
               "action": "send",
               "channel": "email",
               "audience": "existing email list",
-              "target": "freeze-dried beef heart treat",
+              "target": "freeze-dried beef heart treat launch",
               "discount_pct": 15,
               "claims": [
                 "new product launch",
-                "15% off launch offer this week"
+                "limited-time launch offer this week"
               ]
             },
             "targets": [
-              "freeze-dried beef heart treat",
               "email",
-              "existing email list",
-              "launch discount"
+              "freeze-dried beef heart treat",
+              "existing email list"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "audience": "email",
+              "target": "email",
+              "discount_pct": 15,
+              "claims": [
+                "new product launch: freeze-dried beef heart treat",
+                "15% off launch offer, this week only"
+              ]
+            },
+            "targets": [
+              "email"
             ]
           }
         }
@@ -524,23 +821,23 @@
       "over_caution": [
         {
           "id": "verdict_word",
-          "detail": "Context check came back review — proceed, but there are constraints you need to see (listed in section 5)."
+          "detail": "Verdict from the operating-context check: review — cleared to draft, with constraints listed at the bottom."
         }
       ],
       "over_caution_count": 1,
-      "answer": "Context check came back **`review`** — proceed, but there are constraints you need to see (listed in section 5). One is a possible blocker on price, so read that before you send.\n\n---\n\n## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — one ingredient, nothing else**\n\n## 2. Body bullets\n\n- **One ingredient: beef heart.** Freeze-dried and nothing added — no fillers, no binders, no sprays. Full ingredient list is on the product page.\n- **Made for people who already read the label.** If you're portioning your dog's food yourself, this drops in as a topper or a training treat without changing what's in the bowl.\n- **Rich, meaty, and dog-obvious.** Heart is a dense muscle meat with a deep flavor most dogs go straight for — useful when you need a treat that actually competes with distractions.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart — 15% off through Sunday →**\n*(Launch offer, this week only. One discount per order — not combinable with subscription pricing.)*\n\n## 4. Facts I'm relying on\n\nFrom the operating context:\n- Marrow & Co sells freeze-dried organ treats; this is **food, not a veterinary drug**.\n- Primary buyer is a home-cook pet owner, 28–44, who reads ingredient lists and **bounces on medical-sounding copy** — so the bullets stay descriptive, not therapeutic.\n- Email (Klaviyo) is the core channel and is currently active.\n- Brand sells through independent pet shops; **MAP is $29**.\n\nThings I am **unsure** of and did not write around:\n- **The product's list price.** I don't know it, so I can't confirm 15% off keeps it at or above the $29 MAP.\n- Whether the launch week ends Sunday — I picked that for the CTA. Correct the day if it's different.\n- Current season. Q4 is gift-box positioning and spring is wellness language; I don't know which applies today, so the copy is season-neutral. Tell me the timing and I'll angle it.\n- Product specifics I did not invent: sourcing/origin, sourcing claims (grass-fed, single-origin), bag size, piece count, price, and whether it's available as a subscription.\n\n## 5. Constraints and conflicts to review before this goes out\n\n**Possible blocker:**\n- **MAP is $29, and discounting below MAP is forbidden in DTC emails.** If this treat lists under ~$34.12, a 15% discount breaks MAP. Confirm the price. If 15% would go below $29, either reduce the discount or log a MAP exception first — a logged MAP exception is required.\n\n**Standing constraint on this channel:**\n- Email is under a **`protect`** constraint since 2 Aug 2026, from a confirmed operator decision to keep Klaviyo after a positive revenue outcome. Lifting it needs a new confirmed operator decision. This send doesn't change the channel, so it's compatible — flagging it so you know the channel isn't free to alter.\n\n**Requirements this send must satisfy:**\n- Unsubscribe link in the footer.\n- Physical mailing address in the footer.\n- Full ingredient list present on the PDP the email links to.\n- Alt text on every image.\n- **10% email holdout** — the send must exclude a 10% holdout group.\n- Discount cannot stack with subscribe-and-save (reflected in the CTA fine print).\n\n**Copy checks the tool flagged for your review:**\n- No medical-outcome claims. I made none — no digestion, joint, coat, immunity, or taurine language. Please don't add any on review.\n- No \"FDA approved\" or health-badge language. None used.\n\n**Also noted, not applicable here:** SMS is paused after a complaint spike and must not be reactivated without legal. This is email-only. Meta prospecting is off per Jordan's 8 Mar 2026 decision (CAC 40→72) and the June audience test stayed negative — so no paid support for this launch unless you decide otherwise.\n\nI have not recorded anything. Say the word once you've confirmed the price and the send date and I'll log the launch decision."
+      "answer": "**Verdict from the operating-context check: `review`** — cleared to draft, with constraints listed at the bottom. One item needs your answer before this sends (MAP).\n\n---\n\n## 1. Subject line\n\n**Beef heart, freeze-dried. New from Marrow & Co.**\n\n## 2. Body bullets\n\n- **Single ingredient: beef heart.** That's it — nothing sprayed on, nothing filled in. Full ingredient and sourcing detail is on the product page.\n- **Freeze-dried, not cooked down.** Raw beef heart goes in, moisture comes out, the texture stays crumbly enough to break over a bowl or hand out whole.\n- **Built for people who already cook for their dog.** If you're portioning meals yourself, this drops into the routine you've got — as a topper or as a treat.\n\n## 3. CTA line\n\n**Shop beef heart — 15% off through Sunday →**\n*(Launch offer, this week only. One discount per order.)*\n\n## 4. Facts I'm relying on\n\nFrom the operating-context tool:\n- Marrow & Co sells freeze-dried organ treats; this is **food, not a veterinary drug**.\n- Primary buyer: home-cook pet owner, 28–44, reads ingredient lists, **bounces on medical-sounding copy**.\n- MAP is **$29**; do not break MAP in DTC emails.\n- Email (Klaviyo) is active and the core channel, under a **protect** constraint since 2 Aug 2026.\n- Discounts deeper than 20% are forbidden — 15% is within cap.\n- Discounts may not stack with subscribe-and-save.\n\nFrom you: new freeze-dried beef heart treat, existing email list, 15% off for one week.\n\n**Facts I do not have and did not invent:**\n- **The product's list price.** If it is under ~$34.12, then 15% off puts it below the $29 MAP, which the rules forbid. I can't verify this — confirm the price before send, or drop to a discount that keeps it at $29+.\n- Exact send date, so \"through Sunday\" is a placeholder — give me the end date.\n- Weight/size, price point, sourcing origin, and whether it's a topper or treat SKU (I wrote it as usable both ways). Nothing above claims a specific weight or origin.\n- No open/click/revenue figures for this list, and no past product-launch results — I have none.\n\n## Constraints to clear before this goes out\n\n1. **MAP $29** — the open question above. This is the one that can block the send.\n2. **No medical-outcome claims** and **no FDA/health-badge claims** — the copy avoids both; keep it that way through any edits. Spring is wellness language, not medical.\n3. **Ingredient list must be on the PDP** — bullet one points there, so confirm it's live.\n4. **10% email holdout required** on the send.\n5. **Unsubscribe link and physical address in footer.**\n6. **Alt text on all images.**\n7. **No stacking with subscribe-and-save** — reflected in the CTA fine print.\n8. **UTMs** required on paid URLs.\n\nTwo notes: SMS is paused after a complaint spike and must not be reactivated without legal, so this stays email-only. And these names weren't in the registry — \"freeze-dried beef heart treat,\" \"freeze-dried beef heart treat launch\" — so there's no product-level history or governance on file for this SKU; everything above is channel- and brand-level.\n\nI haven't recorded anything. Say the word and I'll log the send decision once you confirm the price and dates."
     },
     {
       "arm": "B0",
-      "run": 3,
+      "run": 4,
       "tokens_in": 351,
-      "tokens_out": 1046,
+      "tokens_out": 1014,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 351,
-          "completion_tokens": 1046,
+          "completion_tokens": 1014,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -558,19 +855,19 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**Beef heart, freeze-dried. Now in stock.**\n\n*(Alt: \"New: Freeze-Dried Beef Heart — 60g\")*\n\n## 2. Body bullets\n\n- **Freeze-dried beef heart, 60g** — our newest organ treat, in stock and shipping now.\n- **Made for people who already cook for their dog** — a straightforward organ treat to add to the bowl or use as a training reward.\n- **Launch week only:** 15% off with code **HEART15**.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart 60g — 15% off this week with code HEART15**\n\n## 4. Facts I'm relying on\n\nFrom your paste:\n- Beef heart 60g is in stock (sam, #growth).\n- Launch to the list is Thursday (sam).\n- 15% off, code HEART15, finance signed off (sam).\n- Brand positioning: Marrow & Co, freeze-dried organ treats, audience is \"people who already cook for their dog\" (about page).\n- Tone direction: keep it simple, ingredient-first (alex).\n\nNot used, deliberately:\n- Klaviyo 30d figures (revenue 18,420 / 410 orders). These are internal account metrics, not customer-facing claims, so I left them out entirely.\n\nThings I'm unsure about — please confirm before send:\n- **Exact offer end date/time.** Your brief says \"this week\"; the paste only says launch is Thursday. I wrote \"launch week only\" as a placeholder — it needs a hard deadline.\n- **Price** and whether the discount shows pre- or post-code.\n- **Ingredient list / sourcing.** I don't know if this is single-ingredient, or where the beef is from, so I made no sourcing, \"single ingredient,\" grass-fed, or nutritional claims.\n- **Code mechanics** — any exclusions, stacking rules, one-use-per-customer, or minimum order.\n- **Feeding guidance** (treat vs. meal topper, portion size) — not in the paste, so I kept the usage line generic.\n- **Whether there's product photography ready** for the email."
+      "answer": "## 1. Subject line\n\n**Beef heart. Freeze-dried. That's the whole ingredient list.**\n\n*(Alt, if you want the offer in the subject: \"New: Freeze-Dried Beef Heart — 15% off this week\")*\n\n---\n\n## 2. Body bullets\n\n- **Beef heart, freeze-dried.** Our newest organ treat, now in stock in a 60g bag.\n- **Made for people who already cook for their dog.** If you're portioning out organ meat in your own kitchen, this is the shelf-stable version of what you're already doing.\n- **Launch week only:** 15% off with code **HEART15** at checkout.\n\n---\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart 60g — 15% off with code HEART15**\n\n---\n\n## 4. Facts I relied on\n\nFrom your paste:\n- Product: beef heart, 60g, **in stock** (sam, #growth)\n- Launch to the email list **Thursday** (sam)\n- Offer: **15% off, code HEART15, finance signed off** (sam)\n- Tone direction: **keep it simple, ingredient-first — the list likes that** (alex)\n- Brand: **Marrow & Co — freeze-dried organ treats**, audience **\"people who already cook for their dog\"** (about page)\n\nDeliberately left out:\n- The Klaviyo 30d numbers (revenue 18,420 / 410 orders) — internal, not customer-facing, and not a claim to put in an email.\n\nThings I'm unsure about — confirm before sending:\n- **Offer end date.** You said \"this week\"; the paste doesn't specify when HEART15 expires. I wrote \"launch week only.\" Give me the exact date if you want it stated.\n- **Price and whether the 60g is the only size.** Not in the paste, so no price appears in the copy.\n- **Ingredient claim.** I wrote \"beef heart, freeze-dried\" but did not say \"single ingredient\" or \"100% beef heart\" — nothing in the paste confirms there's only one ingredient.\n- **Sourcing / nutrition / health claims.** Nothing on origin (grass-fed, country), feeding guidance, or benefits, so I made none.\n- **Whether the code stacks** with other discounts or applies to subscriptions.\n- **Sender name, preview text, and whether this goes to the full list or a segment.**"
     },
     {
       "arm": "B1",
-      "run": 3,
+      "run": 4,
       "tokens_in": 2295,
-      "tokens_out": 1460,
+      "tokens_out": 1955,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 2295,
-          "completion_tokens": 1460,
+          "completion_tokens": 1955,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -588,13 +885,13 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**\"New: Freeze-Dried Beef Heart — 15% off this week\"**\n\n(Alt, if you want less offer-forward: \"Beef heart, freeze-dried. Nothing else.\")\n\n## 2. Body bullets\n\n- **Single ingredient: beef heart.** Freeze-dried, nothing added — read the panel yourself on the product page.\n- **Made for people who already cook for their dog.** It's food, not a supplement. Use it as a topper, a training reward, or straight from the bag.\n- **Launch week only:** 15% off the new beef heart treat for subscribers on our list.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart — 15% off through Sunday →**\n\n## 4. Facts I'm relying on\n\nFrom your operating context:\n- Email (Klaviyo) is active and is the core channel; it's the right place for this.\n- Positioning: freeze-dried organ treats, food not a veterinary drug. Primary buyer is a 28–44 home-cook pet owner who reads ingredient lists and bounces on medical-sounding copy. That's why the copy is ingredient-led and has zero health outcome language.\n- `gov_no_medical` (no medical outcome claims), `gov_no_health_badge` (no FDA-approved), `gov_no_compare` (no inflated compare-at), `gov_no_guarantee` (no unlimited money-back), `gov_no_competitor` (no named brands), `gov_no_kids` — all respected.\n- `gov_discount_cap` forbids discounts deeper than 20%. 15% is compliant.\n- `gov_require_ingredient`: the ingredient list must be live on the PDP before this claim ships. The bullet points at it deliberately.\n- SMS is paused after a complaint spike and must not be reactivated without legal — so this is email-only, no SMS companion send.\n\n## Things you need to check before this goes out\n\n- **MAP is $29 and you don't break MAP in DTC emails.** I don't know this product's list price, so I can't tell you whether 15% off lands above or below $29. If the discounted price is under $29, the offer has to change — and `gov_require_map_note` means any MAP exception has to be logged. Confirm the price before sending.\n- **`gov_no_stack_discount`:** the 15% must not stack with a subscribe-and-save discount. Suppress or hard-code the exclusion.\n- **`gov_require_holdout`:** hold back 10% of the list. Not optional per your rules.\n- **`gov_require_unsub` and `gov_require_addr`:** unsubscribe link and physical address in the footer.\n- **`gov_require_alt_text`:** alt text on every image, including the hero.\n- **`gov_no_ugc`:** if you want customer photos in the launch, you need a signed release on file. I have no record of one.\n- **Seasonal framing:** your context says Q4 is gift boxes and spring is wellness language. Your most recent logged decision is 2026-08-21, so I'm assuming this is a late-summer send and neither frame applies — I've used plain product language. If this is actually landing in Q4, tell me and I'll rework it toward gift boxes.\n- **\"Through Sunday\"** is a placeholder — I don't have your actual end date.\n- `gov_require_utm` covers paid URLs. This is an owned email, so it doesn't strictly apply, but tag the links anyway if you want clean attribution.\n\nI have not cited any performance numbers, because none of your logged results cover a beef heart launch."
+      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — One Ingredient**\n\n## 2. Body bullets\n\n- One ingredient: beef heart. Freeze-dried whole, nothing sprayed on, nothing filled in. Full ingredient list is on the product page.\n- Freeze-drying keeps it shelf-stable at room temperature — no freezer space, no thawing, no prep.\n- Crumble it over the food you already make, or hand it over whole as a training treat. You decide the portion.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart — 15% off through [end date, needs confirming]**\n\n## 4. Facts I'm relying on\n\nFrom your operating context:\n\n- Email is the core channel and is active in Klaviyo. Last six email decisions were all \"keep: positive,\" most recently 2026-08-02 (revenue 18,000 → 18,420).\n- Buyer is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy. That's why the copy is ingredient- and prep-focused, with no health framing.\n- `gov_no_medical` and `gov_no_health_badge`: no medical outcomes, no FDA/approval language. Copy has none.\n- `gov_discount_cap`: 20% ceiling. 15% is inside it.\n- `gov_require_ingredient`: the ingredient-list claim is allowed because the full list must be live on the PDP — confirm before send.\n- MAP is $29, and your note says do not break MAP in DTC emails.\n- Q4 is gift boxes; spring is wellness language. I've kept this seasonally neutral.\n\n## Things I'm unsure of — please confirm before this ships\n\n1. **The product's list price.** This is the blocking item. I don't have it. If beef heart lists below roughly $34, a 15% discount lands under the $29 MAP and breaks both `gov_no_wholesale_map` and your DTC MAP rule. If the price does require an exception, `gov_require_map_note` means it has to be logged first.\n2. **Today's date and the offer end date.** Your last logged decision is 2026-08-21. I don't know what \"this week\" resolves to, so the CTA has a placeholder. If it's near Q4, gift-box framing may be the better angle than a single-SKU launch.\n3. **Discount stacking.** `gov_no_stack_discount` forbids stacking with subscribe-and-save. Klaviyo and the cart need to be set to exclude subscribers from the 15% code, or suppress subscribers from the send.\n4. **Compare-at pricing.** `gov_no_compare` forbids an inflated compare-at. If the PDP shows a strike-through, verify it's a real prior price.\n\n## Send-mechanics checklist (all rule-driven, none optional)\n\n- `gov_require_unsub` — unsubscribe link in footer\n- `gov_require_addr` — physical address in footer\n- `gov_require_alt_text` — alt text on every image, including the hero\n- `gov_require_holdout` — 10% email holdout configured\n- `gov_require_utm` — UTMs only apply to paid URLs; not needed here unless the email links through a paid placement\n\n## What I did not do\n\n- **No SMS companion send.** SMS is paused after the 2026-02-08 complaint spike (complaints 2 → 11), and your context says do not turn it back on without legal.\n- **No push.** Stopped 2026-02-28.\n- **No paid amplification.** Meta prospecting is paused — Jordan killed it 8 Mar 2026 (CAC 40 → 72), and the June 2026 audience retest was still negative (72 → 68). TikTok is paused. Affiliate and retail are retired.\n- **No competitor comparison** (`gov_no_competitor`), **no kid-facing angle** (`gov_no_kids`), **no money-back guarantee language** (`gov_no_guarantee`), **no customer photos or videos** — `gov_no_ugc` requires a signed release, and I don't have visibility into which assets have one."
     },
     {
       "arm": "T",
-      "run": 3,
-      "tokens_in": 5710,
-      "tokens_out": 1555,
+      "run": 4,
+      "tokens_in": 6095,
+      "tokens_out": 1503,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
@@ -633,8 +930,8 @@
           ]
         },
         {
-          "prompt_tokens": 4236,
-          "completion_tokens": 1364,
+          "prompt_tokens": 4621,
+          "completion_tokens": 1312,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -671,190 +968,28 @@
       "tool_called": true,
       "orientation_only": false,
       "stop_reason": "end_turn",
-      "error_count": 1,
-      "errors": [
-        {
-          "id": "email_inactive_or_zero",
-          "detail": "SMS is paused after a complaint spike — this is email only."
-        }
-      ],
-      "over_caution": [
-        {
-          "id": "verdict_word",
-          "detail": "Verdict: review — proceed, but there's one open item you need to resolve before send (MAP)."
-        }
-      ],
-      "over_caution_count": 1,
-      "answer": "Verdict: **review** — proceed, but there's one open item you need to resolve before send (MAP). Details at the end.\n\n---\n\n## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — 15% off this week**\n\n*(Alt: \"Beef heart, freeze-dried. Nothing else.\" — no offer in subject)*\n\n## 2. Body bullets\n\n- **Beef heart, freeze-dried.** You already read labels — the full ingredient list is on the product page, so you can check it before you buy.\n- **Made for the way you already feed.** Crumble it over a home-cooked bowl, or hand it over whole as a training treat.\n- **Shelf-stable, no refrigeration.** Keeps in the pantry between meals, so it's there when you need it.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart — 15% off through Sunday →**\n*(Launch offer ends Sunday. One discount per order; does not stack with subscription pricing.)*\n\n## 4. Facts I'm relying on\n\n**From operating context:**\n- Brand: Marrow & Co, freeze-dried organ treats. Buyer is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy — so the copy above is wellness/practical, not medical.\n- This is food, not a veterinary drug. No medical-outcome claims, no FDA/health badges (both forbidden).\n- Discounts deeper than 20% are forbidden; 15% is within cap.\n- Discounts may not stack with subscribe-and-save — hence the line in the CTA.\n- Ingredient list must be on the PDP; the first bullet points there rather than restating it.\n- Email is the core channel and is under a \"protect\" standing constraint since 2 Aug 2026 (operator kept Klaviyo after a positive outcome). This send is consistent with that.\n- SMS is paused after a complaint spike — this is email only. Do not mirror it to SMS without legal.\n\n**Requirements you must satisfy at send time:**\n- Unsubscribe link in footer (required)\n- Physical address in footer (required)\n- Alt text on all images (required)\n- 10% email holdout (required) — build the send with the holdout excluded\n- UTM requirement is scoped to paid URLs; tag anyway if you want clean attribution\n\n**⚠️ Open item — MAP.** MAP is $29 and you may not break MAP in DTC emails; any exception must be logged. **I don't know this product's list price**, so I can't confirm whether 15% off keeps it at or above $29. If list price is under ~$34.12, 15% off drops it below MAP. Confirm the price before send, or log a MAP exception.\n\n**Things I'm unsure of and did not assert:**\n- Whether the product is genuinely single-ingredient (copy says \"beef heart, freeze-dried\" and defers to the PDP)\n- Sourcing claims (grass-fed, USA-sourced, etc.) — none included\n- Price, pack size, launch date, inventory\n- Any performance expectation for this send — I have no data for a new-product launch email\n\nWant me to re-run the check once you confirm the price, or draft a version with the offer pulled out of the subject line?"
-    },
-    {
-      "arm": "B0",
-      "run": 4,
-      "tokens_in": 351,
-      "tokens_out": 1164,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 351,
-          "completion_tokens": 1164,
-          "cache_read_tokens": 0,
-          "cache_write_tokens": 0,
-          "tool_calls": [],
-          "content_types": [
-            "thinking",
-            "text"
-          ]
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "end_turn",
-      "error_count": 0,
-      "errors": [],
-      "over_caution": [],
-      "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart, 60g — now in stock**\n\n## 2. Body bullets\n\n- **Beef heart, freeze-dried.** The newest addition to our organ treat range, now available in a 60g pack.\n- **Made for people who already cook for their dog.** If you're used to reading labels and sourcing your own ingredients, this is the same idea — just shelf-stable and portioned.\n- **In stock and shipping now.** First run is live as of today.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart 60g — take 15% off with code HEART15 this week.**\n\n## 4. Facts I'm relying on\n\nFrom your notes:\n- Beef heart 60g is in stock (Sam, #growth)\n- Launching to the email list Thursday (Sam)\n- 15% off, code HEART15, finance signed off (Sam)\n- Alex's direction: keep it simple, ingredient-first — the list responds to that\n- Brand positioning from the about page: \"Marrow & Co — freeze-dried organ treats. People who already cook for their dog.\"\n\n## Things I'm unsure of / did not fill in\n\n- **Price.** Not in your notes. You'll need to drop it in, or leave the CTA to do the work.\n- **Offer end date.** Your brief says \"this week,\" but Sam only said launch Thursday. \"This week\" from a Thursday send is ambiguous — I'd pin an explicit date/time (e.g. \"ends Sunday 11:59pm\") before this goes out.\n- **Whether HEART15 is sitewide or product-specific.** Worth confirming so the email doesn't imply the wrong scope.\n- **Ingredient/sourcing detail.** Alex asked for ingredient-first, but I only have \"beef heart\" and \"freeze-dried\" from your notes. I did not claim single-ingredient, grass-fed, sourcing origin, or any nutritional benefit — none of that was in the paste. If you can confirm the actual label copy, bullet 1 gets a lot stronger.\n- **Feeding guidance / treat sizing.** Not provided, so not included.\n\n## One note on the Klaviyo screenshot\n\nI did not use the 30-day figures (revenue 18,420 / 410 orders) anywhere in the copy. Those are internal account metrics, not product performance or social proof, and putting them in customer-facing copy would misrepresent them."
-    },
-    {
-      "arm": "B1",
-      "run": 4,
-      "tokens_in": 2295,
-      "tokens_out": 1396,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 2295,
-          "completion_tokens": 1396,
-          "cache_read_tokens": 0,
-          "cache_write_tokens": 0,
-          "tool_calls": [],
-          "content_types": [
-            "thinking",
-            "text"
-          ]
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "end_turn",
-      "error_count": 1,
-      "errors": [
-        {
-          "id": "email_inactive_or_zero",
-          "detail": "SMS is paused after a complaint spike; this is email-only."
-        }
-      ],
-      "over_caution": [],
-      "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — Single Ingredient, Nothing Else**\n\n## 2. Body bullets\n\n- **One ingredient: beef heart.** Freeze-dried and nothing added — full ingredient list is on the product page if you want to read it before you buy.\n- **Made for people who already cook for their dog.** Use it as a topper, a training treat, or crumbled into the bowls you're already making.\n- **Launch week only:** 15% off the new beef heart treat. Not combinable with subscription discounts.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart — 15% off through Sunday →**\n\n## 4. Facts I'm relying on\n\n**From the operating context:**\n- Email (Klaviyo) is active and is the core channel; repeated positive \"keep email\" decisions, most recently 2026-08-02.\n- `gov_no_medical` — no medical-outcome claims. Brand note: this is food, not a veterinary drug; primary buyer bounces on medical-sounding copy. Copy above is deliberately non-medical and non-wellness-claiming.\n- `gov_discount_cap` — 15% is under the 20% cap.\n- `gov_no_stack_discount` — hence the \"not combinable with subscription discounts\" line.\n- `gov_require_ingredient` — ingredient list must be on the PDP; the copy points there rather than making standalone claims.\n- `gov_require_unsub` and `gov_require_addr` — footer must carry an unsubscribe link and your physical address. I have not written the footer; add both before sending.\n- `gov_require_alt_text` — any product image needs alt text.\n- `gov_require_holdout` — this send needs a 10% email holdout configured in Klaviyo.\n- `gov_no_competitor`, `gov_no_health_badge`, `gov_no_guarantee`, `gov_no_compare` — no competitor names, no FDA/approval language, no unlimited money-back promise, no inflated compare-at price. None are used.\n- MAP is $29 and I must not break MAP in DTC emails.\n- SMS is paused after a complaint spike; this is email-only. No SMS companion send without legal.\n\n**What I'm unsure about — please confirm before sending:**\n- **The price.** I don't know the beef heart treat's list price. If 15% off lands the net price below $29, that breaks MAP. If the list price is at or near $29, this offer likely can't ship as written. Also note `gov_require_map_note` / `gov_no_wholesale_map` — any MAP exception has to be logged.\n- **\"Through Sunday.\"** You said \"this week\"; I don't know your exact send date or end date. Set the real dates.\n- **Seasonal framing.** Q4 is gift boxes and spring is wellness language. I don't know today's date from the context, so I wrote season-neutral copy rather than guess.\n- **Product details** — sourcing, size/weight, price point, whether it's single-origin or grass-fed. I've invented none of these. Add them from the PDP.\n- **Subscription availability** for this SKU — the stacking line assumes a subscribe option exists. Cut it if it doesn't."
-    },
-    {
-      "arm": "T",
-      "run": 4,
-      "tokens_in": 5707,
-      "tokens_out": 1857,
-      "cache_read": 0,
-      "rounds": 2,
-      "round_detail": [
-        {
-          "prompt_tokens": 1474,
-          "completion_tokens": 187,
-          "cache_read_tokens": 0,
-          "cache_write_tokens": 0,
-          "tool_calls": [
-            {
-              "name": "context_check",
-              "arguments": {
-                "proposal": {
-                  "action": "send",
-                  "target": "freeze-dried beef heart treat launch email",
-                  "channel": "email",
-                  "audience": "existing email list",
-                  "discount_pct": 15,
-                  "claims": [
-                    "new product launch",
-                    "15% off this week"
-                  ]
-                },
-                "targets": [
-                  "email",
-                  "existing email list",
-                  "freeze-dried beef heart treat",
-                  "launch offer"
-                ]
-              }
-            }
-          ],
-          "content_types": [
-            "text",
-            "tool_use"
-          ]
-        },
-        {
-          "prompt_tokens": 4233,
-          "completion_tokens": 1670,
-          "cache_read_tokens": 0,
-          "cache_write_tokens": 0,
-          "tool_calls": [],
-          "content_types": [
-            "thinking",
-            "text"
-          ]
-        }
-      ],
-      "tool_calls": [
-        {
-          "name": "context_check",
-          "arguments": {
-            "proposal": {
-              "action": "send",
-              "target": "freeze-dried beef heart treat launch email",
-              "channel": "email",
-              "audience": "existing email list",
-              "discount_pct": 15,
-              "claims": [
-                "new product launch",
-                "15% off this week"
-              ]
-            },
-            "targets": [
-              "email",
-              "existing email list",
-              "freeze-dried beef heart treat",
-              "launch offer"
-            ]
-          }
-        }
-      ],
-      "tool_called": true,
-      "orientation_only": false,
-      "stop_reason": "end_turn",
       "error_count": 0,
       "errors": [],
       "over_caution": [
         {
           "id": "verdict_word",
-          "detail": "Verdict: review — proceed, but there are constraints you need to see (listed in §5)."
+          "detail": "Constraints to review before you send"
         }
       ],
       "over_caution_count": 1,
-      "answer": "Checked. Verdict: **review** — proceed, but there are constraints you need to see (listed in §5). One is a potential blocker on the offer itself.\n\n---\n\n## 1. Subject line\n\n**\"New: freeze-dried beef heart\"**\n\n(Alt, same register: \"Beef heart, freeze-dried. Nothing else added.\" — only use this if \"nothing else added\" is accurate; I can't verify the ingredient panel.)\n\n## 2. Body bullets\n\n- **Beef heart, freeze-dried.** The organ meat you'd already be portioning out at home, in a shelf-stable treat you don't have to prep.\n- **You read labels — so read this one.** Full ingredient list is on the product page before you add to cart.\n- **Made for people who already cook for their dog.** A topper, a training treat, or a straight-up snack. You decide the portion.\n\n## 3. CTA line\n\n**Shop the launch — 15% off freeze-dried beef heart, this week only →**\n\n## 4. Facts I'm relying on\n\nFrom the operating context:\n- Marrow & Co sells freeze-dried organ treats; this is **food, not a veterinary drug**.\n- Primary buyer is a home-cook pet owner, 28–44, who reads ingredient lists and **bounces on medical-sounding copy**.\n- Email (Klaviyo) is the **core channel**, active, and was kept in Aug 2026 after a positive outcome.\n- MAP is **$29**; MAP must not be broken in DTC emails.\n- Discounts deeper than 20% are forbidden. 15% is within cap.\n\nFacts I am **unsure** of and did not write around:\n- **The product's list price** — so I can't confirm 15% off keeps it at or above the $29 MAP. This is the one thing to resolve before sending.\n- Ingredient panel (whether it is genuinely single-ingredient), unit size, sourcing, and country of origin.\n- Whether the PDP is live with the ingredient list published.\n- Current season — I avoided both spring wellness framing and Q4 gift-box framing since I don't know which applies.\n- I have **no performance data** on launch emails, so no forecast from me.\n\n## 5. Constraints and conflicts to review\n\n**Blocking risk — MAP:**\n- `gov_no_wholesale_map`: no discounting below MAP ($29). If list price is under ~$34.12, a 15% discount breaks MAP. **Confirm the price before this sends.** If it does break MAP, `gov_require_map_note` requires a logged MAP exception — and the context is explicit that MAP should not be broken in DTC emails, so the offer should be reduced instead.\n\n**Copy rules — why the draft reads the way it does:**\n- `gov_no_medical`: no medical-outcome claims. I kept out digestion, joints, immunity, energy, \"supports,\" etc.\n- `gov_no_health_badge`: no \"FDA approved\" or health badges.\n- `gov_require_ingredient`: ingredient list must be on the PDP — bullet 2 depends on this being live.\n- The context flagged these three for **operator review**, so please sign off on the copy specifically.\n\n**Send requirements before launch:**\n- `gov_require_unsub`: unsubscribe link in footer.\n- `gov_require_addr`: physical address in footer.\n- `gov_require_alt_text`: alt text on every image.\n- `gov_require_holdout`: **10% email holdout** — this applies to this send.\n- `gov_require_utm`: UTMs on paid URLs (only if any link here is paid-tagged).\n- `gov_no_stack_discount`: the 15% must **not stack** with subscribe-and-save.\n\n**Do not extend this to SMS:** SMS is paused after a complaint spike and cannot be reactivated without legal. Also relevant if asked later: Meta prospecting was killed 8 Mar 2026 (CAC 40→72) and the June audience test stayed negative — both remain paused.\n\nI haven't recorded anything. Say the word once you've confirmed the price and the 15% offer, and I'll log the decision."
+      "answer": "## 1. Subject line\n\n**One ingredient. Beef heart. That's it.**\n\n## 2. Body bullets\n\n- **Single ingredient:** freeze-dried beef heart — nothing added, nothing sprayed on. Full ingredient list is on the product page.\n- **Freeze-dried, not baked or extruded**, so it stays shelf-stable in the cupboard without preservatives.\n- **Built for people who already cook for their dog** — use it as a topper, a training treat, or crumbled over a bowl you made yourself.\n\n## 3. CTA line\n\n**Shop the beef heart treat — 15% off through Sunday.**\n(Launch week only. One discount per order; not stackable with subscription pricing.)\n\n## 4. Facts I'm relying on\n\nFrom the operating context:\n- Marrow & Co sells freeze-dried organ treats; buyers are home-cook pet owners, 28–44, who read ingredient lists and bounce on medical-sounding copy.\n- This is food, not a veterinary drug.\n- Email (Klaviyo) is the core channel and is currently active and protected after a positive keep decision (2 Aug 2026).\n- Discounts deeper than 20% are forbidden — 15% is within cap.\n- Discounts may not stack with subscribe-and-save.\n- MAP is $29 and must not be broken in DTC email.\n\nThings I am **unsure** about and did not assert:\n- **The product's list price.** This matters: if the beef heart treat lists below ~$34.12, a 15% discount puts the net price under the $29 MAP, which the rules forbid in DTC email. Please confirm the price before this sends. If it does dip below MAP, either reduce the discount or log a MAP exception (that logging is a standing requirement).\n- The exact end date of \"this week\" — I wrote \"through Sunday\" as a placeholder.\n- Whether the ingredient list is already live on the PDP. A requirement says the ingredient list must be on the PDP; the bullet references it, so it needs to be there at send.\n- Sourcing, sizing, protein/nutrition figures, and any \"vet-recommended\" style endorsement — none supplied, so none used.\n\n## Constraints to review before you send\n\n- **No medical-outcome claims and no FDA/health-badge claims.** The context flagged both for operator review. My copy uses wellness/ingredient framing only — please confirm it reads clean to you.\n- **Legal footer:** unsubscribe link and physical address are required.\n- **10% email holdout is required** on this send.\n- **Alt text is required** on all images.\n- **UTMs required on paid URLs** (not applicable to this send unless you syndicate the links).\n- **SMS is paused** after a complaint spike and must not be turned back on without legal — so this is email-only, no SMS companion blast.\n- Four names I passed didn't resolve in the registry: \"existing email list,\" \"freeze-dried beef heart treat,\" \"launch offer,\" and \"freeze-dried beef heart treat launch.\" Only `email` (Klaviyo) resolved. The new product and this offer aren't registered, so there may be product- or offer-level constraints I can't see.\n\nI haven't recorded anything. Tell me if you want this logged as a decision once you've confirmed the price against MAP."
     },
     {
       "arm": "B0",
       "run": 5,
       "tokens_in": 351,
-      "tokens_out": 945,
+      "tokens_out": 1026,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 351,
-          "completion_tokens": 945,
+          "completion_tokens": 1026,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -872,19 +1007,19 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**Beef Heart, 60g — now in stock**\n\n*(Alt: \"One ingredient: beef heart\")*\n\n## 2. Body bullets\n\n- **One organ, freeze-dried.** Beef heart, 60g — the newest addition to the Marrow & Co lineup.\n- **Made for people who already cook for their dog.** If you're reading labels and portioning by hand, this is a straight ingredient, not a formula.\n- **In stock now, launching today.** Use code **HEART15** for 15% off this week.\n\n## 3. CTA line\n\n**Shop Beef Heart 60g — 15% off this week with code HEART15**\n\n## 4. Facts I relied on\n\nFrom your paste:\n- Product: beef heart, 60g size, in stock (sam, #growth)\n- Launch to the list Thursday (sam) — subject/bullets are written as a launch-day send\n- Offer: 15% off, code HEART15, finance signed off (sam)\n- Tone direction: keep it simple, ingredient-first, the list likes that (alex)\n- Brand positioning: \"Marrow & Co — freeze-dried organ treats. People who already cook for their dog.\" (about page)\n\nNot used, deliberately:\n- The Klaviyo 30d screenshot (revenue 18,420 / orders 410 / active). These are your internal list metrics, not customer-facing proof points, so I kept them out of the copy.\n\nFacts I'm unsure of — confirm before sending:\n- **Price.** Not in the paste, so no price appears in the email.\n- **Offer end date.** Your brief says \"this week\"; sam's note doesn't state an end date. I wrote \"this week\" — you may want a hard date/time so the deadline is enforceable.\n- **Ingredient statement.** I wrote it as beef heart only. If there's anything else on the panel, or a sourcing claim (grass-fed, single-origin, country of origin), I don't have it and didn't add it.\n- **Feeding guidance, shipping, subscription eligibility, whether HEART15 stacks with other discounts or applies sitewide vs. this SKU only.** None of this was in the paste.\n- **Any health or nutrition benefit claims.** None provided, so none made."
+      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart, 60g**\n\n*(Alt: \"Beef heart. That's the ingredient list.\")* — flagging that this alt assumes beef heart is the *only* ingredient, which your notes don't confirm.\n\n## 2. Body bullets\n\n- **Freeze-dried beef heart, 60g** — the newest addition to our organ treat lineup.\n- **Made for people who already cook for their dog** — organ meat, freeze-dried, nothing complicated.\n- **In stock now**, and launching with 15% off for this week only.\n\n## 3. CTA line\n\n**Shop Beef Heart 60g — use code HEART15 for 15% off this week.**\n\n## 4. Facts I'm relying on\n\nFrom your paste:\n- Product: beef heart, 60g size, currently in stock (sam, #growth)\n- Launch to the existing list on Thursday (sam)\n- Offer: 15% off, code HEART15, signed off by finance (sam)\n- Tone direction: keep it simple, ingredient-first, \"the list likes that\" (alex)\n- Brand positioning: \"Marrow & Co — freeze-dried organ treats. People who already cook for their dog.\" (about page, copied this morning)\n\nFrom your request:\n- Offer runs \"this week\"\n\n## What I did not use, and what I'm unsure about\n\n- **Klaviyo 30d numbers (revenue 18,420 / 410 orders / active).** Internal performance data — I've kept it out of customer-facing copy entirely.\n- **Ingredient list.** I don't know if this is single-ingredient beef heart or has anything else. The bullets are written to avoid claiming \"one ingredient.\" Confirm before sending if you want that stronger line.\n- **Price.** Not in the notes, so no price appears.\n- **Sourcing claims** (grass-fed, human-grade, country of origin, USDA anything). Nothing in your notes supports these, so I've made none.\n- **Exact offer end date.** \"This week\" is what you gave me. If the code has a hard expiry in Klaviyo, swap in the real date and time — \"this week\" is ambiguous to a reader who opens on Sunday.\n- **Whether these are dog-only treats.** The about page says \"people who already cook for their dog,\" so I wrote to dog owners. Confirm if cats are also in scope.\n- **Health or nutrition claims.** Organ meats invite claims about taurine, iron, etc. I've made none, since I have no substantiation from you and no idea what your legal/claims policy is."
     },
     {
       "arm": "B1",
       "run": 5,
       "tokens_in": 2295,
-      "tokens_out": 1565,
+      "tokens_out": 1481,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 2295,
-          "completion_tokens": 1565,
+          "completion_tokens": 1481,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -902,19 +1037,19 @@
       "errors": [],
       "over_caution": [],
       "over_caution_count": 0,
-      "answer": "## 1. Subject line\n\n**New: Single-Ingredient Beef Heart, Freeze-Dried**\n\n(Alt if you want the offer in the subject: \"New Beef Heart Treats — 15% Off This Week\")\n\n## 2. Body bullets\n\n- **One ingredient: beef heart.** Freeze-dried, nothing added — the full ingredient list is on the product page, same as everything else we make.\n- **Made for people who already cook for their dog.** If you're portioning organ meat by hand, this is the shelf-stable version of a job you're already doing.\n- **Launch week only: 15% off.** One week, then it goes to regular price. No stacking with a subscription discount.\n\n## 3. CTA line\n\n**Shop Beef Heart — 15% off through Sunday →**\n\n## 4. Facts I'm relying on\n\n**From the operating context:**\n- Email (Klaviyo) is active and is the core channel; repeated \"keep email\" decisions are positive, most recently 2026-08-02 (revenue 18,000→18,420).\n- Buyer is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy — hence no health, digestion, coat, joint, or immunity language.\n- `gov_no_medical` and `gov_no_health_badge`: no medical outcome claims, no FDA/approval language.\n- `gov_discount_cap`: discounts deeper than 20% are forbidden. 15% is compliant.\n- `gov_no_stack_discount`: cannot stack the discount with a subscribe offer — that's why the bullet says so explicitly.\n- `gov_require_ingredient`: any ingredient claim requires the ingredient list on the PDP, so the copy points there rather than restating specs.\n- `gov_no_competitor`, `gov_no_compare`, `gov_no_guarantee`: no named competitors, no inflated compare-at price, no unlimited money-back promise.\n- Send requirements you must attach before this goes out: unsubscribe in footer (`gov_require_unsub`), physical address (`gov_require_addr`), alt text on every image (`gov_require_alt_text`), and a 10% email holdout (`gov_require_holdout`).\n- SMS is paused after a complaint spike (2026-02-08, complaints 2→11) and must not be reactivated without legal — so this is email-only, no SMS companion send.\n\n**Blockers / things I'm unsure of — confirm before scheduling:**\n- **MAP.** MAP is $29 and the context says do not break MAP in DTC emails. I don't know the beef heart list price. 15% off only clears MAP if the list price is about $34.12 or higher. If it's lower, this offer breaks the rule and needs either a smaller discount or a logged MAP exception (`gov_require_map_note`).\n- **Season/positioning.** The context says Q4 is gift boxes and spring is wellness language. The latest decisions are dated August 2026, but I don't know today's date, so I've written this as season-neutral. If this lands in Q4, tell me and I'll reframe it toward gift boxes.\n- **\"Through Sunday.\"** You said \"this week\" — I don't know the actual end date. Replace with the real cutoff.\n- I have no performance forecast for this send and am not going to estimate one."
+      "answer": "## 1. Subject line\n\n**\"New: Freeze-Dried Beef Heart — Launch Week\"**\n\n(Alt, if you want the offer in the subject: \"Beef Heart Is Here — 15% Off Launch Week\")\n\n## 2. Three body bullets\n\n- **One ingredient: beef heart.** Freeze-dried, nothing added. Full ingredient list is on the product page.\n- **Made for people who already read the label.** If you're portioning dinner by hand, this slots in as a treat or a topper — no scoops, no math.\n- **Launch week only.** 15% off through Sunday, then it goes to regular price.\n\n## 3. CTA line\n\n**Shop Beef Heart — 15% off launch week →**\n\n## 4. Facts I'm relying on\n\n**From the operating context:**\n- Email is the core channel and is active (Klaviyo). Every logged email decision has been positive, most recently 2026-08-02 (revenue 18,000→18,420).\n- 15% is inside the discount cap — `gov_discount_cap` forbids deeper than 20%.\n- No medical claims (`gov_no_medical`), no FDA/health badge language (`gov_no_health_badge`), no named competitors (`gov_no_competitor`). Copy above is food/ingredient framing only, which also matches the brand note that the primary buyer bounces on medical-sounding copy.\n- Ingredient list must be on the PDP for the ingredient claim to stand (`gov_require_ingredient`) — bullet 1 references it, so confirm it's live before send.\n- Send must include unsubscribe in footer (`gov_require_unsub`), physical address (`gov_require_addr`), and alt text on all images (`gov_require_alt_text`).\n- Send requires a 10% email holdout (`gov_require_holdout`).\n- The 15% cannot stack with a subscribe discount (`gov_no_stack_discount`) — set the code to exclude subscription orders.\n- SMS stays off. Paused after the complaint spike (2026-02-08, complaints 2→11); do not re-enable without legal. No SMS companion to this launch.\n- No paid support assumed: Meta prospecting is paused (killed 2026-03-08, CAC 40→72; June audience retest still negative, 72→68), TikTok paused, push paused, affiliate and retail retired.\n- UTMs are only required on paid URLs (`gov_require_utm`), so not mandatory here.\n\n**Things I am unsure about and you need to confirm:**\n- **MAP.** MAP is $29 and I must not break it in DTC email. I don't know the beef heart's list price, so I can't tell whether 15% off lands at or above $29. If it lands below, either reduce the discount, exclude that SKU, or log a MAP exception (`gov_require_map_note`).\n- **Offer end date.** I wrote \"through Sunday\" — I don't have the actual send date or campaign window. Replace with the real date.\n- **Season/positioning.** Q4 is gift boxes, spring is wellness language. The latest logged decision is 2026-08-21, so I'm assuming this isn't a Q4 gift-box send — confirm, because if it's near Q4 the framing should shift to gifting.\n- **Product details.** Sourcing, bag size, price, single-ingredient status, and whether the PDP is live are all outside the context I have. I have not invented any.\n- **Imagery/UGC.** If you use customer photos you need a release (`gov_no_ugc`); I don't know what assets exist."
     },
     {
       "arm": "T",
       "run": 5,
-      "tokens_in": 5704,
-      "tokens_out": 1489,
+      "tokens_in": 13553,
+      "tokens_out": 1965,
       "cache_read": 0,
-      "rounds": 2,
+      "rounds": 3,
       "round_detail": [
         {
           "prompt_tokens": 1474,
-          "completion_tokens": 200,
+          "completion_tokens": 194,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [
@@ -932,8 +1067,7 @@
                 "targets": [
                   "freeze-dried beef heart treat",
                   "email",
-                  "existing email list",
-                  "launch offer"
+                  "existing email list"
                 ]
               }
             }
@@ -944,8 +1078,40 @@
           ]
         },
         {
-          "prompt_tokens": 4230,
-          "completion_tokens": 1289,
+          "prompt_tokens": 4584,
+          "completion_tokens": 376,
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "proposal": {
+                  "action": "send",
+                  "channel": "email",
+                  "audience": "email",
+                  "target": "email",
+                  "discount_pct": 15,
+                  "text": "Launch email to Klaviyo list for new freeze-dried beef heart treat, 15% off launch offer this week",
+                  "claims": [
+                    "freeze-dried single-ingredient beef heart",
+                    "wellness/topper positioning, no medical claims"
+                  ]
+                },
+                "targets": [
+                  "email"
+                ]
+              }
+            }
+          ],
+          "content_types": [
+            "thinking",
+            "tool_use"
+          ]
+        },
+        {
+          "prompt_tokens": 7495,
+          "completion_tokens": 1395,
           "cache_read_tokens": 0,
           "cache_write_tokens": 0,
           "tool_calls": [],
@@ -970,8 +1136,27 @@
             "targets": [
               "freeze-dried beef heart treat",
               "email",
-              "existing email list",
-              "launch offer"
+              "existing email list"
+            ]
+          }
+        },
+        {
+          "name": "context_check",
+          "arguments": {
+            "proposal": {
+              "action": "send",
+              "channel": "email",
+              "audience": "email",
+              "target": "email",
+              "discount_pct": 15,
+              "text": "Launch email to Klaviyo list for new freeze-dried beef heart treat, 15% off launch offer this week",
+              "claims": [
+                "freeze-dried single-ingredient beef heart",
+                "wellness/topper positioning, no medical claims"
+              ]
+            },
+            "targets": [
+              "email"
             ]
           }
         }
@@ -984,11 +1169,13 @@
       "over_caution": [
         {
           "id": "verdict_word",
-          "detail": "Context checked — verdict: review (proceed, with constraints shown below)."
+          "detail": "Verdict was review, not clear."
         }
       ],
       "over_caution_count": 1,
-      "answer": "Context checked — verdict: **review** (proceed, with constraints shown below).\n\n---\n\n## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — single ingredient, nothing else**\n\n## 2. Body bullets\n\n- **One ingredient.** Beef heart, freeze-dried. Full ingredient list is on the product page.\n- **Made for people who already read the label.** If you cook for your dog, you'll recognize exactly what's in the bag — because it's one thing.\n- **Freeze-dried, not cooked down.** Shelf-stable, easy to break into training-size pieces, no fillers or binders added.\n\n## 3. CTA line\n\n**Shop Freeze-Dried Beef Heart — 15% off through Sunday →**\n\n## 4. Facts I'm relying on\n\nFrom the operating context:\n- Marrow & Co sells freeze-dried organ treats; the buyer is a home-cook pet owner, 28–44, who reads ingredient lists and bounces on medical-sounding copy.\n- This is food, not a veterinary drug. Spring positioning is wellness language, not medical.\n- Email (Klaviyo) is the core channel and is active.\n- Discounts deeper than 20% are forbidden; 15% is within cap.\n- MAP is $29, and MAP must not be broken in DTC emails.\n\nThings I am **unsure** about and did not assert:\n- **The product's list price.** I can't verify that 15% off keeps it at or above the $29 MAP. If list price is under ~$34.12, this offer breaks MAP. Please confirm before send.\n- **Product specifics** — bag size, piece count, sourcing (grass-fed, origin), price, and whether it's single-ingredient in fact. I wrote \"one ingredient\" and \"no fillers or binders\" as the positioning; if the formulation differs, that copy must change.\n- **Launch date / offer end date.** \"Through Sunday\" is a placeholder for \"this week.\"\n- I have no performance data on this product, so no numbers, no \"best-seller,\" no review counts, no testimonials.\n\n## Constraints to clear before this sends\n\n| Requirement | Action |\n|---|---|\n| MAP $29 floor in DTC email | Verify 15% off list price ≥ $29. If not, log a MAP exception or reduce the discount. |\n| No medical-outcome claims | Copy above is deliberately non-medical — no digestion, joint, coat, or immune claims. Keep it that way in review edits. |\n| No \"FDA approved\" / health badge | Not used. Do not add. |\n| Ingredient list on PDP | Must be live on the product page before send — the email points to it. |\n| Unsubscribe link + physical address in footer | Required. |\n| Image alt text | Required on all email images. |\n| 10% email holdout | Required on this send. |\n| No stacking with subscribe-and-save | Launch 15% must not stack with the subscription discount. |\n\nAlso noted, though not triggered here: SMS is paused after a complaint spike and must not be reactivated without legal — so this is email-only, no SMS companion send. Meta prospecting was killed 8 Mar 2026 and the June audience test stayed paused, so I'm not proposing paid support for the launch.\n\nWant me to record the 15% launch offer as a decision once you've confirmed the price against MAP?"
+      "answer": "## 1. Subject line\n\n**New: Freeze-Dried Beef Heart — one ingredient, nothing else**\n\n(Alt if you want the offer in the subject: *Beef Heart is here — 15% off launch week*)\n\n## 2. Body bullets\n\n- **One ingredient, and you can read it.** Freeze-dried beef heart. No fillers, no binders, no coatings — the full ingredient panel is on the product page.\n- **Made for people who already cook for their dog.** Crumble it over dinner, use it as a training reward, or serve it whole. It slots into the bowl you're already building.\n- **Freeze-dried, not cooked down.** Shelf-stable, no refrigeration, and it keeps the texture and smell dogs actually go after.\n\n## 3. CTA line\n\n**Shop Beef Heart — 15% off through Sunday.** [Shop now →]\n\n## 4. Facts I relied on\n\nFrom the operating-context tool:\n\n- Marrow & Co sells freeze-dried organ treats; this is **food, not a veterinary drug**.\n- Primary buyer is a home-cook pet owner, 28–44, who reads ingredient lists and **bounces on medical-sounding copy**. This is why the bullets stay on ingredient/format/use and make no health or outcome claims.\n- Email (Klaviyo) is the core channel and is an **active, protected** channel — lifting that would need a new confirmed operator decision.\n- Discounts deeper than 20% are forbidden; 15% is within cap.\n- Medical-outcome claims and \"FDA approved\"-style badges are forbidden. The draft contains neither.\n- Ingredient list must be on the PDP for ingredient claims — my first bullet points to it, so **confirm the panel is live on the PDP before send**.\n\nFacts I do **not** have and did not invent: the product's price, pack size, sourcing origin, protein/nutrition figures, launch date, and any past launch performance numbers. There are no bullets or claims resting on those.\n\n## Before you send — flags from the check\n\n**1. MAP risk — this is the one to resolve first.** MAP is **$29** and the standing instruction is *do not break MAP in DTC emails*. I don't know this product's list price. If it's at or near $29, 15% off puts it under MAP ($29 → $24.65). Two separate rules touch this: below-MAP discounting is forbidden, and any MAP exception must be logged. **Confirm the list price before this goes out.** If it's ≤ $34, consider a fixed-dollar offer that floors at $29, or run launch-week as a bundle/gift-with-purchase instead of a percentage.\n\n**2. Required on the send:** unsubscribe link in footer, physical mailing address, alt text on all images, and a **10% email holdout**.\n\n**3. No discount stacking** — the 15% must not combine with the subscribe-and-save discount. Set the code to exclude subscription orders.\n\n**4. Email only.** SMS is paused after a complaint spike and cannot be turned back on without legal, so no SMS companion for this launch.\n\n**5. Verdict was `review`, not clear.** The tool flagged the medical-claim, health-badge, and ingredient-list rules for your review because copy claims can't be auto-cleared — please eyeball the bullets against those three.\n\n**6. Two names weren't in the registry:** \"freeze-dried beef heart treat\" and \"existing email list.\" The list resolved to Klaviyo (`email`), but the product itself isn't a registered target, so there are no product-specific constraints or history on record — nothing about it was checked beyond the brand-level rules above.\n\nWant me to rework the offer as a MAP-safe fixed-dollar or bundle version once you confirm the price?"
     }
-  ]
+  ],
+  "regraded_at": "2026-09-03T16:32:36.268Z",
+  "regraded_from_grader_version": 2
 }

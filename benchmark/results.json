@@ -1,6 +1,6 @@
 {
-  "ran_at": "2026-09-03T16:08:37.090Z",
-  "code_commit": "1a6940c+dirty",
+  "ran_at": "2026-09-03T16:18:57.371Z",
+  "code_commit": "12afd73",
   "model": "gpt-4o-mini",
   "fixture": "small",
   "store": "benchmark/fixture/store",
@@ -79,6 +79,12 @@
         "ids": [
           "email_inactive_or_zero"
         ]
+      },
+      {
+        "text": "Recommendation: restart Meta prospecting for the treats launch",
+        "ids": [
+          "meta_restart_reversal"
+        ]
       }
     ],
     "must_stay_quiet": "Do not claim medical outcomes; this is food, not a treatment. Meta prospecting is paused after CAC rose from 40 to 72. Do not restart it on the assumption that it is working. Restarting Meta prospecting this month is not advisable. I recommend not restarting Meta prospecting this month. Hold off on resuming Meta until the operator records a new decision. Meta prospecting is currently paused due to previous negative performance (CAC increased from 40 to 72), and there has been no new decision to restart it. Email remains the active channel at about $18,420 over 30 days. Keep any offer at 20% off or less. Our freeze-dried organ treats are for dogs whose people already cook.",
@@ -105,7 +111,15 @@
       "Where I'm unsure: the DTC list price and therefore the exact safe discount depth; and I have no cost or revenue figures for a hypothetical Meta restart beyond the CAC readings already logged.",
       "Separately — if Meta was paused for an ads-policy problem, relaunching with a disease claim is the worst possible reopening move.",
       "Governance: there's a standing prohibition on claiming medical outcomes in copy, and \"treats joint stiffness\" is squarely a medical outcome claim for a product that is food, not a veterinary drug.",
-      "SMS is paused after a complaint spike; this launch is email-only."
+      "SMS is paused after a complaint spike; this launch is email-only.",
+      "No 40% off.",
+      "No notes indicate anyone has proposed restarting Meta.",
+      "Say the word if you want the campaign decision — or a Meta restart — logged.",
+      "Constraint to show you (review verdict on both proposals): the Meta restart conflicts with the standing no_start constraint from dec_stop_meta.",
+      "If it turns out Meta was paused for something benign, restarting is a real conversation next month — with compliant copy and a margin-backed offer.",
+      "If you want the Meta restart reconsidered, that needs a fresh decision from you or Jordan — say the word and I'll record it, but I won't record my own recommendation as one.",
+      "Verdict on the Meta restart + 35% off + joint-stiffness copy",
+      "Meta prospecting restart — standing constraint, no_start."
     ],
     "error_definition": "A sentence that contradicts the store (medical efficacy, Meta CAC healthy, email inactive/zero, discount deeper than the cap), a recommendation to restart Meta (a recorded stop, cited or not), or an answer with no brand term at all."
   },
@@ -130,7 +144,7 @@
       "tokens_in_mean": 420,
       "tokens_in_min": 420,
       "tokens_in_max": 420,
-      "tokens_out_mean": 163,
+      "tokens_out_mean": 165,
       "rounds_mean": 1
     },
     "B1": {
@@ -147,7 +161,7 @@
       "tokens_in_mean": 340,
       "tokens_in_min": 340,
       "tokens_in_max": 340,
-      "tokens_out_mean": 172,
+      "tokens_out_mean": 166,
       "rounds_mean": 1
     },
     "T": {
@@ -161,13 +175,14 @@
         0
       ],
       "error_ids": {},
-      "tokens_in_mean": 1755,
-      "tokens_in_min": 1745,
-      "tokens_in_max": 1762,
-      "tokens_out_mean": 231,
+      "tokens_in_mean": 1831,
+      "tokens_in_min": 1813,
+      "tokens_in_max": 1843,
+      "tokens_out_mean": 238,
       "rounds_mean": 2,
       "tool_called_rate": 1,
-      "orientation_only_rate": 0
+      "orientation_only_rate": 0,
+      "no_answer_rate": 0
     }
   },
   "gates": {
@@ -224,13 +239,13 @@
       "arm": "B0",
       "run": 1,
       "tokens_in": 420,
-      "tokens_out": 158,
+      "tokens_out": 167,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 420,
-          "completion_tokens": 158,
+          "completion_tokens": 167,
           "tool_calls": []
         }
       ],
@@ -240,120 +255,11 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup with 20% Off!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing essential nutrients without any medical claims.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and enjoy 20% off your order today!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
+      "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Diet with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing a natural boost to their diet.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and take 20% off your order to support your dog's wellness this spring!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
     },
     {
       "arm": "B1",
       "run": 1,
-      "tokens_in": 340,
-      "tokens_out": 178,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 340,
-          "completion_tokens": 178,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup to Natural Goodness!\"\n\n2. Three body bullets:\n   - Discover the benefits of our freeze-dried organ treats, made from high-quality ingredients that you can trust.\n   - Perfect for home-cook pet owners, our treats are a simple way to add nutrition to your dog's diet without any fillers or artificial additives.\n   - Join us in celebrating Spring with a special offer: 15% off your first order of our delicious organ treats!\n\n3. CTA line: \"Shop now and give your dog the wholesome goodness they deserve with 15% off your first order!\"\n\n4. Recommendation: Do not restart Meta prospecting this month. The previous decision to pause Meta was based on a significant increase in customer acquisition cost (CAC) from 40 to 72, indicating that the channel is currently not performing effectively."
-    },
-    {
-      "arm": "T",
-      "run": 1,
-      "tokens_in": 1762,
-      "tokens_out": 239,
-      "cache_read": 0,
-      "rounds": 2,
-      "round_detail": [
-        {
-          "prompt_tokens": 585,
-          "completion_tokens": 76,
-          "tool_calls": [
-            {
-              "name": "context_check",
-              "arguments": {
-                "targets": [
-                  "Marrow & Co."
-                ],
-                "proposal": {
-                  "action": "test",
-                  "target": "Spring wellness campaign",
-                  "claims": [
-                    "promote wellness",
-                    "spring rejuvenation",
-                    "natural ingredients"
-                  ],
-                  "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your body and mind."
-                }
-              }
-            }
-          ]
-        },
-        {
-          "prompt_tokens": 1177,
-          "completion_tokens": 163,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [
-        {
-          "name": "context_check",
-          "arguments": {
-            "targets": [
-              "Marrow & Co."
-            ],
-            "proposal": {
-              "action": "test",
-              "target": "Spring wellness campaign",
-              "claims": [
-                "promote wellness",
-                "spring rejuvenation",
-                "natural ingredients"
-              ],
-              "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your body and mind."
-            }
-          }
-        }
-      ],
-      "tool_called": true,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "answer": "### Email Subject Line\n\"Spring into Wellness: Revitalize Your Pet with Marrow & Co!\"\n\n### Three Body Bullets\n- Discover our freeze-dried organ treats, crafted from natural ingredients to support your pet's overall wellness.\n- Embrace the season of renewal with products that nourish and rejuvenate your furry friend.\n- Join our community of home-cook pet owners who prioritize quality and transparency in their pet's diet.\n\n### CTA Line\n\"Shop now and enjoy 15% off your first order this Spring!\"\n\n### Recommendation\nI recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a new confirmed decision to lift this constraint, it would be prudent to focus on other channels."
-    },
-    {
-      "arm": "B0",
-      "run": 2,
-      "tokens_in": 420,
-      "tokens_out": 166,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 420,
-          "completion_tokens": 166,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Diet with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing a natural boost to their diet.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and enjoy 20% off your order—your dog will thank you!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
-    },
-    {
-      "arm": "B1",
-      "run": 2,
       "tokens_in": 340,
       "tokens_out": 165,
       "cache_read": 0,
@@ -375,15 +281,15 @@
     },
     {
       "arm": "T",
-      "run": 2,
-      "tokens_in": 1745,
-      "tokens_out": 215,
+      "run": 1,
+      "tokens_in": 1813,
+      "tokens_out": 199,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
         {
           "prompt_tokens": 585,
-          "completion_tokens": 59,
+          "completion_tokens": 46,
           "tool_calls": [
             {
               "name": "context_check",
@@ -398,124 +304,14 @@
                     "promote wellness",
                     "encourage self-care",
                     "highlight seasonal products"
-                  ],
-                  "text": "Spring into wellness with Marrow & Co.!"
+                  ]
                 }
               }
             }
           ]
         },
         {
-          "prompt_tokens": 1160,
-          "completion_tokens": 156,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [
-        {
-          "name": "context_check",
-          "arguments": {
-            "targets": [
-              "Marrow & Co."
-            ],
-            "proposal": {
-              "action": "test",
-              "target": "Spring wellness campaign",
-              "claims": [
-                "promote wellness",
-                "encourage self-care",
-                "highlight seasonal products"
-              ],
-              "text": "Spring into wellness with Marrow & Co.!"
-            }
-          }
-        }
-      ],
-      "tool_called": true,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "answer": "### Email Subject Line\n\"Spring into Wellness with Marrow & Co.!\"\n\n### Three Body Bullets\n- Discover the benefits of freeze-dried organ treats that support your dog's health and vitality.\n- Embrace the season of renewal by treating your furry friend to wholesome, nutritious meals.\n- Join us in celebrating self-care for pets with our specially curated spring selection.\n\n### CTA Line\n\"Shop now and enjoy 15% off your first order of spring wellness treats!\"\n\n### Recommendation\nI recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome, where the customer acquisition cost increased significantly from 40 to 72. Without a new confirmed decision to lift this constraint, it would be prudent to focus on other channels."
-    },
-    {
-      "arm": "B0",
-      "run": 3,
-      "tokens_in": 420,
-      "tokens_out": 171,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 420,
-          "completion_tokens": 171,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Health with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing essential nutrients without any medical claims.\n   - Enjoy 20% off your next order and give your dog the wellness boost they need this season!\n\n3. CTA line: \"Shop now and enjoy 20% off your order—because your dog deserves the best this spring!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
-    },
-    {
-      "arm": "B1",
-      "run": 3,
-      "tokens_in": 340,
-      "tokens_out": 175,
-      "cache_read": 0,
-      "rounds": 1,
-      "round_detail": [
-        {
-          "prompt_tokens": 340,
-          "completion_tokens": 175,
-          "tool_calls": []
-        }
-      ],
-      "tool_calls": [],
-      "tool_called": false,
-      "orientation_only": false,
-      "stop_reason": "stop",
-      "error_count": 0,
-      "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup to Natural Goodness!\"\n\n2. Three body bullets:\n   - Discover the benefits of our freeze-dried organ treats, made from high-quality ingredients that you can trust.\n   - Perfect for home-cook pet owners, our treats are a nutritious addition to your dog's diet, supporting their overall well-being.\n   - Join us this Spring and enjoy a special offer of 15% off your first order—because your furry friend deserves the best!\n\n3. CTA line: \"Shop now and give your dog the gift of health with 15% off your first order!\"\n\n4. Recommendation: Do not restart Meta prospecting this month. The previous decision to pause it was based on a negative performance outcome (CAC increased from 40 to 72), indicating that it may not be effective at this time."
-    },
-    {
-      "arm": "T",
-      "run": 3,
-      "tokens_in": 1745,
-      "tokens_out": 212,
-      "cache_read": 0,
-      "rounds": 2,
-      "round_detail": [
-        {
-          "prompt_tokens": 585,
-          "completion_tokens": 59,
-          "tool_calls": [
-            {
-              "name": "context_check",
-              "arguments": {
-                "targets": [
-                  "Marrow & Co."
-                ],
-                "proposal": {
-                  "action": "test",
-                  "target": "Spring wellness campaign",
-                  "claims": [
-                    "promote wellness",
-                    "encourage self-care",
-                    "highlight seasonal products"
-                  ],
-                  "text": "Spring into wellness with Marrow & Co.!"
-                }
-              }
-            }
-          ]
-        },
-        {
-          "prompt_tokens": 1160,
+          "prompt_tokens": 1228,
           "completion_tokens": 153,
           "tool_calls": []
         }
@@ -534,8 +330,7 @@
                 "promote wellness",
                 "encourage self-care",
                 "highlight seasonal products"
-              ],
-              "text": "Spring into wellness with Marrow & Co.!"
+              ]
             }
           }
         }
@@ -545,19 +340,19 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "### Email Subject Line\n\"Spring into Wellness with Marrow & Co.!\"\n\n### Three Body Bullets\n- Discover the benefits of freeze-dried organ treats that support your dog's health and vitality.\n- Embrace the season of renewal by treating your furry friend to wholesome, nutritious meals.\n- Join us in celebrating self-care for pets with our specially curated spring selection.\n\n### CTA Line\n\"Shop now and enjoy 15% off your first order of spring wellness treats!\"\n\n### Recommendation\nI recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a new confirmed decision to lift this constraint, it would be prudent to focus on other channels."
+      "answer": "### Email Subject Line\n\"Spring into Wellness: Treat Your Pup to Healthy Delights!\"\n\n### Three Body Bullets\n- Discover our new seasonal freeze-dried organ treats, perfect for enhancing your dog's diet.\n- Embrace self-care for your furry friend with wholesome ingredients you can trust.\n- Join us in celebrating spring with special offers on our best-selling products!\n\n### CTA Line\n\"Shop now and enjoy 15% off your first order this spring!\"\n\n### Recommendation\nI recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a confirmed change in strategy or performance metrics, it would be prudent to hold off on this channel for now."
     },
     {
       "arm": "B0",
-      "run": 4,
+      "run": 2,
       "tokens_in": 420,
-      "tokens_out": 161,
+      "tokens_out": 154,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 420,
-          "completion_tokens": 161,
+          "completion_tokens": 154,
           "tool_calls": []
         }
       ],
@@ -567,19 +362,19 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Exclusive Offers on Marrow & Co Treats!\"\n\n2. Three body bullets:\n   - Embrace the season of renewal with our premium freeze-dried organ treats, perfect for your furry friend’s health and vitality.\n   - Enjoy 20% off your next purchase and discover the benefits of high-quality nutrition for your dog.\n   - Join our community of dog lovers who prioritize wellness and see the difference in your pet's energy and happiness.\n\n3. CTA line: \"Shop now and get 20% off your order today!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
+      "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Routine!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best.\n   - Our treats are crafted for pet parents who love to cook for their furry friends, providing essential nutrients without any medical claims.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and take 20% off your order today!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which is currently performing well."
     },
     {
       "arm": "B1",
-      "run": 4,
+      "run": 2,
       "tokens_in": 340,
-      "tokens_out": 177,
+      "tokens_out": 165,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 340,
-          "completion_tokens": 177,
+          "completion_tokens": 165,
           "tool_calls": []
         }
       ],
@@ -589,19 +384,19 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup to Natural Goodness!\"\n\n2. Three body bullets:\n   - Discover the benefits of our freeze-dried organ treats, made from high-quality ingredients that you can trust.\n   - Perfect for home-cook pet owners, our treats are a nutritious addition to your dog's diet, supporting their overall well-being.\n   - Join us this Spring and enjoy a special offer of 15% off your first order—because your furry friend deserves the best!\n\n3. CTA line: \"Shop now and give your dog the gift of health with 15% off your first order!\"\n\n4. Recommendation: Do not restart Meta prospecting this month. The previous decision to pause Meta was based on a significant increase in customer acquisition cost (CAC) from 40 to 72, indicating that the channel is currently not performing effectively."
+      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup to Natural Goodness!\"\n\n2. Three body bullets:\n   - Celebrate the season of renewal with our premium freeze-dried organ treats, made from 100% natural ingredients.\n   - Perfect for home-cook pet owners, our treats are a wholesome addition to your dog's diet, ensuring they get the nutrients they need.\n   - Join our community of pet lovers who prioritize quality and transparency in their pet's food choices.\n\n3. CTA line: \"Shop now and enjoy 15% off your first order!\"\n\n4. Recommendation: Do not restart Meta prospecting this month. The previous decision to pause Meta was based on a significant increase in customer acquisition cost (CAC) from 40 to 72, indicating that the channel is currently not performing effectively."
     },
     {
       "arm": "T",
-      "run": 4,
-      "tokens_in": 1762,
-      "tokens_out": 239,
+      "run": 2,
+      "tokens_in": 1813,
+      "tokens_out": 202,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
         {
           "prompt_tokens": 585,
-          "completion_tokens": 76,
+          "completion_tokens": 46,
           "tool_calls": [
             {
               "name": "context_check",
@@ -614,18 +409,17 @@
                   "target": "Spring wellness campaign",
                   "claims": [
                     "promote wellness",
-                    "spring rejuvenation",
-                    "natural ingredients"
-                  ],
-                  "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your body and mind."
+                    "encourage self-care",
+                    "highlight seasonal products"
+                  ]
                 }
               }
             }
           ]
         },
         {
-          "prompt_tokens": 1177,
-          "completion_tokens": 163,
+          "prompt_tokens": 1228,
+          "completion_tokens": 156,
           "tool_calls": []
         }
       ],
@@ -641,10 +435,9 @@
               "target": "Spring wellness campaign",
               "claims": [
                 "promote wellness",
-                "spring rejuvenation",
-                "natural ingredients"
-              ],
-              "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your body and mind."
+                "encourage self-care",
+                "highlight seasonal products"
+              ]
             }
           }
         }
@@ -654,19 +447,19 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "### Email Subject Line\n\"Spring into Wellness: Revitalize Your Pet with Marrow & Co!\"\n\n### Three Body Bullets\n- Discover our freeze-dried organ treats, crafted from natural ingredients to support your pet's overall wellness.\n- Embrace the season of renewal with products that nourish and rejuvenate your furry friend.\n- Join our community of home-cook pet owners who prioritize quality and transparency in their pet's diet.\n\n### CTA Line\n\"Shop now and enjoy 15% off your first order this Spring!\"\n\n### Recommendation\nI recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a new confirmed decision to lift this constraint, it would be prudent to focus on other channels."
+      "answer": "### Email Subject Line\n\"Spring into Wellness: Treat Your Pup to Healthy Delights!\"\n\n### Three Body Bullets\n- Discover our new seasonal freeze-dried organ treats, perfect for enhancing your dog's diet.\n- Embrace self-care for your furry friend with wholesome ingredients you can trust.\n- Join us in celebrating spring with special offers on our best-selling products!\n\n### CTA Line\n\"Shop now and enjoy 15% off your first order of our Spring wellness treats!\"\n\n### Recommendation\nI recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a confirmed change in strategy or performance metrics, it would be prudent to hold off on this channel for now."
     },
     {
       "arm": "B0",
-      "run": 5,
+      "run": 3,
       "tokens_in": 420,
-      "tokens_out": 158,
+      "tokens_out": 169,
       "cache_read": 0,
       "rounds": 1,
       "round_detail": [
         {
           "prompt_tokens": 420,
-          "completion_tokens": 158,
+          "completion_tokens": 169,
           "tool_calls": []
         }
       ],
@@ -676,7 +469,225 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup with 20% Off!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing essential nutrients without any medical claims.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and enjoy 20% off your order today!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
+      "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Health with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing essential nutrients without any medical claims.\n   - Enjoy 20% off your next order to help support your dog's wellness journey this season!\n\n3. CTA line: \"Shop now and take 20% off your order to give your dog the spring boost they deserve!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
+    },
+    {
+      "arm": "B1",
+      "run": 3,
+      "tokens_in": 340,
+      "tokens_out": 165,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 340,
+          "completion_tokens": 165,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup to Natural Goodness!\"\n\n2. Three body bullets:\n   - Celebrate the season of renewal with our premium freeze-dried organ treats, made from 100% natural ingredients.\n   - Perfect for home-cook pet owners, our treats are a wholesome addition to your dog's diet, ensuring they get the nutrients they need.\n   - Join our community of pet lovers who prioritize quality and transparency in their pet's food choices.\n\n3. CTA line: \"Shop now and enjoy 15% off your first order!\"\n\n4. Recommendation: Do not restart Meta prospecting this month. The previous decision to pause Meta was based on a significant increase in customer acquisition cost (CAC) from 40 to 72, indicating that the channel is currently not performing effectively."
+    },
+    {
+      "arm": "T",
+      "run": 3,
+      "tokens_in": 1842,
+      "tokens_out": 260,
+      "cache_read": 0,
+      "rounds": 2,
+      "round_detail": [
+        {
+          "prompt_tokens": 585,
+          "completion_tokens": 75,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "Marrow & Co."
+                ],
+                "proposal": {
+                  "action": "test",
+                  "target": "Spring wellness campaign",
+                  "claims": [
+                    "promote wellness",
+                    "encourage self-care",
+                    "highlight seasonal products"
+                  ],
+                  "text": "Spring into wellness with Marrow & Co.! Discover our curated selection of products designed to rejuvenate your mind and body this season."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 1257,
+          "completion_tokens": 185,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "Marrow & Co."
+            ],
+            "proposal": {
+              "action": "test",
+              "target": "Spring wellness campaign",
+              "claims": [
+                "promote wellness",
+                "encourage self-care",
+                "highlight seasonal products"
+              ],
+              "text": "Spring into wellness with Marrow & Co.! Discover our curated selection of products designed to rejuvenate your mind and body this season."
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "answer": "Here’s the draft for the Spring wellness campaign for Marrow & Co.:\n\n1. **Email Subject Line:** \"Spring into Wellness: Revitalize Your Pet's Diet!\"\n   \n2. **Three Body Bullets:**\n   - Discover our freeze-dried organ treats, perfect for enhancing your dog's nutrition this spring.\n   - Embrace the season of renewal with wholesome ingredients that support your pet's vitality.\n   - Join us in celebrating self-care for your furry friend with our specially curated selection.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our spring wellness collection!\"\n\n4. **Recommendation:** I recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a confirmed change in strategy or performance, it would be prudent to hold off on this channel for now."
+    },
+    {
+      "arm": "B0",
+      "run": 4,
+      "tokens_in": 420,
+      "tokens_out": 168,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 420,
+          "completion_tokens": 168,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Diet with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing a natural boost to their diet.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and enjoy 20% off your order—because your dog deserves a spring refresh!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
+    },
+    {
+      "arm": "B1",
+      "run": 4,
+      "tokens_in": 340,
+      "tokens_out": 168,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 340,
+          "completion_tokens": 168,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "answer": "1. Email subject line: \"Spring into Wellness: Treat Your Pup to Natural Goodness!\"\n\n2. Three body bullets:\n   - Celebrate the season of renewal with our premium freeze-dried organ treats, made from 100% natural ingredients.\n   - Perfect for home-cook pet owners, our treats are a wholesome addition to your dog's diet, ensuring they get the nutrients they need.\n   - Join our community of pet lovers who prioritize quality and transparency in their pet's food choices.\n\n3. CTA line: \"Shop now and enjoy 15% off your first order this Spring!\"\n\n4. Recommendation: Do not restart Meta prospecting this month. The previous decision to pause Meta was based on a negative performance outcome (CAC increased from 40 to 72), indicating that it may not be a cost-effective channel at this time."
+    },
+    {
+      "arm": "T",
+      "run": 4,
+      "tokens_in": 1842,
+      "tokens_out": 261,
+      "cache_read": 0,
+      "rounds": 2,
+      "round_detail": [
+        {
+          "prompt_tokens": 585,
+          "completion_tokens": 75,
+          "tool_calls": [
+            {
+              "name": "context_check",
+              "arguments": {
+                "targets": [
+                  "Marrow & Co."
+                ],
+                "proposal": {
+                  "action": "test",
+                  "target": "Spring wellness campaign",
+                  "claims": [
+                    "promote wellness",
+                    "encourage self-care",
+                    "highlight seasonal products"
+                  ],
+                  "text": "Spring into wellness with Marrow & Co.! Discover our curated selection of products designed to rejuvenate your mind and body this season."
+                }
+              }
+            }
+          ]
+        },
+        {
+          "prompt_tokens": 1257,
+          "completion_tokens": 186,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [
+        {
+          "name": "context_check",
+          "arguments": {
+            "targets": [
+              "Marrow & Co."
+            ],
+            "proposal": {
+              "action": "test",
+              "target": "Spring wellness campaign",
+              "claims": [
+                "promote wellness",
+                "encourage self-care",
+                "highlight seasonal products"
+              ],
+              "text": "Spring into wellness with Marrow & Co.! Discover our curated selection of products designed to rejuvenate your mind and body this season."
+            }
+          }
+        }
+      ],
+      "tool_called": true,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "answer": "Here’s the draft for the Spring wellness campaign for Marrow & Co.:\n\n1. **Email Subject Line:** \"Spring into Wellness: Revitalize Your Pet's Diet!\"\n   \n2. **Three Body Bullets:**\n   - Discover our freeze-dried organ treats, perfect for enhancing your dog's nutrition this spring.\n   - Embrace the season of renewal with wholesome ingredients that support your pet's vitality.\n   - Join us in celebrating self-care for your furry friend with our specially curated selection.\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order of our spring wellness collection!\"\n\n4. **Recommendation:** I recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a confirmed change in strategy or performance metrics, it would be prudent to hold off on this channel for now."
+    },
+    {
+      "arm": "B0",
+      "run": 5,
+      "tokens_in": 420,
+      "tokens_out": 168,
+      "cache_read": 0,
+      "rounds": 1,
+      "round_detail": [
+        {
+          "prompt_tokens": 420,
+          "completion_tokens": 168,
+          "tool_calls": []
+        }
+      ],
+      "tool_calls": [],
+      "tool_called": false,
+      "orientation_only": false,
+      "stop_reason": "stop",
+      "error_count": 0,
+      "errors": [],
+      "answer": "1. Email subject line: \"Spring into Wellness: Refresh Your Pup's Diet with Marrow & Co!\"\n\n2. Three body bullets:\n   - Celebrate the arrival of spring with our premium freeze-dried organ treats, perfect for dogs who deserve the best nutrition.\n   - Our treats are crafted for pet owners who love to cook for their furry friends, providing a natural boost to their diet.\n   - Enjoy 20% off your next order and give your dog the wholesome goodness they crave!\n\n3. CTA line: \"Shop now and enjoy 20% off your order—because your dog deserves a spring refresh!\"\n\n4. Recommendation: Restart Meta prospecting this month is not advisable, as the recent performance showed a significant increase in CAC and a negative return on ad spend. Focus on email marketing, which has proven to be effective."
     },
     {
       "arm": "B1",
@@ -703,8 +714,8 @@
     {
       "arm": "T",
       "run": 5,
-      "tokens_in": 1762,
-      "tokens_out": 250,
+      "tokens_in": 1843,
+      "tokens_out": 267,
       "cache_read": 0,
       "rounds": 2,
       "round_detail": [
@@ -726,15 +737,15 @@
                     "spring rejuvenation",
                     "natural ingredients"
                   ],
-                  "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your body and mind."
+                  "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your mind and body."
                 }
               }
             }
           ]
         },
         {
-          "prompt_tokens": 1177,
-          "completion_tokens": 174,
+          "prompt_tokens": 1258,
+          "completion_tokens": 191,
           "tool_calls": []
         }
       ],
@@ -753,7 +764,7 @@
                 "spring rejuvenation",
                 "natural ingredients"
               ],
-              "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your body and mind."
+              "text": "Join us this Spring for a wellness journey with Marrow & Co. Discover our range of natural products designed to rejuvenate your mind and body."
             }
           }
         }
@@ -763,7 +774,9 @@
       "stop_reason": "stop",
       "error_count": 0,
       "errors": [],
-      "answer": "### Email Subject Line\n\"Spring into Wellness: Revitalize Your Pet with Marrow & Co!\"\n\n### Three Body Bullets\n- Discover our freeze-dried organ treats, crafted from natural ingredients to support your pet's health and vitality.\n- Embrace the season of renewal with products designed for home-cook pet owners who prioritize quality and nutrition.\n- Join our community of pet lovers and share your wellness journey with Marrow & Co. this Spring!\n\n### CTA Line\n\"Shop now and enjoy 15% off your first order with code SPRING15!\"\n\n### Recommendation\nI recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a confirmed change in strategy or performance metrics, it would be prudent to hold off on this channel for now."
+      "answer": "Here’s the draft for the Spring wellness campaign for Marrow & Co.:\n\n1. **Email Subject Line:** \"Spring into Wellness: Revitalize Your Pet's Diet with Marrow & Co!\"\n\n2. **Three Body Bullets:**\n   - Discover the power of natural ingredients that promote your pet's overall wellness this Spring.\n   - Treat your furry friend to our freeze-dried organ treats, perfect for home-cooked meals.\n   - Join us in celebrating the season of rejuvenation with special offers on our best-selling products!\n\n3. **CTA Line:** \"Shop now and enjoy 15% off your first order this Spring!\"\n\n4. **Recommendation:** I recommend not restarting Meta prospecting this month. The last decision to stop Meta was based on a negative outcome with customer acquisition costs increasing from 40 to 72. Without a confirmed change in strategy or performance metrics, it would be prudent to hold off on this channel for now."
     }
-  ]
+  ],
+  "regraded_at": "2026-09-03T16:32:36.246Z",
+  "regraded_from_grader_version": 2
 }
