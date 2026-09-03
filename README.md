@@ -14,7 +14,7 @@ A real example, from the test fixture:
 
 With this connected, the agent asks first and gets back: Meta is stopped and why, the discount cap, and the rule against medical claims. It stops the proposal instead of writing it.
 
-**Measured, pooled across two models on that task:** the agent given a paste made 1.6 errors per run. Given your whole context as a document, 0.5. With this server, 0. It costs more tokens, not fewer — see [What it does not do](#what-it-does-not-do).
+**Measured, pooled across two models on that task (n = 5 per arm per model):** the agent given a paste made 1.5 errors per run. Given your whole context as a document, 0.5. With this server, 0. It costs more tokens, not fewer, and on a task with nothing to catch it added friction — see [What it does not do](#what-it-does-not-do).
 
 ## Who it is for
 
@@ -53,7 +53,7 @@ store/
   history.json      decisions you made, when, and what happened
 ```
 
-`store/` in this repo is a working example. Copy it and edit.
+`store/` in this repo is a working example. Copy it and edit. Give every target the `aliases` your team and your agent actually use for it ("the list", "Klaviyo", "launch email"): a name the registry cannot resolve is the failure we measured most often, and aliases are the operator's lever for it.
 
 These are real records from the example store, not a sketch:
 
@@ -85,7 +85,7 @@ Rules are predicates, not prose, which is the whole bet: an agent can obey `disc
 
 ## Instructions for your AI agent
 
-Paste this into your agent's system prompt, `CLAUDE.md`, or equivalent. Without it the agent will not reliably call the tool — we measured that, and it is the honest caveat.
+Paste this into your agent's system prompt, `CLAUDE.md`, or equivalent. In our harness both models called the tool on its description alone, 5/5, with nothing in the system prompt naming it; how real hosts present the description is unmeasured, and the instructions below also tell the agent what to do with `review` and with a name that does not resolve, which is where one model looped.
 
 ```markdown
 ## ecom-context — call this before you draft, recommend, or act
@@ -106,9 +106,12 @@ Two calls, in this order:
    `mentions_competitor`, `uses_ugc`.
 
    You get one of:
-   - `blocked` — a rule forbids it. Do not do it. Tell the operator which rule.
-   - `review` — it conflicts with a past decision or a constraint. Say what the
-     conflict is and let the operator decide. Do not silently proceed.
+   - `blocked` — a rule forbids it. Do not do it. Tell the operator which rule,
+     revise the proposal, and call again.
+   - `review` — something needs the operator's eyes: a conflict with a past
+     decision, a claim rule the server cannot check for you, a name that did not
+     resolve, a pending record. Proceed with the work and show the operator the
+     listed items in your reply. Do not call again unless your proposal changes.
    - `ok` — no rule or precedent objects. Proceed.
 
 Rules:
@@ -118,17 +121,21 @@ Rules:
   `history.record`. It lands as *proposed* and does nothing until the operator
   confirms it with `ecom-context confirm <id>`. Do not treat your own record as
   established fact.
-- If a target name does not resolve, the response tells you so and lists the
-  registry. Ask which one; do not guess.
+- If a target name does not resolve, the response lists the registry and, under
+  `unresolved_suggestions`, the ids that share a word with your name. If one is
+  what you meant, call once more with that id. If none is, do not call again with
+  the same words: proceed, and tell the operator which names were not in the
+  registry.
 ```
 
 ## What it does not do
 
-- **It does not save tokens.** Measured: a hand-written paste is 390–581 input tokens; this server's answer is 2,295 on one model and 19,138 on another. If the pitch you want is "cheaper", this is not it. The claim is correctness.
+- **It does not save tokens.** Measured: a hand-written paste is 390–581 input tokens; a run with this server is about 2,500 on gpt-4o-mini and about 19,000 on claude-opus-5, and it stays roughly flat as the store grows while a full-context document grows linearly — but on claude-opus-5 it is flat *above* the 200-decision document. If the pitch you want is "cheaper", this is not it. The claim is correctness.
 - **It does not help when a paste already works.** On our small task both models made zero errors without it, so the result is void by our own gate.
 - **It does not read your platforms.** No Shopify, Klaviyo or ad-platform integration. You write the store; the platform owns performance data.
 - **It does not decide.** A conflict returns `review`, not `blocked`, because precedent is yours to override. It only makes sure you see it first.
-- **Two gates are still unmeasured** (over-caution on a control task, and cost as the store grows), so this repo's own verdict is RESHAPE, not SHIP. The numbers below are what we have.
+- **It can add friction where nothing needs catching.** On a control task with no trap, gpt-4o-mini named the email list in its own words, got `review` for unresolved names, and re-called eight times without answering in 4 of 5 runs (refusing in the fifth); claude-opus-5 finished every draft correctly but reported "verdict: review" on all of them because it always declares claims and claim rules are `review` by design. Both count as over-caution under the benchmark's own definition.
+- **All seven gates of the design are now measured and two fail** (the control-task over-caution above, and cost as the store grows, on claude-opus-5), so this repo's own verdict is RESHAPE, not SHIP. The reference section below has every number, and [what it would take](#what-this-benchmark-does-not-cover-and-what-it-would-take) to measure what is still unmeasured.
 
 ---
 
