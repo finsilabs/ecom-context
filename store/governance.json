@@ -1,3 +1,1 @@
-{
-  "rules": []
-}
+{"rules":[{"id":"gov_discount_cap","effect":"forbid","domain":"offers","action":"discount","object":"maximum_discount_pct","op":"gt","value":20,"created_at":"2026-01-01T00:00:00Z","created_by":"operator"},{"id":"gov_no_medical","effect":"forbid","domain":"copy","action":"claim","object":"medical_outcome","patterns":["treats? (arthritis|joint stiffness)"],"created_at":"2026-01-01T00:00:00Z","created_by":"operator"}]}

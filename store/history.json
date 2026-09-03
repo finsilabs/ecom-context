@@ -1,3 +1,1 @@
-{
-  "decisions": []
-}
+{"decisions":[{"id":"dec_meta_stop","decided_at":"2026-03-08T00:00:00Z","actor":"operator","action":"stop","target":"meta","outcome":"negative","metric":"cac","before":40,"after":72,"status":"confirmed","recorded_by":"operator"}]}
