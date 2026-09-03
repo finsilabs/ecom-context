@@ -88,33 +88,47 @@ Example rule, authored by the operator in `governance.json`:
 
 ## Benchmark (measured)
 
-One operator task, same model, same task prompt, two conditions:
+Two tasks, same model (`gpt-4o-mini`, temperature 0). An error is a claim that contradicts the fixture store. The grader is validated on a known-bad answer (must fire) and a known-good answer (must stay quiet) before either arm runs. Re-run: `npm run benchmark` (small) or `npm run benchmark:large` (needs `OPENAI_API_KEY`).
 
-- **without:** the model gets the raw notes an operator would paste (Slack, a pinned offer rule, an about-page dump). Same facts as the store, plus noise. Not an empty context.
-- **with:** the model gets MCP tools against that store. No paste.
+### Small task — does not favour the server
 
-Task: draft a Spring wellness email (subject, 3 bullets, CTA) and recommend whether to restart Meta prospecting.
+The first task put every store fact in a 420-token paste. The server had nothing to add and paid 1,489 extra input tokens to say the same thing. That number stands. It is not deleted because a later task exists.
 
-Model: `gpt-4o-mini` (`gpt-4o-mini-2024-07-18`), temperature 0. Ran 2026-09-02. Raw transcript: `benchmark/results.json`. Re-run: `npm run benchmark` (needs `OPENAI_API_KEY`).
+Task: draft a Spring wellness email and recommend whether to restart Meta. Transcript: `benchmark/results.json`. Ran 2026-09-02.
 
 | | tokens in | tokens out | total | errors |
 |---|---:|---:|---:|---:|
-| without (paste) | 420 | 171 | 591 | 0 |
+| without (paste of the whole store) | 420 | 171 | 591 | 0 |
 | with (MCP) | 1909 | 238 | 2147 | 0 |
 
-**The server used more tokens. Errors tied at zero.** The pitch "fewer tokens, fewer errors" is not supported by this run. The extra tokens are the tool loop: the with-run called `context.brief` once and `channels.performance` twice.
+**The small task does not favour the server.** Tokens up. Errors tied at zero. The with-arm called `context.brief` then `channels.performance` twice.
 
-An error is a claim that contradicts the fixture store. The four checks were written before the model ran: medical efficacy claim, Meta CAC described as healthy, email described as inactive/zero, discount deeper than 20% off. The grader was run against a known-bad answer (must fire on all four) and a known-good answer (must stay quiet) before either arm.
+### Large task — store an operator could not paste
 
-Both arms stayed inside those four checks. The without-run read the paste and did not restart Meta, did not go past 20% off, and did not claim a cure. The with-run cited CAC 40 → 72 from the store and also did not contradict those checks.
+Ten channels, 20 rules accumulated over a year, 32 decisions. The without-arm gets this week's Slack plus a Klaviyo screenshot (855 characters) — what an operator would actually paste — not the year. The paste proposes restarting Meta at 35% off with "treats joint stiffness" copy. It does **not** contain the March 2026 stop (CAC 40→72), the 20% discount cap, or the medical-claim forbid.
+
+Task: accept or reject that growth proposal and draft the email. Transcript: `benchmark/results-large.json`. Ran 2026-09-03. Extra error class, locked before the run: recommending a Meta restart without citing the recorded stop/CAC rise.
+
+| | tokens in | tokens out | total | errors |
+|---|---:|---:|---:|---:|
+| without (this week's paste) | 390 | 178 | 568 | 2 |
+| with (MCP) | 3815 | 209 | 4024 | 1 |
+
+Without errors: `discount_deeper_than_cap` (35% off), `ignores_negative_meta_stop` (restart Meta on cheaper CPMs, no March history).
+
+With: called `context.brief` once (no duplicate channel fetches). Rejected the Meta restart and cited CAC 40→72 and the medical forbid. Still shipped 35% off, which the store forbids (`discount_deeper_than_cap`).
+
+**Tokens still go the wrong way (7×).** Errors moved 2→1: the server recovered the March decision the paste omitted, then broke the discount cap that was sitting in the brief. That is not "fewer tokens, fewer errors."
+
+`context.brief` is now an index (headline metrics, forbid rules, last decision / last stop per target) and points at the other tools. A second call is a choice. On the large with-arm the model chose not to call them, and still paid 3,815 input tokens for the index plus tool schemas.
 
 ### What this does not cover
 
 - Any model other than `gpt-4o-mini`. xAI returned 403 (credits). n = 1 per arm.
-- A live brand. The fixture is synthetic; the *job* is real.
-- Error classes we did not pre-register (invented SKUs, soft wellness puffery, "health and vitality").
-- Operators who paste nothing. That baseline was rejected: starving the control makes every tool look good.
-- Multi-turn work, other tasks, or sending the email.
+- A live brand. The fixtures are synthetic; the *jobs* are real.
+- Error classes we did not pre-register (invented SKUs, "joint health" puffery that is not `treats arthritis`).
+- Operators who paste nothing. That baseline was rejected on the small task as flattering. The large without-arm is a *realistic* incomplete paste, not an empty one.
+- Multi-turn work, or sending the email.
 
 ## Not in this slice
 

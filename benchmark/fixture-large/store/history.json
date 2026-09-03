@@ -1,0 +1,352 @@
+{
+  "decisions": [
+    {
+      "id": "dec_start_email",
+      "decided_at": "2025-06-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 0,
+      "after": 4200
+    },
+    {
+      "id": "dec_start_meta",
+      "decided_at": "2025-06-15T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "meta",
+      "outcome": "positive",
+      "metric": "cac",
+      "before": 0,
+      "after": 38
+    },
+    {
+      "id": "dec_start_google",
+      "decided_at": "2025-07-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "google",
+      "outcome": "positive",
+      "metric": "roas",
+      "before": 0,
+      "after": 2.4
+    },
+    {
+      "id": "dec_start_aff",
+      "decided_at": "2025-07-20T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "affiliate",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_start_sms",
+      "decided_at": "2025-08-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "sms",
+      "outcome": "positive",
+      "metric": "orders",
+      "before": 0,
+      "after": 40
+    },
+    {
+      "id": "dec_aff_stop",
+      "decided_at": "2025-08-28T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target_type": "channel",
+      "target_id": "affiliate",
+      "outcome": "negative",
+      "metric": "revenue",
+      "before": 800,
+      "after": 0
+    },
+    {
+      "id": "dec_retail_start",
+      "decided_at": "2025-09-01T00:00:00.000Z",
+      "actor": "founder",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "retail",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_email_freq",
+      "decided_at": "2025-09-18T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target_type": "channel",
+      "target_id": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 9000,
+      "after": 11200
+    },
+    {
+      "id": "dec_ws_start",
+      "decided_at": "2025-10-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "wholesale",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 0,
+      "after": 3000
+    },
+    {
+      "id": "dec_google_keep",
+      "decided_at": "2025-10-22T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "google",
+      "outcome": "positive",
+      "metric": "roas",
+      "before": 2.4,
+      "after": 2.6
+    },
+    {
+      "id": "dec_retail_stop",
+      "decided_at": "2025-11-02T00:00:00.000Z",
+      "actor": "founder",
+      "action": "stop",
+      "target_type": "channel",
+      "target_id": "retail",
+      "outcome": "negative",
+      "metric": "revenue",
+      "before": 400,
+      "after": 0
+    },
+    {
+      "id": "dec_sms_late",
+      "decided_at": "2025-11-11T00:00:00.000Z",
+      "actor": "operator",
+      "action": "change",
+      "target_type": "channel",
+      "target_id": "sms",
+      "outcome": "negative",
+      "metric": "unsub",
+      "before": 0.4,
+      "after": 1.8
+    },
+    {
+      "id": "dec_tt_start",
+      "decided_at": "2025-12-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "tiktok",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_push_start",
+      "decided_at": "2026-01-05T00:00:00.000Z",
+      "actor": "operator",
+      "action": "start",
+      "target_type": "channel",
+      "target_id": "push",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_tt_stop",
+      "decided_at": "2026-01-22T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target_type": "channel",
+      "target_id": "tiktok",
+      "outcome": "negative",
+      "metric": "cac",
+      "before": 55,
+      "after": 91
+    },
+    {
+      "id": "dec_sms_pause",
+      "decided_at": "2026-02-08T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target_type": "channel",
+      "target_id": "sms",
+      "outcome": "negative",
+      "metric": "complaints",
+      "before": 2,
+      "after": 11
+    },
+    {
+      "id": "dec_email_keep_feb",
+      "decided_at": "2026-02-20T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 15100,
+      "after": 16800
+    },
+    {
+      "id": "dec_push_pause",
+      "decided_at": "2026-02-28T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target_type": "channel",
+      "target_id": "push",
+      "outcome": "negative"
+    },
+    {
+      "id": "dec_stop_meta",
+      "decided_at": "2026-03-08T00:00:00.000Z",
+      "actor": "operator",
+      "action": "stop",
+      "target_type": "channel",
+      "target_id": "meta",
+      "outcome": "negative",
+      "metric": "cac",
+      "before": 40,
+      "after": 72
+    },
+    {
+      "id": "dec_keep_email_mar",
+      "decided_at": "2026-03-08T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 15100,
+      "after": 18420
+    },
+    {
+      "id": "dec_google_keep_apr",
+      "decided_at": "2026-04-12T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "google",
+      "outcome": "positive",
+      "metric": "roas",
+      "before": 2.6,
+      "after": 2.5
+    },
+    {
+      "id": "dec_organic_test",
+      "decided_at": "2026-04-04T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target_type": "channel",
+      "target_id": "organic",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_ws_keep",
+      "decided_at": "2026-05-01T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "wholesale",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 4000,
+      "after": 5200
+    },
+    {
+      "id": "dec_meta_test_jun",
+      "decided_at": "2026-06-15T00:00:00.000Z",
+      "actor": "operator",
+      "action": "test",
+      "target_type": "channel",
+      "target_id": "meta",
+      "outcome": "negative",
+      "metric": "cac",
+      "before": 72,
+      "after": 68
+    },
+    {
+      "id": "dec_email_keep_jun",
+      "decided_at": "2026-06-20T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 17000,
+      "after": 18420
+    },
+    {
+      "id": "dec_google_jul",
+      "decided_at": "2026-07-09T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "google",
+      "outcome": "positive"
+    },
+    {
+      "id": "dec_tt_stay_paused",
+      "decided_at": "2026-07-18T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "tiktok",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_email_aug",
+      "decided_at": "2026-08-02T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "email",
+      "outcome": "positive",
+      "metric": "revenue",
+      "before": 18000,
+      "after": 18420
+    },
+    {
+      "id": "dec_meta_still_paused",
+      "decided_at": "2026-08-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "meta",
+      "outcome": "negative"
+    },
+    {
+      "id": "dec_sms_still_paused",
+      "decided_at": "2026-08-10T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "sms",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_organic_aug",
+      "decided_at": "2026-08-21T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "organic",
+      "outcome": "inconclusive"
+    },
+    {
+      "id": "dec_ws_aug",
+      "decided_at": "2026-08-21T00:00:00.000Z",
+      "actor": "operator",
+      "action": "keep",
+      "target_type": "channel",
+      "target_id": "wholesale",
+      "outcome": "positive"
+    }
+  ]
+}

@@ -36,7 +36,7 @@ function createServer(store: ContextStore): McpServer {
     {
       title: 'Operating brief',
       description:
-        'Compact operating brief assembled from memory, channels, governance, and history. Governance and history are typed records; free text is only in memory.',
+        'Compact INDEX of the four stores, not a dump. Includes: latest memory notes, channel headline metrics (no approaches), every forbid rule, and the last decision per target. Call channels.performance, governance.rules, or history.decisions only if you need approaches, require-rules, or older decisions. Do not call this twice.',
       inputSchema: z.object({}),
     },
     async () => {
@@ -53,7 +53,7 @@ function createServer(store: ContextStore): McpServer {
     {
       title: 'Channel performance',
       description:
-        'Typed per-channel performance and approaches already tried, with outcomes. Not a metrics dump and not prose.',
+        'Full record for a channel, including approaches tried and outcomes. Headline metrics are already in context.brief — pass channel_id for the one channel you need. Do not call this twice for the same id.',
       inputSchema: z.object({
         channel_id: z.string().min(1).optional().describe('If set, return only this channel'),
       }),
@@ -76,7 +76,7 @@ function createServer(store: ContextStore): McpServer {
     {
       title: 'Governance rules',
       description:
-        'Typed rules the agent must obey (effect, domain, action, object). Not free-text policy. Filter by domain or effect.',
+        'Typed rules. Forbid rules are already listed in context.brief. Call this to filter by domain or effect, or to read require rules. Not free-text policy.',
       inputSchema: z.object({
         domain: GovernanceDomain.optional(),
         effect: GovernanceEffect.optional(),
@@ -99,7 +99,7 @@ function createServer(store: ContextStore): McpServer {
     {
       title: 'Decision history',
       description:
-        'Typed decisions: when, who, action, target, outcome, optional metric before/after. Not a changelog narrative.',
+        'Typed decision log. context.brief already has the last decision per target. Call this for older decisions or to filter by target_type or outcome.',
       inputSchema: z.object({
         target_type: DecisionTargetType.optional(),
         outcome: DecisionOutcome.optional(),
@@ -126,7 +126,7 @@ function createServer(store: ContextStore): McpServer {
     {
       title: 'Write memory',
       description:
-        'Append a free-text memory note. This is the only store that accepts prose. Do not put rules or decisions here.',
+        'Append a free-text memory note. The only write path. Do not put rules or decisions here. Do not call this while drafting from existing context.',
       inputSchema: z.object({
         topic: z.string().min(1).describe('Short tag, e.g. positioning, customer, product'),
         text: z.string().min(1).describe('Free-text note about the business'),

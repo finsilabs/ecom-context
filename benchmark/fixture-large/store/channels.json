@@ -1,0 +1,196 @@
+{
+  "channels": [
+    {
+      "id": "email",
+      "name": "Klaviyo",
+      "kind": "email",
+      "status": "active",
+      "window": "30d",
+      "revenue": 18420,
+      "spend": null,
+      "orders": 410,
+      "approaches": [
+        {
+          "id": "ap_email_freq",
+          "tried_at": "2026-02-10T00:00:00.000Z",
+          "kind": "frequency",
+          "outcome": "worked"
+        },
+        {
+          "id": "ap_email_subj",
+          "tried_at": "2025-11-02T00:00:00.000Z",
+          "kind": "creative",
+          "outcome": "worked"
+        }
+      ]
+    },
+    {
+      "id": "sms",
+      "name": "SMS",
+      "kind": "sms",
+      "status": "paused",
+      "window": "30d",
+      "revenue": 900,
+      "spend": 400,
+      "orders": 22,
+      "approaches": [
+        {
+          "id": "ap_sms_late",
+          "tried_at": "2025-12-01T00:00:00.000Z",
+          "kind": "timing",
+          "outcome": "did_not_work"
+        }
+      ]
+    },
+    {
+      "id": "meta",
+      "name": "Meta prospecting",
+      "kind": "paid_social",
+      "status": "paused",
+      "window": "30d",
+      "revenue": 6200,
+      "spend": 8900,
+      "orders": 55,
+      "approaches": [
+        {
+          "id": "ap_meta_cr",
+          "tried_at": "2026-03-01T00:00:00.000Z",
+          "kind": "creative",
+          "outcome": "did_not_work"
+        },
+        {
+          "id": "ap_meta_aud",
+          "tried_at": "2026-06-01T00:00:00.000Z",
+          "kind": "audience",
+          "outcome": "did_not_work"
+        }
+      ]
+    },
+    {
+      "id": "google",
+      "name": "Google Search",
+      "kind": "search",
+      "status": "active",
+      "window": "30d",
+      "revenue": 7400,
+      "spend": 3100,
+      "orders": 90,
+      "approaches": [
+        {
+          "id": "ap_g_brand",
+          "tried_at": "2025-09-15T00:00:00.000Z",
+          "kind": "audience",
+          "outcome": "worked"
+        }
+      ]
+    },
+    {
+      "id": "tiktok",
+      "name": "TikTok Spark",
+      "kind": "paid_social",
+      "status": "paused",
+      "window": "30d",
+      "revenue": 1100,
+      "spend": 2400,
+      "orders": 18,
+      "approaches": [
+        {
+          "id": "ap_tt_ugc",
+          "tried_at": "2026-01-20T00:00:00.000Z",
+          "kind": "creative",
+          "outcome": "did_not_work"
+        }
+      ]
+    },
+    {
+      "id": "affiliate",
+      "name": "Affiliate",
+      "kind": "affiliate",
+      "status": "retired",
+      "window": "30d",
+      "revenue": 0,
+      "spend": 0,
+      "orders": 0,
+      "approaches": [
+        {
+          "id": "ap_aff_flat",
+          "tried_at": "2025-08-01T00:00:00.000Z",
+          "kind": "offer",
+          "outcome": "did_not_work"
+        }
+      ]
+    },
+    {
+      "id": "organic",
+      "name": "Organic social",
+      "kind": "organic",
+      "status": "active",
+      "window": "30d",
+      "revenue": null,
+      "spend": null,
+      "orders": null,
+      "approaches": [
+        {
+          "id": "ap_org_reel",
+          "tried_at": "2026-04-04T00:00:00.000Z",
+          "kind": "creative",
+          "outcome": "inconclusive"
+        }
+      ]
+    },
+    {
+      "id": "wholesale",
+      "name": "Wholesale",
+      "kind": "other",
+      "status": "active",
+      "window": "30d",
+      "revenue": 5200,
+      "spend": null,
+      "orders": 14,
+      "approaches": [
+        {
+          "id": "ap_ws_moq",
+          "tried_at": "2025-10-10T00:00:00.000Z",
+          "kind": "offer",
+          "outcome": "worked"
+        }
+      ]
+    },
+    {
+      "id": "push",
+      "name": "Push",
+      "kind": "other",
+      "status": "paused",
+      "window": "30d",
+      "revenue": 300,
+      "spend": null,
+      "orders": 8,
+      "approaches": [
+        {
+          "id": "ap_push_d",
+          "tried_at": "2026-02-02T00:00:00.000Z",
+          "kind": "timing",
+          "outcome": "did_not_work"
+        }
+      ]
+    },
+    {
+      "id": "retail",
+      "name": "Retail pop-up",
+      "kind": "other",
+      "status": "retired",
+      "window": "30d",
+      "revenue": 0,
+      "spend": 0,
+      "orders": 0,
+      "approaches": [
+        {
+          "id": "ap_ret",
+          "tried_at": "2025-07-07T00:00:00.000Z",
+          "kind": "other",
+          "outcome": "did_not_work"
+        }
+      ]
+    }
+  ]
+}

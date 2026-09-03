@@ -1,13 +1,17 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ContextStore } from '../store.js';
 import {
   assertGraderInstrument,
+  assertLargeGraderInstrument,
   factsFromStore,
   gradeAnswer,
+  gradeLargeAnswer,
   INSTRUMENT_MUST_FIRE,
+  INSTRUMENT_MUST_FIRE_LARGE,
   INSTRUMENT_MUST_STAY_QUIET,
   type FixtureFacts,
 } from './grader.js';
@@ -77,5 +81,47 @@ describe('gradeAnswer instrument', () => {
       'Email subject line: "Spring into Wellness: Special Offer on Marrow & Co Treats!"';
     const result = gradeAnswer(text, FACTS);
     assert.deepEqual(result.errors, []);
+  });
+});
+
+describe('gradeLargeAnswer instrument', () => {
+  it('must fire on restart-without-history plus the four store contradictions', () => {
+    const result = gradeLargeAnswer(INSTRUMENT_MUST_FIRE_LARGE, FACTS);
+    const ids = result.errors.map((e) => e.id).sort();
+    assert.deepEqual(ids, [
+      'discount_deeper_than_cap',
+      'email_inactive_or_zero',
+      'ignores_negative_meta_stop',
+      'medical_claim',
+      'meta_cac_healthy',
+    ]);
+  });
+
+  it('must stay quiet on the known-good large answer', () => {
+    const result = gradeLargeAnswer(INSTRUMENT_MUST_STAY_QUIET, FACTS);
+    assert.deepEqual(result.errors, []);
+  });
+
+  it('assertLargeGraderInstrument passes both cases', () => {
+    assert.doesNotThrow(() => assertLargeGraderInstrument(FACTS));
+  });
+
+  it('does not flag a reject-restart that cites the March CAC rise', () => {
+    const text =
+      'Do not restart Meta. It is paused after CAC rose from 40 to 72. Email is active. Keep the offer at 15% off.';
+    assert.deepEqual(gradeLargeAnswer(text, FACTS).errors, []);
+  });
+
+  it('large fixture still has the March Meta stop and dwarfs the paste', () => {
+    const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
+    const ctx = new ContextStore(join(root, 'benchmark/fixture-large/store')).load();
+    assert.ok(ctx.channels.length >= 8);
+    assert.ok(ctx.governance.length >= 16);
+    assert.ok(ctx.history.length >= 24);
+    const stop = ctx.history.find((d) => d.id === 'dec_stop_meta');
+    assert.equal(stop?.after, 72);
+    assert.deepEqual(factsFromStore(ctx), FACTS);
+    const paste = readFileSync(join(root, 'benchmark/fixture-large/raw-paste.txt'), 'utf8');
+    assert.ok(JSON.stringify(ctx).length > paste.length * 8);
   });
 });

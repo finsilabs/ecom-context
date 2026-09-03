@@ -1,0 +1,165 @@
+{
+  "rules": [
+    {
+      "id": "gov_no_medical",
+      "effect": "forbid",
+      "domain": "copy",
+      "action": "claim",
+      "object": "medical_outcome",
+      "created_at": "2025-06-12T00:00:00.000Z"
+    },
+    {
+      "id": "gov_discount_cap",
+      "effect": "forbid",
+      "domain": "offers",
+      "action": "discount",
+      "object": "deeper_than_20_pct",
+      "value": 20,
+      "created_at": "2025-07-03T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_competitor",
+      "effect": "forbid",
+      "domain": "copy",
+      "action": "mention_competitor",
+      "object": "named_brand",
+      "created_at": "2025-08-01T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_kids",
+      "effect": "forbid",
+      "domain": "audience",
+      "action": "target_audience",
+      "object": "children",
+      "created_at": "2025-08-20T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_ugc",
+      "effect": "forbid",
+      "domain": "copy",
+      "action": "use_ugc",
+      "object": "without_release",
+      "created_at": "2025-09-09T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_compare",
+      "effect": "forbid",
+      "domain": "offers",
+      "action": "compare_at",
+      "object": "inflated_compare_at",
+      "created_at": "2025-10-02T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_sms_late",
+      "effect": "forbid",
+      "domain": "channel",
+      "action": "send",
+      "object": "sms_after_21h",
+      "created_at": "2025-11-11T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_guarantee",
+      "effect": "forbid",
+      "domain": "legal",
+      "action": "guarantee",
+      "object": "unlimited_money_back",
+      "created_at": "2025-12-01T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_health_badge",
+      "effect": "forbid",
+      "domain": "copy",
+      "action": "claim",
+      "object": "fda_approved",
+      "created_at": "2026-01-08T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_stack_discount",
+      "effect": "forbid",
+      "domain": "offers",
+      "action": "discount",
+      "object": "stack_with_subscribe",
+      "created_at": "2026-02-14T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_tiktok_sound",
+      "effect": "forbid",
+      "domain": "channel",
+      "action": "use_ugc",
+      "object": "unlicensed_audio",
+      "created_at": "2026-03-02T00:00:00.000Z"
+    },
+    {
+      "id": "gov_no_wholesale_map",
+      "effect": "forbid",
+      "domain": "offers",
+      "action": "discount",
+      "object": "below_map",
+      "created_at": "2026-04-18T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_unsub",
+      "effect": "require",
+      "domain": "legal",
+      "action": "send",
+      "object": "unsubscribe_in_footer",
+      "created_at": "2025-06-12T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_addr",
+      "effect": "require",
+      "domain": "legal",
+      "action": "send",
+      "object": "physical_address",
+      "created_at": "2025-06-12T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_ingredient",
+      "effect": "require",
+      "domain": "copy",
+      "action": "claim",
+      "object": "ingredient_list_on_pdp",
+      "created_at": "2025-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_utm",
+      "effect": "require",
+      "domain": "ops",
+      "action": "send",
+      "object": "utm_on_paid_urls",
+      "created_at": "2025-10-20T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_holdout",
+      "effect": "require",
+      "domain": "channel",
+      "action": "send",
+      "object": "email_holdout_10pct",
+      "created_at": "2026-01-15T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_consent",
+      "effect": "require",
+      "domain": "audience",
+      "action": "send",
+      "object": "sms_explicit_consent",
+      "created_at": "2026-02-01T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_alt_text",
+      "effect": "require",
+      "domain": "copy",
+      "action": "send",
+      "object": "image_alt_text",
+      "created_at": "2026-05-05T00:00:00.000Z"
+    },
+    {
+      "id": "gov_require_map_note",
+      "effect": "require",
+      "domain": "offers",
+      "action": "discount",
+      "object": "map_exception_logged",
+      "created_at": "2026-06-06T00:00:00.000Z"
+    }
+  ]
+}

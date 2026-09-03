@@ -1,0 +1,52 @@
+{
+  "notes": [
+    {
+      "id": "mem_positioning",
+      "written_at": "2025-06-05T00:00:00.000Z",
+      "topic": "positioning",
+      "text": "Marrow & Co sells freeze-dried organ treats. The customer already cooks for their dog. This is food, not a veterinary drug."
+    },
+    {
+      "id": "mem_customer",
+      "written_at": "2025-06-05T00:00:00.000Z",
+      "topic": "customer",
+      "text": "Primary buyer is a home-cook pet owner, 28–44, who reads ingredient lists. They bounce on medical-sounding copy."
+    },
+    {
+      "id": "mem_season",
+      "written_at": "2025-11-01T00:00:00.000Z",
+      "topic": "seasonality",
+      "text": "Q4 is gift boxes. Spring is wellness language, not medical."
+    },
+    {
+      "id": "mem_wholesale",
+      "written_at": "2026-01-11T00:00:00.000Z",
+      "topic": "wholesale",
+      "text": "Independent pet shops. MAP is $29. Do not break MAP in DTC emails."
+    },
+    {
+      "id": "mem_sms_ban",
+      "written_at": "2026-02-09T00:00:00.000Z",
+      "topic": "sms",
+      "text": "SMS paused after complaint spike. Do not turn it back on without legal."
+    },
+    {
+      "id": "mem_meta_mar",
+      "written_at": "2026-03-09T00:00:00.000Z",
+      "topic": "meta",
+      "text": "Jordan killed Meta prospecting 8 Mar 2026. CAC 40 to 72. Not a maybe."
+    },
+    {
+      "id": "mem_june_retest",
+      "written_at": "2026-06-16T00:00:00.000Z",
+      "topic": "meta",
+      "text": "June Meta audience test still negative. CAC 72 to 68. Left paused."
+    },
+    {
+      "id": "mem_email_core",
+      "written_at": "2026-08-02T00:00:00.000Z",
+      "topic": "email",
+      "text": "Email is the core channel. Frequency test in Feb 2026 is the one that worked."
+    }
+  ]
+}

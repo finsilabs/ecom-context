@@ -16,14 +16,18 @@ import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 import { ContextStore } from '../store.js';
 import {
   assertGraderInstrument,
+  assertLargeGraderInstrument,
   factsFromStore,
   gradeAnswer,
+  gradeLargeAnswer,
   type GradeResult,
 } from './grader.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '../..');
-const FIXTURE = join(ROOT, 'benchmark/fixture');
+const LARGE = process.argv.includes('--large');
+const FIXTURE = join(ROOT, LARGE ? 'benchmark/fixture-large' : 'benchmark/fixture');
 const STORE_DIR = join(FIXTURE, 'store');
+const RESULTS = join(ROOT, LARGE ? 'benchmark/results-large.json' : 'benchmark/results.json');
 const MODEL = process.env.ECOM_CONTEXT_BENCH_MODEL || 'gpt-4o-mini';
 const API_URL = 'https://api.openai.com/v1/chat/completions';
 
@@ -157,7 +161,7 @@ async function runWith(task: string, storeDir: string): Promise<{
       {
         role: 'system',
         content:
-          'You are an e-commerce operator\'s assistant. Operating-context tools are connected (context.brief, channels.performance, governance.rules, history.decisions, memory.write). Call them before you draft. Do not invent governance, performance, or history.',
+          'You are an e-commerce operator\'s assistant. Operating-context tools are connected. context.brief is an index: headline metrics, forbid rules, last decision per target. Call channels.performance, governance.rules, or history.decisions only if you need approaches, require-rules, or older decisions. Do not call the same tool twice with the same arguments. Do not use memory.write for this task. Do not invent governance, performance, or history.',
       },
       { role: 'user', content: task },
     ];
@@ -224,7 +228,8 @@ async function main(): Promise<void> {
   const store = new ContextStore(STORE_DIR);
   const ctx = store.load();
   const facts = factsFromStore(ctx);
-  assertGraderInstrument(facts);
+  if (LARGE) assertLargeGraderInstrument(facts);
+  else assertGraderInstrument(facts);
 
   const task = loadText('task.txt');
   const paste = loadText('raw-paste.txt');
@@ -239,18 +244,24 @@ async function main(): Promise<void> {
     console.error('running WITH (MCP connected)...');
     const withRun = await runWith(task, liveStore);
 
-  const gradeWithout = gradeAnswer(without.answer, facts);
-  const gradeWith = gradeAnswer(withRun.answer, facts);
+  const gradeWithout = LARGE ? gradeLargeAnswer(without.answer, facts) : gradeAnswer(without.answer, facts);
+  const gradeWith = LARGE ? gradeLargeAnswer(withRun.answer, facts) : gradeAnswer(withRun.answer, facts);
 
   const report = {
     ran_at: new Date().toISOString(),
     model: MODEL,
+    fixture: LARGE ? 'large' : 'small',
     task,
     grader: {
-      must_fire: 'INSTRUMENT_MUST_FIRE in src/benchmark/grader.ts',
-      must_stay_quiet: 'INSTRUMENT_MUST_STAY_QUIET in src/benchmark/grader.ts',
-      error_definition:
-        'A claim in the answer that contradicts the fixture store: medical efficacy, Meta CAC described as healthy, email described as inactive/zero, or a discount deeper than 20% off.',
+      must_fire: LARGE
+        ? 'INSTRUMENT_MUST_FIRE_LARGE in src/benchmark/grader.ts'
+        : 'INSTRUMENT_MUST_FIRE in src/benchmark/grader.ts',
+      must_stay_quiet: LARGE
+        ? 'INSTRUMENT_MUST_STAY_QUIET_LARGE in src/benchmark/grader.ts'
+        : 'INSTRUMENT_MUST_STAY_QUIET in src/benchmark/grader.ts',
+      error_definition: LARGE
+        ? 'Store contradictions (medical, Meta CAC healthy, email inactive/zero, discount >20%) plus recommending a Meta restart without citing the recorded March stop/CAC rise.'
+        : 'A claim in the answer that contradicts the fixture store: medical efficacy, Meta CAC described as healthy, email described as inactive/zero, or a discount deeper than 20% off.',
     },
     without: summarize('without_server_paste_baseline', without.answer, without.usage, gradeWithout, {
       rounds: without.rounds,
@@ -267,7 +278,7 @@ async function main(): Promise<void> {
     },
   };
 
-  const outPath = join(ROOT, 'benchmark/results.json');
+  const outPath = RESULTS;
   writeFileSync(outPath, `${JSON.stringify(report, null, 2)}\n`);
   console.error(`wrote ${outPath}`);
   console.log(

@@ -20,7 +20,8 @@ export type GradedError = {
     | 'medical_claim'
     | 'meta_cac_healthy'
     | 'email_inactive_or_zero'
-    | 'discount_deeper_than_cap';
+    | 'discount_deeper_than_cap'
+    | 'ignores_negative_meta_stop';
   detail: string;
 };
 
@@ -32,7 +33,7 @@ const PROHIBITION =
   /\b(do not|don't|dont|never|must not|cannot|can't|avoid|without claiming|not a (?:cure|treatment|medicine|drug)|do not claim|don't claim|do not restart|don't restart)\b/i;
 
 const MEDICAL_EFFICACY =
-  /\b(cure[sd]?|heals|healing|clinically proven to (?:treat|cure|prevent)|(?:treats|treating|prevents|preventing)\s+(?:arthritis|cancer|disease|hip dysplasia)|eliminates? (?:arthritis|cancer|disease|hip dysplasia))\b/i;
+  /\b(cure[sd]?|heals|healing|clinically proven to (?:treat|cure|prevent)|(?:treats|treating|prevents|preventing)\s+(?:arthritis|cancer|disease|hip dysplasia|joint stiffness)|eliminates? (?:arthritis|cancer|disease|hip dysplasia|joint stiffness))\b/i;
 
 const CAC_HEALTHY =
   /\bcac\b.{0,40}\b(excellent|healthy|good|low|great|improved|improving)\b|\b(excellent|healthy|good|low|great)\b.{0,40}\bcac\b/i;
@@ -88,6 +89,39 @@ export function gradeAnswer(answer: string, facts: FixtureFacts): GradeResult {
   return { errors };
 }
 
+const META_RESTART =
+  /\b(restart|resume|scale|go back on)\b/i;
+const META_WORD = /\bmeta\b/i;
+const CITES_META_STOP =
+  /\b(paused|stopped|killed)\b|\bcac\b.{0,24}(rose|from|40).{0,12}72\b|\b40\s*(→|->|to)\s*72\b/i;
+
+function recommendsMetaRestart(answer: string): boolean {
+  for (const sentence of sentences(answer)) {
+    if (isProhibition(sentence)) continue;
+    if (/\bnot advisable\b|\bshould not\b|\bis not\b/i.test(sentence)) continue;
+    if (META_RESTART.test(sentence) && META_WORD.test(sentence)) return true;
+  }
+  return false;
+}
+
+/**
+ * Extra check for the large task: proposing a Meta restart that does not
+ * cite the recorded March stop / CAC rise. Defined before that run.
+ */
+export function gradeLargeAnswer(answer: string, facts: FixtureFacts): GradeResult {
+  const result = gradeAnswer(answer, facts);
+  const seen = new Set(result.errors.map((e) => e.id));
+  if (recommendsMetaRestart(answer) && !CITES_META_STOP.test(answer)) {
+    if (!seen.has('ignores_negative_meta_stop')) {
+      result.errors.push({
+        id: 'ignores_negative_meta_stop',
+        detail: 'recommends restarting Meta without citing the recorded stop/CAC rise',
+      });
+    }
+  }
+  return result;
+}
+
 export const INSTRUMENT_MUST_FIRE = [
   'Spring wellness starts here.',
   'Our organ blend cures arthritis in 30 days.',
@@ -103,6 +137,36 @@ export const INSTRUMENT_MUST_STAY_QUIET = [
   'Email remains the active channel at about $18,420 over 30 days.',
   'Keep any offer at 20% off or less.',
 ].join(' ');
+
+export const INSTRUMENT_MUST_FIRE_LARGE = [
+  'Restart Meta this month.',
+  'Copy: it treats joint stiffness.',
+  'Take 35% off your first bag.',
+  'Email is dead this quarter.',
+  'CAC is excellent.',
+].join(' ');
+
+export const INSTRUMENT_MUST_STAY_QUIET_LARGE = INSTRUMENT_MUST_STAY_QUIET;
+
+export function assertLargeGraderInstrument(facts: FixtureFacts): void {
+  assertGraderInstrument(facts);
+  const fire = gradeLargeAnswer(INSTRUMENT_MUST_FIRE_LARGE, facts);
+  const ids = fire.errors.map((e) => e.id).sort();
+  const expected = [
+    'discount_deeper_than_cap',
+    'email_inactive_or_zero',
+    'ignores_negative_meta_stop',
+    'medical_claim',
+    'meta_cac_healthy',
+  ];
+  if (JSON.stringify(ids) !== JSON.stringify(expected)) {
+    throw new Error(`large grader must-fire failed: got ${ids.join(',')}`);
+  }
+  const quiet = gradeLargeAnswer(INSTRUMENT_MUST_STAY_QUIET_LARGE, facts);
+  if (quiet.errors.length !== 0) {
+    throw new Error(`large grader must-quiet failed: ${JSON.stringify(quiet.errors)}`);
+  }
+}
 
 export function factsFromStore(ctx: {
   channels: Array<{ id: string; status: string; revenue: number | null }>;
